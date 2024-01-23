@@ -1,17 +1,17 @@
 import React from 'react';
-import {ScrollView, Text, StyleSheet, View} from 'react-native';
-import {useTranslation} from 'react-i18next';
-import {APP_NAME} from '../common/constanst';
-import {colors} from '../common/styles';
-import {Button, PaperProvider, Modal, Portal, Icon} from 'react-native-paper';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { ScrollView, Text, StyleSheet, View, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '../common/constanst';
+import { colors } from '../common/styles';
+import { Button, PaperProvider, Modal, Portal, Icon } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LoginModal from '../components/Modals/LoginModal';
 import SearchModal from '../components/Modals/SearchModal';
 import TOSModal from '../components/Modals/TOSModal';
 
 const LoginScreen: React.FC = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [loginVisible, setLogin] = React.useState(false);
   const [searchVisible, setSearch] = React.useState(false);
   const [TOSVisible, setTOS] = React.useState(false);
@@ -27,8 +27,11 @@ const LoginScreen: React.FC = () => {
     <SafeAreaProvider>
       <PaperProvider>
         <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.header}>{APP_NAME}</Text>
-          <Text style={styles.text}>{t('login')}</Text>
+          <Image
+            
+            source={require('../assets/images/logo.png')}
+            style={{ width: 300, height: 250, tintColor: colors.orange, position:'absolute', top: 30,resizeMode: 'contain' }}
+          />
           <LoginModal onDismiss={hideLogin} visible={loginVisible} />
           <SearchModal onDismiss={hideSearch} visible={searchVisible} />
           <TOSModal onDismiss={hideTOS} visible={TOSVisible} />
@@ -64,6 +67,7 @@ const LoginScreen: React.FC = () => {
           </Button>
           <Button
             mode="text"
+            style={{  position:'absolute', bottom:200 }}
             onPress={() => showTOS()}
             icon={props => (
               <MaterialIcons
@@ -73,7 +77,7 @@ const LoginScreen: React.FC = () => {
                 color={colors.midGrey}
               />
             )}>
-            <Text style={{fontSize: 18, color: colors.midGrey}}>
+            <Text style={{ fontSize: 18, color: colors.midGrey }}>
               käyttöehdot
             </Text>
           </Button>
