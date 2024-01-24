@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {colors} from '../common/styles';
 import LogoTopBar from '../components/LogoTopBar';
+import Gradient from '../components/Gradient';
 
 const RegistrationNumberScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -13,53 +14,55 @@ const RegistrationNumberScreen: React.FC = () => {
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <LogoTopBar
-        leftButton={{
-          icon: 'arrow-back',
-          action: () => console.log('painettu arrow back'),
-        }}
-      />
-
-      <ScrollView contentContainerStyle={styles.innerContainer}>
-        <Text style={styles.text}>{t('identificationInfo')}</Text>
-        <TextInput
-          label={t('registrationNumber')}
-          value={registerNumber}
-          textColor={colors.orange}
-          onChangeText={value => setRegisterNumber(value)}
-          mode="outlined"
-          right={
-            <TextInput.Icon
-              icon="keyboard-outline"
-              size={30}
-              color={colors.orange}
-              style={styles.icon}
-            />
-          }
-          theme={{colors: {onSurfaceVariant: colors.orange}}}
-          outlineColor={colors.orange}
-          activeOutlineColor={colors.orange}
-          style={styles.textInput}
+      <Gradient>
+        <LogoTopBar
+          leftButton={{
+            icon: 'arrow-back',
+            action: () => console.log('painettu arrow back'),
+          }}
         />
 
-        <View
-          style={{
-            backgroundColor: colors.white,
-            height: 220,
-            marginVertical: '15%',
-          }}>
-          <Text>Add camera here</Text>
-        </View>
+        <ScrollView contentContainerStyle={styles.innerContainer}>
+          <Text style={styles.text}>{t('identificationInfo')}</Text>
+          <TextInput
+            label={t('registrationNumber')}
+            value={registerNumber}
+            textColor={colors.orange}
+            onChangeText={value => setRegisterNumber(value)}
+            mode="outlined"
+            right={
+              <TextInput.Icon
+                icon="keyboard-outline"
+                size={30}
+                color={colors.orange}
+                style={styles.icon}
+              />
+            }
+            theme={{colors: {onSurfaceVariant: colors.orange}}}
+            outlineColor={colors.orange}
+            activeOutlineColor={colors.orange}
+            style={styles.textInput}
+          />
 
-        <View style={styles.bottomContainer}>
-          <Button
-            onPress={() => console.log('todo')}
-            style={styles.button}
-            contentStyle={styles.innerButton}>
-            <View />
-          </Button>
-        </View>
-      </ScrollView>
+          <View
+            style={{
+              backgroundColor: colors.white,
+              height: 220,
+              marginVertical: '15%',
+            }}>
+            <Text>Add camera here</Text>
+          </View>
+
+          <View style={styles.bottomContainer}>
+            <Button
+              onPress={() => console.log('todo')}
+              style={styles.button}
+              contentStyle={styles.innerButton}>
+              <View />
+            </Button>
+          </View>
+        </ScrollView>
+      </Gradient>
     </SafeAreaProvider>
   );
 };
@@ -67,7 +70,6 @@ const RegistrationNumberScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.black,
   },
   innerContainer: {
     width: '100%',
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 60,
-    backgroundColor: colors.black,
+    backgroundColor: colors.transparent,
     fontSize: 18,
   },
   icon: {
