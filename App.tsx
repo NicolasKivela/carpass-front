@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import BootSplash from 'react-native-bootsplash';
 
 import LoginScreen from './src/screens/loginScreen';
 
 const App = () => {
+  useEffect(() => {
+    const init = async () => {
+      await BootSplash.hide({fade: true});
+    };
+
+    init();
+  }, []);
+
   return <LoginScreen />;
 };
 
