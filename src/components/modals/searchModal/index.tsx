@@ -1,10 +1,12 @@
 import React from 'react';
-import {Icon, Text} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import {Portal, Modal, Button, TextInput} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
-import {colors} from '../../common/styles';
-import modalStyles from '../../common/modalStyles';
+import {colors} from '../../../common/styles';
+import styles from '../styles';
+import TextField from '../../textfield';
+import SecondaryButton from '../../secondaryButton';
 
 interface ModalContentProps {
   visible: boolean;
@@ -24,39 +26,21 @@ const SearchModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
       <Modal
         visible={visible}
         onDismiss={onDismiss}
-        contentContainerStyle={modalStyles.modal}>
+        contentContainerStyle={styles.modal}>
         <MaterialIcons
           name="info-outline"
           size={30}
           color={colors.orange}
-          style={{top: 10, bottom: 20}}
+          style={styles.iconStyle}
         />
         <Text
-          style={{
-            position: 'relative',
-            top: 20,
-            padding: 20,
-            color: 'white',
-          }}>
+          style={styles.textStyle}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           consequat odio ornare luctus feugiat. Curabitur ut metus interdum,
           laoreet dui.
         </Text>
-        <TextInput
-          label={t('password')}
-          value={search}
-          textColor="white"
-          onChangeText={password => setSearch(password)}
-          mode="outlined"
-          right={<TextInput.Icon icon="keyboard-outline" />}
-          activeOutlineColor={colors.midGrey}
-          style={{
-            backgroundColor: colors.darkGrey,
-          }}
-        />
-        <Button mode="text" onPress={() => console.log('query: ', search)}>
-          <Text style={{color: colors.midGrey}}>{t('login')}</Text>
-        </Button>
+        <TextField style={styles.inputStyle} label={t('password')} onChangeText={password=> setSearch(password)} value={search} rightIcon="keyboard"  />
+        <SecondaryButton style={styles.btnStyle} onPress={() => console.log('query: ', search)} title={t('login')} fontSize={16} />
       </Modal>
     </Portal>
   );
