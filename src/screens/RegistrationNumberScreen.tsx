@@ -1,8 +1,14 @@
 import React, {useState} from 'react';
-import {ScrollView, Text, StyleSheet, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  View,
+  Platform,
+  SafeAreaView,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {TextInput, Button} from 'react-native-paper';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {colors} from '../common/styles';
 import LogoTopBar from '../components/LogoTopBar';
@@ -13,15 +19,14 @@ const RegistrationNumberScreen: React.FC = () => {
   const [registerNumber, setRegisterNumber] = useState('');
 
   return (
-    <SafeAreaProvider style={styles.container}>
-      <Gradient>
+    <Gradient>
+      <SafeAreaView style={styles.container}>
         <LogoTopBar
           leftButton={{
             icon: 'arrow-back',
             action: () => console.log('painettu arrow back'),
           }}
         />
-
         <ScrollView contentContainerStyle={styles.innerContainer}>
           <Text style={styles.text}>{t('identificationInfo')}</Text>
           <TextInput
@@ -38,7 +43,9 @@ const RegistrationNumberScreen: React.FC = () => {
                 style={styles.icon}
               />
             }
-            theme={{colors: {onSurfaceVariant: colors.orange}}}
+            theme={{
+              colors: {onSurfaceVariant: colors.orange},
+            }}
             outlineColor={colors.orange}
             activeOutlineColor={colors.orange}
             style={styles.textInput}
@@ -62,8 +69,8 @@ const RegistrationNumberScreen: React.FC = () => {
             </Button>
           </View>
         </ScrollView>
-      </Gradient>
-    </SafeAreaProvider>
+      </SafeAreaView>
+    </Gradient>
   );
 };
 
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     position: 'absolute',
     width: '100%',
-    bottom: 20,
+    bottom: Platform.OS === 'ios' ? 35 : 20,
     right: 25,
     alignItems: 'center',
   },
