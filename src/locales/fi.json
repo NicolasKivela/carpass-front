@@ -1,6 +1,8 @@
 {
+  "identificationInfo": "Tunnistetiedot",
   "login": "Kirjaudu sovellukseen",
   "search": "Hae tarkastuskoodilla",
   "username": "Käyttäjätunnus",
-  "password": "Salasana"
+  "password": "Salasana",
+  "registrationNumber": "Rekisterinumero"
 }

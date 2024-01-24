@@ -1,6 +1,8 @@
 {
+  "identificationInfo": "Identification information",
   "login": "Log in to the application",
   "search": "Search with a code",
-  "username" : "Username",
-  "password" : "Password"
+  "username": "Username",
+  "password": "Password",
+  "registrationNumber": "Registration number"
 }
