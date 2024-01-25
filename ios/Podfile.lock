@@ -417,10 +417,14 @@ PODS:
     - React-jsi (= 0.71.15)
     - React-logger (= 0.71.15)
     - React-perflogger (= 0.71.15)
+<<<<<<< HEAD
   - RNSVG (14.1.0):
     - React-Core
   - RNVectorIcons (10.0.3):
     - RCT-Folly (= 2021.07.22.00)
+=======
+  - RNBootSplash (5.3.0):
+>>>>>>> feature/add-login-screen
     - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
@@ -488,8 +492,12 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+<<<<<<< HEAD
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+=======
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
+>>>>>>> feature/add-login-screen
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -581,10 +589,15 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+<<<<<<< HEAD
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+=======
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
+>>>>>>> feature/add-login-screen
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -637,8 +650,12 @@ SPEC CHECKSUMS:
   React-RCTVibration: a97783e3645ddf852e34da2e015656e309f3a083
   React-runtimeexecutor: 8f2ddd9db7874ec7de84f5c55d73aeaaf82908e2
   ReactCommon: 309d965cb51f058d07dea65bc04dcf462911f0a4
+<<<<<<< HEAD
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
+=======
+  RNBootSplash: 73c2a97d761db234125638c24ad6da6d781d049d
+>>>>>>> feature/add-login-screen
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 68c9c592c3e80ec37ff28db20eedb13d84aae5df
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

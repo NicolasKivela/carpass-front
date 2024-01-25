@@ -1,8 +1,10 @@
 {
   "identificationInfo": "Identification information",
   "login": "Log in to the application",
-  "search": "Search with a code",
-  "username": "Username",
+  "loginToApp": "Log in to the application",
   "password": "Password",
-  "registrationNumber": "Registration number"
+  "registrationNumber": "Registration number",
+  "search": "Search with a code",
+  "tos" : "Terms of use",
+  "username": "Username"
 }
