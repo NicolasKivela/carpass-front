@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native'
 import {Checkbox, Text, Chip} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -9,44 +9,49 @@ interface RatingCardProps {
 };
 const RatingCard: React.FC <RatingCardProps> = (props) => {
     const {section} = props;
+
     return(
-        <View style={ratingCardView}>
+        <View style={styles.ratingCardView}>
             <View style={{width: '42%'}}>
-            <Text style={{fontSize:15,marginRight: 50, color: colors.midGrey}}>{section}</Text>
+            <Text style={{fontSize:15,marginRight: 49, color: colors.midGrey}}>{section}</Text>
             </View>
-            <View style={chipView}>
-            <Chip style={chip} icon={props => (
-                                  <MaterialIcons
-                                     {...props}
-                                     name="warning"
-                                     size={20}
-                                     color={colors.midGrey}
-                                     style={icon}
-                                      />
-                                    )}>
-                                    </Chip>
-            <Chip style={chip} icon={props => (
-                                  <MaterialIcons
-                                     {...props}
-                                     name="bulb1"
-                                     size={20}
-                                     color={colors.midGrey}
-                                     style={icon}
-                                      />
-                                    )}>
-                                    </Chip>
-            <Chip style={chip} icon={props => (
-                                  <MaterialIcons
-                                     {...props}
-                                     name="safety"
-                                     size={20}
-                                     color={colors.midGrey}
-                                     style={icon}
-                                      />
-                                    )}>
-                                                </Chip>
+            <View style={styles.chipView}>
+            <Chip style={styles.chip}></Chip>
+            <Chip style={styles.chip}></Chip>
+            <Chip style={styles.chip}></Chip>
                </View>
         </View>
     );
 };
+const styles = StyleSheet.create({
+
+chip:{
+    borderColor: colors.betweenGrey,
+    borderWidth: 3,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.betweenGrey,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 27
+},
+icon:{
+    alignSelf: 'center'
+},
+ratingCardView:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 16,
+    marginVertical: 10
+},
+chipView:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 25,
+    margin: 16,
+    marginVertical: 10
+}
+})
 export default RatingCard;
