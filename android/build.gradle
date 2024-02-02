@@ -9,6 +9,7 @@ buildscript {
         supportLibVersion           = "29.0.0"
         googlePlayServicesVersion   = "17.0.0"
         playCoreVersion             = "1.7.3"
+        RNNKotlinVersion = kotlinVersion
     }
     repositories {
         google()
