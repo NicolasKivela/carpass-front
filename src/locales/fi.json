@@ -1,6 +1,8 @@
 {
-  "login": "Kirjaudu sovellukseen",
+  "loginToApp": "Kirjaudu sovellukseen",
   "search": "Hae tarkastuskoodilla",
   "username": "Käyttäjätunnus",
-  "password": "Salasana"
+  "password": "Salasana",
+  "tos": "käyttöehdot",
+  "login": "Kirjaudu"
 }

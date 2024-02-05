@@ -1,6 +1,9 @@
 {
-  "login": "Log in to the application",
+  "loginToApp": "Log in to the application",
   "search": "Search with a code",
   "username" : "Username",
-  "password" : "Password"
+  "password" : "Password",
+  "tos" : "Terms of use",
+  "login" : "Login"
+
 }
