@@ -1,9 +1,9 @@
 import React from 'react';
 
 import LoginScreen from './src/screens/LoginScreen';
-
+import ReviewerScreen from './src/screens/ReviewerScreen';
 const App = () => {
-  return <LoginScreen />;
+  return <ReviewerScreen/>;
 };
 
 export default App;

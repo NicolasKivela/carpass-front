@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {ScrollView,FlatList,View,Text, StyleSheet,TouchableOpacity} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PaperProvider} from 'react-native-paper';
-import RatingCard from '../components/RatingCard';
+import TrafficLights from '../components/TrafficLights';
 import {container, colors} from '../common/styles';
 
 
@@ -22,62 +22,63 @@ const ReviewerScreen: React.FC= () =>{
     const [activeButton, setActiveButton] = useState(0);
 
     const handlePress = (value) => {
-    if(activeButton === 0 || activeButton!==value){
-        setActiveButton(value)
-    }
-    else if(activeButton === value){
-            setActiveButton(0)
+        if(activeButton === 0 || activeButton!==value){
+            setActiveButton(value)
         }
+        else if(activeButton === value){
+                setActiveButton(0)
+            }
     };
 
     return(
-    <PaperProvider>
-        <SafeAreaProvider>
-            <View style={styles.container}>
-            </View>
-            <View style={styles.gap}>
-
-                <TouchableOpacity
-                style={[styles.button]}
-                onPress={() => handlePress(1)}
-                activeOpacity = {1}
-                >
-                <Text style={[styles.buttonText, activeButton === 1 && styles.activeButtonText]}>
-                LAAJA
-                </Text>
-                {activeButton === 1 && <View style={styles.underline} />}
-                </TouchableOpacity>
-                <TouchableOpacity
-                style={[styles.button]}
-                onPress={() => handlePress(2)}
-                activeOpacity = {1}
-                >
-                <Text style={[styles.buttonText, activeButton === 2 && styles.activeButtonText]}>
-                KEVYT
-                </Text>
-                {activeButton === 2 && <View style={styles.underline} />}
-                </TouchableOpacity>
-                <TouchableOpacity
-                style={[styles.button]}
-                onPress={() => handlePress(3)}
-                activeOpacity = {1}
-                >
-                <Text style={[styles.buttonText, activeButton === 3 && styles.activeButtonText]}>
-                OSA
-                </Text>
-                {activeButton === 3 && <View style={styles.underline} />}
-                </TouchableOpacity>
-            </View>
-            <View style={styles.section3}>
-                <FlatList
-                    ListHeaderComponent={<Text style={styles.header}>{displayText}</Text>}
-                    data={displayData}
-                    renderItem={({ item }) => <RatingCard section={item.section} />}
-                    keyExtractor={(item) => item.key}
-                  />
-        </View>
-        </SafeAreaProvider>
-    </PaperProvider>
+        <PaperProvider>
+            <SafeAreaProvider>
+                <View style={styles.container}>
+                </View>
+                <View style={styles.gap}>
+                    <TouchableOpacity
+                        style={[styles.button]}
+                        onPress={() => handlePress(1)}
+                        activeOpacity = {1}>
+                        <Text style={[styles.buttonText,
+                            activeButton === 1 && styles.activeButtonText]}>
+                            LAAJA
+                        </Text>
+                        {activeButton === 1 && <View style={styles.underline} />}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.button]}
+                        onPress={() => handlePress(2)}
+                        activeOpacity = {1}
+                            >
+                        <Text style={[styles.buttonText,
+                            activeButton === 2 && styles.activeButtonText]}>
+                            KEVYT
+                        </Text>
+                        {activeButton === 2 && <View style={styles.underline} />}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.button]}
+                        onPress={() => handlePress(3)}
+                        activeOpacity = {1}
+                        >
+                        <Text style={[styles.buttonText,
+                            activeButton === 3 && styles.activeButtonText]}>
+                            OSA
+                        </Text>
+                        {activeButton === 3 && <View style={styles.underline} />}
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.section3}>
+                    <FlatList
+                        ListHeaderComponent={<Text style={styles.header}>{displayText}</Text>}
+                        data={displayData}
+                        renderItem={({ item }) => <TrafficLights section={item.section} />}
+                        keyExtractor={(item) => item.key}
+                      />
+                </View>
+            </SafeAreaProvider>
+        </PaperProvider>
     );
 
 };
@@ -90,7 +91,6 @@ const styles = StyleSheet.create({
     },
     gap:{
         height: 60,
-
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around"
@@ -104,12 +104,11 @@ const styles = StyleSheet.create({
         gap:10,
     },
     section3:{
-
-            flex: 1,
-            backgroundColor: colors.black,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap:10,
+        flex: 1,
+        backgroundColor: colors.black,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap:10,
     },
     button: {
         backgroundColor: colors.darkGrey,
@@ -117,27 +116,22 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height:60,
         alignItems: "center",
-
-      },
-
-    buttonText:{
-    fontSize:20,
-    color:colors.midGrey
     },
-    activeButtonText:{
+    buttonText: {
+        fontSize:20,
+        color:colors.midGrey
+    },
+    activeButtonText: {
         fontSize:20,
         color:colors.orange,
-
-        },
+    },
     underline: {
-
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
         borderBottomWidth: 2,
         borderBottomColor: colors.orange,
-
     }
 })
 
