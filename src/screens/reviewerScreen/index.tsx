@@ -2,9 +2,8 @@ import React,{useState} from 'react'
 import {ScrollView,FlatList,View,Text, StyleSheet,TouchableOpacity} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PaperProvider} from 'react-native-paper';
-import TrafficLights from '../components/TrafficLights';
-import {container, colors} from '../common/styles';
-
+import TrafficLight from '../../components/trafficLight';
+import styles from './styles'
 
 const ReviewerScreen: React.FC= () =>{
     const data1 = [{ key: '1', section: 'Ajettavuus' },
@@ -73,7 +72,7 @@ const ReviewerScreen: React.FC= () =>{
                     <FlatList
                         ListHeaderComponent={<Text style={styles.header}>{displayText}</Text>}
                         data={displayData}
-                        renderItem={({ item }) => <TrafficLights section={item.section} />}
+                        renderItem={({ item }) => <TrafficLight section={item.section} />}
                         keyExtractor={(item) => item.key}
                       />
                 </View>
@@ -82,57 +81,4 @@ const ReviewerScreen: React.FC= () =>{
     );
 
 };
-const styles = StyleSheet.create({
-    header:{
-        fontSize: 25,
-        color: colors.white,
-        marginTop: 10,
-        marginLeft: 10
-    },
-    gap:{
-        height: 60,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around"
-    },
-    container:{
-        paddingTop: 2,
-        flex: 0.2,
-        backgroundColor: colors.black,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap:10,
-    },
-    section3:{
-        flex: 1,
-        backgroundColor: colors.black,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap:10,
-    },
-    button: {
-        backgroundColor: colors.darkGrey,
-        flex: 1,
-        justifyContent: "center",
-        height:60,
-        alignItems: "center",
-    },
-    buttonText: {
-        fontSize:20,
-        color:colors.midGrey
-    },
-    activeButtonText: {
-        fontSize:20,
-        color:colors.orange,
-    },
-    underline: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        borderBottomWidth: 2,
-        borderBottomColor: colors.orange,
-    }
-})
-
 export default ReviewerScreen;
