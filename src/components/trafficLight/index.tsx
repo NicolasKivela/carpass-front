@@ -1,40 +1,71 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native'
-import {Checkbox, Text, Chip} from 'react-native-paper';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import { Chip } from 'react-native-paper';
 import styles from './styles';
 
+enum TrafficLightColor {
+  RED = 'RED',
+  YELLOW = 'YELLOW',
+  GREEN = 'GREEN',
+}
+
 interface TrafficLightProps {
-    section: string;
-};
-const TrafficLight: React.FC <TrafficLightProps> = (props) => {
-    const {section} = props;
-    const [activeChip, setActiveChip] = useState(0);
+  section: string;
+  modifyWarning: (count: number) => void;
+  modifyError: (count: number) => void;
+}
 
-    const handlePress = (value) => {
-    if(activeChip === 0 || activeChip!==value){
-        setActiveChip(value)
-    }
-    else if(activeChip === value){
-        setActiveChip(0)
-    }
-    };
+const TrafficLight: React.FC<TrafficLightProps> = ({
+  section,
+  modifyWarning,
+  modifyError,
+}) => {
+  const [activeColor, setActiveColor] = useState<TrafficLightColor | null>(null);
 
-    return(
-        <View style={styles.trafficLightView}>
-            <View style={{width: '42%'}}>
-                <Text style={styles.carPartText}>{section}</Text>
-            </View>
-            <View style={styles.chipView}>
-                <Chip style={[styles.chip,activeChip===1 && styles.activeChip1]}
-                    onPress={() => handlePress(1)}></Chip>
-                <Chip style={[styles.chip, activeChip===2 && styles.activeChip2]}
-                    onPress={() => handlePress(2)}></Chip>
-                <Chip style={[styles.chip, activeChip===3 && styles.activeChip3]}
-                    onPress={() => handlePress(3)}></Chip>
-            </View>
-        </View>
-    );
+  const toggleColor = (color: TrafficLightColor) => {
+    if (activeColor === color) {
+      setActiveColor(null);
+      if (color === TrafficLightColor.RED) {
+        modifyError(-1);
+      } else if (color === TrafficLightColor.YELLOW) {
+        modifyWarning(-1);
+      }
+    } else {
+      if (activeColor === TrafficLightColor.RED) {
+        modifyError(-1);
+      } else if (activeColor === TrafficLightColor.YELLOW) {
+        modifyWarning(-1);
+      }
+      setActiveColor(color);
+      if (color === TrafficLightColor.RED) {
+        modifyError(1);
+      } else if (color === TrafficLightColor.YELLOW) {
+        modifyWarning(1);
+      }
+    }
+  };
+
+  return (
+    <View style={styles.trafficLightView}>
+      <View style={{ width: '42%' }}>
+        <Text style={styles.carPartText}>{section}</Text>
+      </View>
+      <View style={styles.chipView}>
+        <Chip
+          style={[styles.chip, activeColor === TrafficLightColor.RED && styles.activeChip1]}
+          onPress={() => toggleColor(TrafficLightColor.RED)}
+        ></Chip>
+        <Chip
+          style={[styles.chip, activeColor === TrafficLightColor.YELLOW && styles.activeChip2]}
+          onPress={() => toggleColor(TrafficLightColor.YELLOW)}
+        ></Chip>
+        <Chip
+          style={[styles.chip, activeColor === TrafficLightColor.GREEN && styles.activeChip3]}
+          onPress={() => toggleColor(TrafficLightColor.GREEN)}
+        ></Chip>
+      </View>
+    </View>
+  );
 };
 
 export default TrafficLight;

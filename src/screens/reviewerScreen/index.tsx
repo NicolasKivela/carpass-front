@@ -1,9 +1,11 @@
-import React,{useState} from 'react'
-import {ScrollView,FlatList,View,Text, StyleSheet,TouchableOpacity} from 'react-native';
+import React,{useState, useEffect} from 'react'
+import {ScrollView,FlatList,View,Text, StyleSheet,TouchableOpacity,Image} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {PaperProvider} from 'react-native-paper';
+import {PaperProvider,MD3Colors} from 'react-native-paper';
 import TrafficLight from '../../components/trafficLight';
+import ReviewProgressBar from '../../components/reviewNavigationbar';
 import styles from './styles'
+
 
 const ReviewerScreen: React.FC= () =>{
     const data1 = [{ key: '1', section: 'Ajettavuus' },
@@ -19,6 +21,14 @@ const ReviewerScreen: React.FC= () =>{
     const [displayData, setData] = useState(data1)
     const [displayText, setText] = useState(text1)
     const [activeButton, setActiveButton] = useState(0);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [warningNum, setWarningNum] = useState(0);
+    const [errorNum, setErrorNum] = useState(0);
+    useEffect(() => {
+        setWarningNum(0)
+        setErrorNum(0)
+
+    }, [])
 
     const handlePress = (value) => {
         if(activeButton === 0 || activeButton!==value){
@@ -28,12 +38,55 @@ const ReviewerScreen: React.FC= () =>{
                 setActiveButton(0)
             }
     };
+    const modifyWarningNum = (value) => {
+
+        if (warningNum===0 && value<0){
+           return
+        }
+        setWarningNum(warningNum+value)
+        console.log(warningNum, 'THIS IS WARNING')
+    }
+    const modifyErrorNum = (value) => {
+
+        if (errorNum===0 && value<0){
+            return
+        }
+        setErrorNum(errorNum+value)
+        console.log(errorNum, 'THIS IS ERROR')
+    }
+
 
     return(
         <PaperProvider>
             <SafeAreaProvider>
-                <View style={styles.container}>
+
+               <View style={styles.container}>
+                    <View style={styles.leftView}>
+                        <Image
+                          source={require('../../assets/images/trustcarlogo.png')}
+                          style={styles.imageStyles}
+                        />
+                    </View>
+
+                    <View style={styles.rightView}>
+                        <View style={styles.circleRow}>
+
+                              {warningNum>0 && <View style={[styles.circle,  warningNum > 0 ? { backgroundColor: 'yellow' } : null]}>
+                                <Text>{warningNum}</Text>
+                              </View>}
+
+
+                              {errorNum>0 && <View style={[styles.circle, errorNum > 0 ? { backgroundColor: 'red' } : null]}>
+                                <Text>{errorNum}</Text>
+                              </View>}
+
+                        </View>
+                        <ReviewProgressBar progress={pageNumber/10}/>
+                        <Text style={styles.pageNumber}>{pageNumber}/10</Text>
+                    </View>
                 </View>
+
+
                 <View style={styles.gap}>
                     <TouchableOpacity
                         style={[styles.button]}
@@ -69,13 +122,15 @@ const ReviewerScreen: React.FC= () =>{
                     </TouchableOpacity>
                 </View>
                 <View style={styles.section3}>
+
                     <FlatList
                         ListHeaderComponent={<Text style={styles.header}>{displayText}</Text>}
                         data={displayData}
-                        renderItem={({ item }) => <TrafficLight section={item.section} />}
+                        renderItem={({ item }) => <TrafficLight section={item.section} modifyError={modifyErrorNum} modifyWarning={modifyWarningNum}/>}
                         keyExtractor={(item) => item.key}
                       />
                 </View>
+
             </SafeAreaProvider>
         </PaperProvider>
     );

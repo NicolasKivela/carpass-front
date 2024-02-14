@@ -15,12 +15,29 @@ const styles = StyleSheet.create({
         justifyContent: "space-around"
     },
     container:{
-        paddingTop: 2,
-        flex: 0.2,
+
+        flex: 0.15,
+        flexDirection: 'row',
+        backgroundColor: colors.black,
+
+
+    },
+    leftView: {
+        flex:0.5,
         backgroundColor: colors.black,
         alignItems: 'center',
-        justifyContent: 'space-between',
-        gap:10,
+        justifyContent: 'center'
+    },
+    rightView: {
+        flex: 1,
+        backgroundColor: colors.black,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
+    },
+    centered:{
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     section3:{
         flex: 1,
@@ -51,6 +68,41 @@ const styles = StyleSheet.create({
         right: 0,
         borderBottomWidth: 2,
         borderBottomColor: colors.orange,
-    }
+    },
+    progressView: {
+        height: 60,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around"
+    },
+    imageStyles: {
+        width: '90%', // Ensure the image takes up the entire width of the parent view
+        height: '90%', // Ensure the image takes up the entire height of the parent view
+        resizeMode: 'contain', // Adjust the image size to fit the container while preserving aspect ratio
+   },
+   pageNumber: {
+        color: colors.white,
+        fontSize: 16
+   },
+   circle: {
+        width: 25,
+        height: 25,
+        borderRadius: 25 / 2,
+        alignItems: 'center',
+        justifyContent: "center",
+        backgroundColor: colors.black,
+
+   },
+   yellowCircle: {
+        backgroundColor: colors.yellow
+   },
+   redCircle: {
+        backgroundColor: colors.red
+   },
+   circleRow: {
+        flexDirection: 'row',
+        marginLeft: 135
+   }
+
 });
 export default styles;
