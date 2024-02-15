@@ -49,4 +49,7 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: colors.lightGrey,
   },
+  camera: {
+    flex: 1,
+  },
 });

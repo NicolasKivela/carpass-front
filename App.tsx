@@ -2,6 +2,7 @@ import React from 'react';
 import BootSplash from 'react-native-bootsplash';
 import {Navigation} from 'react-native-navigation';
 import {PaperProvider} from 'react-native-paper';
+import 'react-native-reanimated';
 
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 import {SCREENS} from './src/common/constants';

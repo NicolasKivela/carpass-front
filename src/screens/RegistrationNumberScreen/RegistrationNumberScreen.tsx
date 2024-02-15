@@ -1,8 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, Text, View, SafeAreaView} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {TextInput, Button} from 'react-native-paper';
+import {
+  Camera,
+  useCameraDevice,
+  useFrameProcessor,
+  useCameraFormat,
+  runAsync,
+} from 'react-native-vision-camera';
+import {scanOCR} from '@ismaelmoreiraa/vision-camera-ocr';
 
+import {useSharedValue, Worklets} from 'react-native-worklets-core';
+
+import {cameraPermissions} from '../../common/utilities/permissions';
 import {colors} from '../../common/styles';
 import LogoTopBar from '../../components/LogoTopBar';
 import Gradient from '../../components/Gradient';
@@ -10,7 +21,71 @@ import {styles} from './styles';
 
 const RegistrationNumberScreen: React.FC = () => {
   const {t} = useTranslation();
-  const [registerNumber, setRegisterNumber] = useState('');
+  const device = useCameraDevice('back');
+
+  const [hasPermissions, setHasPermission] = useState(false);
+  const [frameProcessorActive, setFrameProcessorActive] = useState(true);
+  const [frameData, setFrameData] = useState('');
+  const [registerNumber, setRegisterNumber] = useState<{
+    value: string;
+    tempValues: string[];
+  }>({
+    value: '',
+    tempValues: [],
+  });
+
+  const setFrameDataJS = Worklets.createRunInJsFn(setFrameData);
+  const setFrameProcessorActiveJS = Worklets.createRunInJsFn(
+    setFrameProcessorActive,
+  );
+
+  const checkCameraPermission = async () => {
+    try {
+      const result = await cameraPermissions();
+      setHasPermission(result);
+    } catch {
+      console.log('Camera permissions denied'); //TODO, error handling
+    }
+  };
+
+  useEffect(() => {
+    checkCameraPermission();
+  }, []);
+
+  useEffect(() => {
+    if (registerNumber.value === '') {
+      setFrameProcessorActiveJS(true);
+    }
+  }, [registerNumber]);
+
+  useEffect(() => {
+    setFrameProcessorActiveJS(false);
+    if (registerNumber.tempValues.includes(frameData)) {
+      setRegisterNumber({...registerNumber, value: frameData});
+    } else {
+      setRegisterNumber({
+        ...registerNumber,
+        tempValues: [...registerNumber.tempValues, frameData],
+      });
+    }
+  }, [frameData]);
+
+  const format = useCameraFormat(device, [{videoResolution: 'max'}, {fps: 5}]);
+
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    const data = scanOCR(frame);
+    if (data.result) {
+      const vehiclePlate = data.result.blocks.find(
+        item =>
+          /[A-Z]/.test(item.text) &&
+          /\d/.test(item.text) &&
+          item.text.length > 3 &&
+          item.text.length < 9,
+      )?.text;
+      vehiclePlate && setFrameDataJS(vehiclePlate);
+    }
+  }, []);
 
   return (
     <Gradient>
@@ -25,9 +100,11 @@ const RegistrationNumberScreen: React.FC = () => {
           <Text style={styles.text}>{t('identificationInfo')}</Text>
           <TextInput
             label={t('registrationNumber')}
-            value={registerNumber}
+            value={registerNumber.value}
             textColor={colors.orange}
-            onChangeText={value => setRegisterNumber(value)}
+            onChangeText={value => {
+              setRegisterNumber({...registerNumber, value});
+            }}
             mode="outlined"
             right={
               <TextInput.Icon
@@ -48,10 +125,21 @@ const RegistrationNumberScreen: React.FC = () => {
           <View
             style={{
               backgroundColor: colors.white,
-              height: 220,
+              height: 230,
               marginVertical: '15%',
             }}>
-            <Text>Add camera here</Text>
+            {device && hasPermissions && (
+              <Camera
+                style={styles.camera}
+                device={device}
+                isActive={frameProcessorActive}
+                frameProcessor={frameProcessor}
+                format={format}
+                fps={5}
+                pixelFormat={'yuv'}
+                onError={err => console.log('err', err)}
+              />
+            )}
           </View>
 
           <View style={styles.bottomContainer}>
