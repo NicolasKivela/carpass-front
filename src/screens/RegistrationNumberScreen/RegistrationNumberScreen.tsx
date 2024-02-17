@@ -7,11 +7,10 @@ import {
   useCameraDevice,
   useFrameProcessor,
   useCameraFormat,
-  runAsync,
 } from 'react-native-vision-camera';
 import {scanOCR} from '@ismaelmoreiraa/vision-camera-ocr';
 
-import {useSharedValue, Worklets} from 'react-native-worklets-core';
+import {Worklets} from 'react-native-worklets-core';
 
 import {cameraPermissions} from '../../common/utilities/permissions';
 import {colors} from '../../common/styles';
@@ -35,9 +34,7 @@ const RegistrationNumberScreen: React.FC = () => {
   });
 
   const setFrameDataJS = Worklets.createRunInJsFn(setFrameData);
-  const setFrameProcessorActiveJS = Worklets.createRunInJsFn(
-    setFrameProcessorActive,
-  );
+  const format = useCameraFormat(device, [{videoResolution: 'max'}, {fps: 8}]);
 
   const checkCameraPermission = async () => {
     try {
@@ -54,12 +51,12 @@ const RegistrationNumberScreen: React.FC = () => {
 
   useEffect(() => {
     if (registerNumber.value === '') {
-      setFrameProcessorActiveJS(true);
+      setFrameProcessorActive(true);
     }
   }, [registerNumber]);
 
   useEffect(() => {
-    setFrameProcessorActiveJS(false);
+    setFrameProcessorActive(false);
     if (registerNumber.tempValues.includes(frameData)) {
       setRegisterNumber({...registerNumber, value: frameData});
     } else {
@@ -70,21 +67,18 @@ const RegistrationNumberScreen: React.FC = () => {
     }
   }, [frameData]);
 
-  const format = useCameraFormat(device, [{videoResolution: 'max'}, {fps: 5}]);
-
   const frameProcessor = useFrameProcessor(frame => {
     'worklet';
     const data = scanOCR(frame);
-    if (data.result) {
-      const vehiclePlate = data.result.blocks.find(
-        item =>
-          /[A-Z]/.test(item.text) &&
-          /\d/.test(item.text) &&
-          item.text.length > 3 &&
-          item.text.length < 9,
-      )?.text;
-      vehiclePlate && setFrameDataJS(vehiclePlate);
-    }
+    const vehiclePlate = data?.result?.blocks.find(
+      item =>
+        /[A-Z]/.test(item.text) &&
+        /\d/.test(item.text) &&
+        !/[ `!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?~]/.test(item.text) &&
+        item.text.length > 3 &&
+        item.text.length < 9,
+    )?.text;
+    vehiclePlate && setFrameDataJS(vehiclePlate);
   }, []);
 
   return (
@@ -93,7 +87,7 @@ const RegistrationNumberScreen: React.FC = () => {
         <LogoTopBar
           leftButton={{
             icon: 'arrow-back',
-            action: () => console.log('painettu arrow back'),
+            action: () => console.log('TODO: navigate back'),
           }}
         />
         <ScrollView contentContainerStyle={styles.innerContainer}>
@@ -122,12 +116,7 @@ const RegistrationNumberScreen: React.FC = () => {
             style={styles.textInput}
           />
 
-          <View
-            style={{
-              backgroundColor: colors.white,
-              height: 230,
-              marginVertical: '15%',
-            }}>
+          <View style={styles.cameraContainer}>
             {device && hasPermissions && (
               <Camera
                 style={styles.camera}
@@ -135,7 +124,7 @@ const RegistrationNumberScreen: React.FC = () => {
                 isActive={frameProcessorActive}
                 frameProcessor={frameProcessor}
                 format={format}
-                fps={5}
+                fps={8}
                 pixelFormat={'yuv'}
                 onError={err => console.log('err', err)}
               />
@@ -144,7 +133,11 @@ const RegistrationNumberScreen: React.FC = () => {
 
           <View style={styles.bottomContainer}>
             <Button
-              onPress={() => console.log('todo')}
+              onPress={() => {
+                !frameProcessorActive && setFrameProcessorActive(true);
+                setRegisterNumber({value: '', tempValues: []});
+                console.log('TODO: reload or something else? make separate function');
+              }}
               style={styles.button}
               contentStyle={styles.innerButton}>
               <View />

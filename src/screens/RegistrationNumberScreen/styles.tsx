@@ -49,6 +49,11 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: colors.lightGrey,
   },
+  cameraContainer: {
+    backgroundColor: colors.veryLightGrey,
+    height: 250,
+    marginVertical: '15%',
+  },
   camera: {
     flex: 1,
   },

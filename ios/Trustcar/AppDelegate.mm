@@ -1,15 +1,25 @@
 #import "AppDelegate.h"
-#import <ReactNativeNavigation/ReactNativeNavigation.h>
 #import "RNBootSplash.h"
 
+#import <ReactNativeNavigation/ReactNativeNavigation.h>
+#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [[UIDatePicker appearance] setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_GB"]];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor blackColor];
   
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  NSURL *jsCodeLocation;
+
+  [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:self.window.rootViewController.view];
+
+  return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
@@ -24,6 +34,10 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
+	return [ReactNativeNavigation extraModulesForBridge:bridge];
 }
 
 
