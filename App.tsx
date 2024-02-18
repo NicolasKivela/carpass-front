@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import BootSplash from 'react-native-bootsplash';
 
 import LoginScreen from './src/screens/loginScreen';
+import ReviewerScreen from './src/screens/reviewerScreen';
 
 const App = () => {
   useEffect(() => {
@@ -12,7 +13,7 @@ const App = () => {
     init();
   }, []);
 
-  return <LoginScreen />;
+  return <ReviewerScreen />;
 };
 
 export default App;
