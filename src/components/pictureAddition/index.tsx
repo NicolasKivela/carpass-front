@@ -6,6 +6,7 @@ import {colors} from '../../common/styles';
 import {Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import ImagePicker from 'react-native-image-crop-picker';
+import ImageFull from '../imageFull';
 
 type Picture = {
   id: number;
@@ -19,6 +20,14 @@ type Picture = {
 
 const PictureAddition = ({}) => {
   const [Pictures, setPictures] = useState<Picture[]>([]);
+  const [imageUri, setUri] = useState('');
+  const [imageVisible, setVisible] = React.useState(false);
+  const showImage = (uri: string) => {
+    setUri(uri);
+    setVisible(true);
+    console.log(imageUri);
+  };
+  const hideImage = () => setVisible(false);
 
   const {t} = useTranslation();
 
@@ -46,10 +55,13 @@ const PictureAddition = ({}) => {
         onPress={addPicture}
       />
       {Pictures.map(icon => (
-        <TouchableOpacity key={icon.id} onPress={() => removePicture(icon.id)}>
+        <TouchableOpacity
+          key={icon.id}
+          onPress={() => showImage(icon.uri ? icon.uri : '')}>
           <Image style={styles.image} source={{uri: icon.uri}}></Image>
         </TouchableOpacity>
       ))}
+      <ImageFull visible={imageVisible} onDismiss={hideImage} uri={imageUri} />
     </View>
   );
 };
