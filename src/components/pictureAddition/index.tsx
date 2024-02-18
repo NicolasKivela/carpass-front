@@ -6,6 +6,7 @@ import {colors} from '../../common/styles';
 import {Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import ImagePicker from 'react-native-image-crop-picker';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 type Picture = {
   id: number;
@@ -39,10 +40,14 @@ const PictureAddition = ({}) => {
 
   return (
     <View style={styles.View}>
-      <Text style={styles.textStyle}>{t('Images')}</Text>
+      <Text style={styles.textStyle}>{t('images')}</Text>
       <IconButton
-        icon="add-circle-outline"
-        iconColor={colors.orange}
+        icon={() => (
+          <MaterialIcons
+            name="add-circle-outline"
+            size={25}
+            color={colors.orange}></MaterialIcons>
+        )}
         onPress={addPicture}
       />
       {Pictures.map(icon => (
