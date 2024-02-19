@@ -11,7 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 type Picture = {
   id: number;
-  uri?: string;
+  uri: string | null;
 };
 
 /* Some sort of dialog needed if user should be able to choose between camera or gallery.
@@ -21,12 +21,17 @@ type Picture = {
 
 const PictureAddition = ({}) => {
   const [Pictures, setPictures] = useState<Picture[]>([]);
-  const [imageUri, setUri] = useState('');
+  const [activePicture, setActivePicture] = useState<Picture>({
+    id: 0,
+    uri: null,
+  });
+  const [imageUri, setUri] = useState<string | null>('');
   const [imageVisible, setVisible] = React.useState(false);
-  const showImage = (uri: string) => {
-    setUri(uri);
+  const showImage = (picture: Picture) => {
+    setUri(picture.uri);
     setVisible(true);
     console.log(imageUri);
+    setActivePicture(picture);
   };
   const hideImage = () => setVisible(false);
 
@@ -42,6 +47,11 @@ const PictureAddition = ({}) => {
         console.log(newId);
       })
       .catch(e => console.log(e));
+  };
+  const changePicture = (id: number, newPath: string) => {
+    setPictures(pictures =>
+      pictures.map(pic => (pic.id === id ? {...pic, uri: newPath} : pic)),
+    );
   };
   const removePicture = (id: number) => {
     setPictures(pictures => pictures.filter(icon => icon.id !== id));
@@ -62,11 +72,22 @@ const PictureAddition = ({}) => {
       {Pictures.map(icon => (
         <TouchableOpacity
           key={icon.id}
-          onPress={() => showImage(icon.uri ? icon.uri : '')}>
-          <Image style={styles.image} source={{uri: icon.uri}}></Image>
+          onPress={() => showImage(icon ? icon : {id: 0, uri: null})}>
+          <Image
+            style={styles.image}
+            source={{uri: icon.uri ? icon.uri : ''}}></Image>
         </TouchableOpacity>
       ))}
-      <ImageFull visible={imageVisible} onDismiss={hideImage} uri={imageUri} />
+      <ImageFull
+        visible={imageVisible}
+        onDismiss={hideImage}
+        onChange={s => changePicture(activePicture.id, s)}
+        onDelete={() => {
+          removePicture(activePicture.id);
+          hideImage();
+        }}
+        uri={activePicture.uri ? activePicture.uri : ''} // may add placeholder image here
+      />
     </View>
   );
 };
