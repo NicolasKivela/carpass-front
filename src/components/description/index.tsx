@@ -22,10 +22,10 @@ const Description: React.FC<ModalContentProps> = ({visible}) => {
     <View style={styles.View}>
       <TextField
         secureTextEntry={false}
-        label={t('username')}
+        label={t('description')}
         onChangeText={text => setText(text)}
         value={text}
-        rightIcon="mic"
+        rightIcon="microphone"
         onIconPress={() => console.log('click')}
       />
       <PictureAddition />
