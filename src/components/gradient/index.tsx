@@ -2,7 +2,8 @@ import React, {ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {colors} from '../common/styles';
+import {colors} from '../../common/styles';
+import {styles} from './styles';
 
 interface Props {
   children: ReactNode;
@@ -20,11 +21,6 @@ const Gradient: React.FC<Props> = ({children}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-  },
-});
+
 
 export default Gradient;

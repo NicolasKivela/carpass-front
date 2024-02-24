@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, Text, View, SafeAreaView} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {TextInput, Button} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 import {
   Camera,
   useCameraDevice,
@@ -14,8 +14,8 @@ import {Worklets} from 'react-native-worklets-core';
 
 import {cameraPermissions} from '../../common/utilities/permissions';
 import {colors} from '../../common/styles';
-import LogoTopBar from '../../components/LogoTopBar';
-import Gradient from '../../components/Gradient';
+import LogoTopBar from '../../components/logoTopBar';
+import Gradient from '../../components/gradient';
 import {styles} from './styles';
 
 const RegistrationNumberScreen: React.FC = () => {

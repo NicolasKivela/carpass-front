@@ -4,9 +4,9 @@ import {Navigation} from 'react-native-navigation';
 import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
-import LoginScreen from './src/screens/LoginScreen/LoginScreen';
+import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
-import RegistrationNumberScreen from './src/screens/RegistrationNumberScreen/RegistrationNumberScreen';
+import RegistrationNumberScreen from './src/screens/RegistrationNumberScreen';
 import {colors} from './src/common/styles';
 import './src/locales/index';
 
