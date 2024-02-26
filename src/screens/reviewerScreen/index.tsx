@@ -64,7 +64,8 @@ const ReviewerScreen: React.FC = () => {
     console.log(errorNum, 'THIS IS ERROR');
   };
   const setDescriptionVisibility = (key: string, color: string) => {
-    const value = color == 'GREEN' ? false : true;
+    const value = color === null ? false : (color === 'GREEN' ? false : true);
+    console.log(color, "===", value)
     setVisibleDescriptions(prevVisibility => ({
       ...prevVisibility,
       [key]: value,
