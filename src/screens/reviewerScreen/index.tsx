@@ -44,21 +44,21 @@ const ReviewerScreen: React.FC = () => {
     setErrorNum(0);
   }, []);
 
-  const handlePress = value => {
+  const handlePress = (value: string) => {
     if (activeButton === null || activeButton !== value) {
       setActiveButton(value);
     } else if (activeButton === value) {
       setActiveButton(null);
     }
   };
-  const modifyWarningNum = value => {
+  const modifyWarningNum = (value: number) => {
     if (warningNum === 0 && value < 0) {
       return;
     }
     setWarningNum(warningNum + value);
     console.log(warningNum, 'THIS IS WARNING');
   };
-  const modifyErrorNum = value => {
+  const modifyErrorNum = (value: number) => {
     if (errorNum === 0 && value < 0) {
       return;
     }
