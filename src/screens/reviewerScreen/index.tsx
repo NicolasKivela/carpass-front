@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PaperProvider, MD3Colors} from 'react-native-paper';
 import TrafficLight from '../../components/trafficLight';
@@ -28,9 +29,10 @@ const ReviewerScreen: React.FC = () => {
     {key: '9', section: 'Muut mittarit'},
   ];
   const text1 = '1. Ajettavuus, hallintalaitteet ja sisätilat';
+  const { t } = useTranslation();
   const [displayData, setData] = useState(data1);
   const [displayText, setText] = useState(text1);
-  const [activeButton, setActiveButton] = useState(0);
+  const [activeButton, setActiveButton] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
@@ -43,10 +45,10 @@ const ReviewerScreen: React.FC = () => {
   }, []);
 
   const handlePress = value => {
-    if (activeButton === 0 || activeButton !== value) {
+    if (activeButton === null || activeButton !== value) {
       setActiveButton(value);
     } else if (activeButton === value) {
-      setActiveButton(0);
+      setActiveButton(null);
     }
   };
   const modifyWarningNum = value => {
@@ -113,42 +115,42 @@ const ReviewerScreen: React.FC = () => {
         <View style={styles.gap}>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => handlePress(1)}
+            onPress={() => handlePress("LAAJA")}
             activeOpacity={1}>
             <Text
               style={[
                 styles.buttonText,
-                activeButton === 1 && styles.activeButtonText,
+                activeButton === "LAAJA" && styles.activeButtonText,
               ]}>
-              LAAJA
+              {t("full")}
             </Text>
-            {activeButton === 1 && <View style={styles.underline} />}
+            {activeButton === "LAAJA" && <View style={styles.underline} />}
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => handlePress(2)}
+            onPress={() => handlePress("KEVYT")}
             activeOpacity={1}>
             <Text
               style={[
                 styles.buttonText,
-                activeButton === 2 && styles.activeButtonText,
+                activeButton === "KEVYT" && styles.activeButtonText,
               ]}>
-              KEVYT
+              {t("lite")}
             </Text>
-            {activeButton === 2 && <View style={styles.underline} />}
+            {activeButton === "KEVYT" && <View style={styles.underline} />}
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => handlePress(3)}
+            onPress={() => handlePress("OSA")}
             activeOpacity={1}>
             <Text
               style={[
                 styles.buttonText,
-                activeButton === 3 && styles.activeButtonText,
+                activeButton === "OSA" && styles.activeButtonText,
               ]}>
-              OSA
+              {t("part")}
             </Text>
-            {activeButton === 3 && <View style={styles.underline} />}
+            {activeButton === "OSA" && <View style={styles.underline} />}
           </TouchableOpacity>
         </View>
         <View style={styles.section3}>
