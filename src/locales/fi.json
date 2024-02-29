@@ -3,8 +3,11 @@
   "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",
   "password": "Salasana",
+  "username": "Käyttäjätunnus",
   "registrationNumber": "Rekisterinumero",
   "search": "Hae tarkastuskoodilla",
   "tos": "käyttöehdot",
-  "username": "Käyttäjätunnus"
+  "full": "LAAJA",
+  "lite": "KEVYT",
+  "part": "OSA"
 }

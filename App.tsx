@@ -1,8 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import BootSplash from 'react-native-bootsplash';
-import {Navigation} from 'react-native-navigation';
-import {PaperProvider} from 'react-native-paper';
-import 'react-native-reanimated';
 
 import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
@@ -32,6 +29,7 @@ Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
 Navigation.registerComponent(SCREENS.REGISTRATION_NUMBER, () =>
   componentHOC(RegistrationNumberScreen),
 );
+import ReviewerScreen from './src/screens/reviewerScreen';
 
 const App = () => {
   Navigation.events().registerAppLaunchedListener(() => {

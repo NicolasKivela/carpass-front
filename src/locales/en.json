@@ -1,10 +1,12 @@
 {
   "identificationInfo": "Identification information",
-  "login": "Log in to the application",
   "loginToApp": "Log in to the application",
   "password": "Password",
   "registrationNumber": "Registration number",
   "search": "Search with a code",
   "tos" : "Terms of use",
-  "username": "Username"
+  "login": "Login",
+  "full": "FULL",
+  "lite": "LITE",
+  "part": "OSA"
 }
