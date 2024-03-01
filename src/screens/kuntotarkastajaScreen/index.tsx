@@ -4,10 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import MainButton from '../../components/mainButton';
 import SecondaryButton from '../../components/secondaryButton';
+import StatisticModal from '../../components/modals/statisticModal';
+import GuidanceModal from '../../components/modals/guidanceModal';
 import styles from './styles';
 
 const KuntotarkastajaScreen: React.FC = () => {
   const { t } = useTranslation();
+    const [statisticVisible, setStatistic] = React.useState(false);
+    const [guidanceVisible, setGuidance] = React.useState(false);
+
+    const showStatistic = () => setStatistic(true);
+    const hideStatistic = () => setStatistic(false);
+    const showGuidance = () => setStatistic(true);
+    const hideGuidance = () => setStatistic(false);
 
 
   return (
@@ -18,19 +27,28 @@ const KuntotarkastajaScreen: React.FC = () => {
           style={styles.imageStyles}
         />
         <MainButton
-          title={t('startInspection')}
-          icon="login"
+          title={t('Inspection begin')}
+          icon="checklist"
           onPress={() => showInspection()}
           style={styles.button}
         />
         <MainButton
           title={t('Orders')}
-          icon="search"
+          icon="mail"
           onPress={() => showOrders()}
         />
-        <View style={styles.buttonContainer}>
-          <SecondaryButton title={t('tos')} onPress={() => showTOS()} icon="gpp-maybe" />
-        </View>
+          <SecondaryButton
+          title={t('Statistics')}
+          onPress={() => showStatistic()}
+          icon="menu"
+          style={styles.buttonContainer}
+        />
+          <SecondaryButton
+          title={t('Guidance')}
+          onPress={() => showGuidance()}
+          icon="help"
+          style={styles.buttonContainer}
+        />
       </View>
     </SafeAreaProvider>
   );
