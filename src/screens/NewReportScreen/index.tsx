@@ -163,6 +163,25 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
 }) => {
   const {t} = useTranslation();
 
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (
+      isActive &&
+      label === 'registrationNumber' &&
+      setRegistrationNumberIcon
+    ) {
+      setRegistrationNumberIcon('keyboard-outline');
+    } else if (
+      !isActive &&
+      label === 'registrationNumber' &&
+      setRegistrationNumberIcon &&
+      !value
+    ) {
+      setRegistrationNumberIcon('camera');
+    }
+  }, [isActive]);
+
   const keyboardTypeHandler = () => {
     switch (label) {
       case 'modelYear':
@@ -178,7 +197,7 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
     <TextInput
       label={t(label)}
       value={value}
-      textColor={colors.orange}
+      textColor={isActive ? colors.orange : colors.lightGrey}
       onChangeText={setOnChange}
       mode="outlined"
       keyboardType={keyboardTypeHandler()}
@@ -186,26 +205,17 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
         <TextInput.Icon
           icon={icon}
           size={30}
-          color={colors.orange}
+          color={isActive ? colors.orange : colors.lightGrey}
           style={styles.icon}
         />
       }
       theme={{
-        colors: {onSurfaceVariant: colors.orange},
+        colors: {onSurfaceVariant: isActive ? colors.orange : colors.lightGrey},
       }}
-      onFocus={() => {
-        label === 'registrationNumber' &&
-          setRegistrationNumberIcon &&
-          setRegistrationNumberIcon('keyboard-outline');
-      }}
-      onBlur={() => {
-        label === 'registrationNumber' &&
-          setRegistrationNumberIcon &&
-          !value &&
-          setRegistrationNumberIcon('camera');
-      }}
-      outlineColor={colors.orange}
-      activeOutlineColor={colors.orange}
+      onFocus={() => setIsActive(true)}
+      onBlur={() => setIsActive(false)}
+      outlineColor={isActive ? colors.orange : colors.lightGrey}
+      activeOutlineColor={isActive ? colors.orange : colors.lightGrey}
       style={styles.textInput}
     />
   );

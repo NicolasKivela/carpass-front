@@ -5,6 +5,7 @@ import {colors} from '../../common/styles';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 20
   },
   innerContainer: {
     flex: 1,
