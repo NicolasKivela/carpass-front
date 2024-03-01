@@ -36,7 +36,7 @@ const FrameProcessorCamera: React.FC<Props> = ({
   const [frameData, setFrameData] = useState('');
 
   const setFrameDataJS = Worklets.createRunInJsFn(setFrameData);
-  const format = useCameraFormat(device, [{videoResolution: 'max'}, {fps: 8}]);
+  const format = useCameraFormat(device, [{videoResolution: 'max'}, {fps: 5}]);
 
   const checkCameraPermission = async () => {
     try {
@@ -52,14 +52,8 @@ const FrameProcessorCamera: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (registerNumber.value === '') {
-      setFrameProcessorActive(true);
-    }
-  }, [registerNumber]);
-
-  useEffect(() => {
-    setFrameProcessorActive(false);
     if (registerNumber.tempValues.includes(frameData)) {
+      setFrameProcessorActive(false);
       setRegisterNumber({...registerNumber, value: frameData});
     } else {
       setRegisterNumber({
@@ -92,9 +86,7 @@ const FrameProcessorCamera: React.FC<Props> = ({
           isActive={frameProcessorActive}
           frameProcessor={frameProcessor}
           format={format}
-          fps={8}
           pixelFormat={'yuv'}
-          onError={() => setFrameProcessorActive(false)}
         />
       )}
       {!frameProcessorActive && (

@@ -1,7 +1,15 @@
-import React, {useState} from 'react';
-import {ScrollView, Text, SafeAreaView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Text,
+  SafeAreaView,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  BackHandler,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {TextInput} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 
 import {colors} from '../../common/styles';
 import LogoTopBar from '../../components/logoTopBar';
@@ -12,6 +20,9 @@ import {styles} from './styles';
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
 
+  const [readyToProceed, setReadyToProceed] = useState(false);
+  const [registrationNumberIcon, setRegistrationNumberIcon] =
+    useState('camera-outline');
   const [registerNumber, setRegisterNumber] = useState<{
     value: string;
     tempValues: string[];
@@ -19,6 +30,52 @@ const NewReportScreen: React.FC = () => {
     value: '',
     tempValues: [],
   });
+  const [otherData, setOtherData] = useState({
+    vehicleIdentificationNumber: '',
+    brandAndModel: '',
+    modelYear: null,
+    odometerReading: null,
+  });
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backButtonHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      registerNumber.value &&
+      otherData.vehicleIdentificationNumber &&
+      otherData.brandAndModel &&
+      otherData.modelYear &&
+      otherData.odometerReading
+    ) {
+      setReadyToProceed(true);
+    } else if (readyToProceed) {
+      setReadyToProceed(false);
+    }
+  }, [otherData, registerNumber]);
+
+  const backButtonHandler = () => {
+    if (registerNumber.value) {
+      setRegisterNumber({value: '', tempValues: []});
+      setOtherData({
+        vehicleIdentificationNumber: '',
+        brandAndModel: '',
+        modelYear: null,
+        odometerReading: null,
+      });
+    } else {
+      //TODO: go back to start report/orders screen (not implemented)
+    }
+    return true;
+  };
+
+  const startInspectionHandler = () => {
+    //TODO: add values to redux and navigate to report screen
+  };
 
   return (
     <Gradient>
@@ -26,42 +83,131 @@ const NewReportScreen: React.FC = () => {
         <LogoTopBar
           leftButton={{
             icon: 'arrow-back',
-            action: () => console.log('TODO: navigate back'),
+            action: backButtonHandler,
           }}
         />
-        <ScrollView contentContainerStyle={styles.innerContainer}>
-          <Text style={styles.text}>{t('identificationInfo')}</Text>
-          <TextInput
-            label={t('registrationNumber')}
-            value={registerNumber.value}
-            textColor={colors.orange}
-            onChangeText={value => {
-              setRegisterNumber({...registerNumber, value});
-            }}
-            mode="outlined"
-            right={
-              <TextInput.Icon
-                icon="keyboard-outline"
-                size={30}
-                color={colors.orange}
-                style={styles.icon}
-              />
-            }
-            theme={{
-              colors: {onSurfaceVariant: colors.orange},
-            }}
-            outlineColor={colors.orange}
-            activeOutlineColor={colors.orange}
-            style={styles.textInput}
-          />
 
-          <FrameProcessorCamera
-            registerNumber={registerNumber}
-            setRegisterNumber={setRegisterNumber}
-          />
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <KeyboardAvoidingView
+            style={styles.innerContainer}
+            behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+            <Text style={styles.text}>{t('identificationInfo')}</Text>
+            <NewReportTextInput
+              label={'registrationNumber'}
+              value={registerNumber.value}
+              setOnChange={(value: string) => {
+                setRegisterNumber({...registerNumber, value});
+              }}
+              icon={registrationNumberIcon}
+              setRegistrationNumberIcon={setRegistrationNumberIcon}
+            />
+            {registerNumber.value ? (
+              <View style={styles.container}>
+                {Object.keys(otherData).map(item => {
+                  return (
+                    <NewReportTextInput
+                      key={item}
+                      label={item}
+                      value={otherData[item]}
+                      setOnChange={(value: string) => {
+                        setOtherData({...otherData, [item]: value});
+                      }}
+                      icon={'keyboard-outline'}
+                    />
+                  );
+                })}
+              </View>
+            ) : (
+              <FrameProcessorCamera
+                registerNumber={registerNumber}
+                setRegisterNumber={setRegisterNumber}
+              />
+            )}
+          </KeyboardAvoidingView>
         </ScrollView>
+
+        {registerNumber.value && (
+          <View style={styles.footerContainer}>
+            <Button
+              onPress={startInspectionHandler}
+              textColor={colors.orange}
+              style={styles.footerButton}>
+              <Text
+                style={
+                  readyToProceed ? styles.footerTextDone : styles.footerText
+                }>
+                {t('startInspection')}
+              </Text>
+            </Button>
+          </View>
+        )}
       </SafeAreaView>
     </Gradient>
+  );
+};
+
+interface NewReportTextInputProps {
+  label: string;
+  value: string;
+  setOnChange: (value: string) => void;
+  icon: string;
+  setRegistrationNumberIcon?: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
+  label,
+  value,
+  setOnChange,
+  icon,
+  setRegistrationNumberIcon,
+}) => {
+  const {t} = useTranslation();
+
+  const keyboardTypeHandler = () => {
+    switch (label) {
+      case 'modelYear':
+        return 'numeric';
+      case 'odometerReading':
+        return 'numeric';
+      default:
+        return 'default';
+    }
+  };
+
+  return (
+    <TextInput
+      label={t(label)}
+      value={value}
+      textColor={colors.orange}
+      onChangeText={setOnChange}
+      mode="outlined"
+      keyboardType={keyboardTypeHandler()}
+      right={
+        <TextInput.Icon
+          icon={icon}
+          size={30}
+          color={colors.orange}
+          style={styles.icon}
+        />
+      }
+      theme={{
+        colors: {onSurfaceVariant: colors.orange},
+      }}
+      onFocus={() => {
+        label === 'registrationNumber' &&
+          setRegistrationNumberIcon &&
+          setRegistrationNumberIcon('keyboard-outline');
+      }}
+      onBlur={() => {
+        label === 'registrationNumber' &&
+          setRegistrationNumberIcon &&
+          !value &&
+          setRegistrationNumberIcon('camera');
+      }}
+      outlineColor={colors.orange}
+      activeOutlineColor={colors.orange}
+      style={styles.textInput}
+    />
   );
 };
 

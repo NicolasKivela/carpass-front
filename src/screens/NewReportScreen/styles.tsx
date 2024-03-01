@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   innerContainer: {
+    flex: 1,
     width: '100%',
     height: '100%',
     paddingHorizontal: 25,
@@ -20,11 +21,32 @@ export const styles = StyleSheet.create({
     marginBottom: 25,
   },
   textInput: {
+    width: '100%',
     height: 60,
-    backgroundColor: colors.transparent,
+    backgroundColor: colors.black,
     fontSize: 18,
+    marginBottom: 20,
   },
   icon: {
     paddingTop: 7,
-  }
+  },
+  footerContainer: {
+    flex: 1,
+    width: '100%', 
+    height: '100%',
+    justifyContent: 'center',
+  },
+  footerButton: {
+    marginHorizontal: '15%',
+  },
+  footerText: {
+    textTransform: 'uppercase',
+    fontSize: 16,
+    color: colors.lightGrey,
+  },
+  footerTextDone: {
+    textTransform: 'uppercase',
+    fontSize: 16,
+    color: colors.orange,
+  },
 });

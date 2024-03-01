@@ -1,10 +1,15 @@
 {
+  "brandAndModel": "Brand and model",
   "identificationInfo": "Identification information",
   "login": "Log in to the application",
   "loginToApp": "Log in to the application",
+  "modelYear": "Model year",
+  "odometerReading": "Odometer reading",
   "password": "Password",
+  "vehicleIdentificationNumber": "Vehicle Identification Number",
   "registrationNumber": "Registration number",
   "search": "Search with a code",
+  "startInspection": "Start inspection",
   "tos" : "Terms of use",
   "username": "Username"
 }
