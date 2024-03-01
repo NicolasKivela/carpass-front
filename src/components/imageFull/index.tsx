@@ -10,6 +10,7 @@ import SecondaryButton from '../secondaryButton';
 interface imageProps {
   visible: boolean;
   uri: string;
+  timestamp: string;
   onDismiss: () => void;
   onDelete: () => void;
   onChange: (path: string) => void;
@@ -18,6 +19,7 @@ interface imageProps {
 const ImageFull: React.FC<imageProps> = ({
   visible,
   uri,
+  timestamp,
   onDismiss,
   onChange,
   onDelete,
@@ -40,6 +42,15 @@ const ImageFull: React.FC<imageProps> = ({
       onChange(image.path);
     });
   };
+  const date = new Date(
+    timestamp != '' ? parseInt(timestamp, 10) : 0,
+  ).toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
 
   if (!visible || image == '') {
     return null;
@@ -52,7 +63,7 @@ const ImageFull: React.FC<imageProps> = ({
         onDismiss={onDismiss}
         contentContainerStyle={styles.modal}>
         <View style={styles.topBar}>
-          <Text>moi</Text>
+          <Text>{date}</Text>
         </View>
         <ImageBackground style={styles.background} source={{uri: image}}>
           <View style={styles.bottomBar}>

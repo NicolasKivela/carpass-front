@@ -12,6 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 type Picture = {
   id: number;
   uri: string | null;
+  timestamp: string | null;
 };
 
 /* Some sort of dialog needed if user should be able to choose between camera or gallery.
@@ -24,6 +25,7 @@ const PictureAddition = ({}) => {
   const [activePicture, setActivePicture] = useState<Picture>({
     id: 0,
     uri: null,
+    timestamp: null,
   });
   const [imageUri, setUri] = useState<string | null>('');
   const [imageVisible, setVisible] = React.useState(false);
@@ -42,9 +44,15 @@ const PictureAddition = ({}) => {
       .then(image => {
         const newId =
           Pictures.length > 0 ? Pictures[Pictures.length - 1].id + 1 : 1;
-        const newPicture: Picture = {id: newId, uri: image.path};
+        const newPicture: Picture = {
+          id: newId,
+          uri: image.path,
+          timestamp: image.modificationDate ? image.modificationDate : null,
+        };
+
         setPictures(prevPictures => [...prevPictures, newPicture]);
         console.log(newId);
+        console.log(image.modificationDate);
       })
       .catch(e => console.log(e));
   };
@@ -72,7 +80,9 @@ const PictureAddition = ({}) => {
       {Pictures.map(icon => (
         <TouchableOpacity
           key={icon.id}
-          onPress={() => showImage(icon ? icon : {id: 0, uri: null})}>
+          onPress={() =>
+            showImage(icon ? icon : {id: 0, uri: null, timestamp: null})
+          }>
           <Image
             style={styles.image}
             source={{uri: icon.uri ? icon.uri : ''}}></Image>
@@ -87,6 +97,7 @@ const PictureAddition = ({}) => {
           hideImage();
         }}
         uri={activePicture.uri ? activePicture.uri : ''} // may add placeholder image here
+        timestamp={activePicture.timestamp ? activePicture.timestamp : ''}
       />
     </View>
   );

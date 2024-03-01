@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
   topBar: {
     flex: 0.1,
     backgroundColor: colors.darkGrey,
+    justifyContent: 'center',
+    alignItems:'center'
     
   },
   background:{
@@ -25,7 +27,8 @@ const styles = StyleSheet.create({
   bottomBar: {
     height: '10%',
     backgroundColor: colors.black.replace('rgb','rgba').replace(')',', 0.7)'),
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems:'center',
     flexDirection: 'row'
   },
 
