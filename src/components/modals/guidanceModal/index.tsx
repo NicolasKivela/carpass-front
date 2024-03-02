@@ -13,7 +13,7 @@ interface ModalContentProps {
   onDismiss: () => void;
 }
 
-const statisticModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
+const guidanceModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   const [checked, setChecked] = React.useState(false);
   const {t} = useTranslation();
 
@@ -52,4 +52,4 @@ const statisticModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   );
 };
 
-export default statisticModal;
+export default guidanceModal;

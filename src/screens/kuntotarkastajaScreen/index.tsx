@@ -10,13 +10,13 @@ import styles from './styles';
 
 const KuntotarkastajaScreen: React.FC = () => {
   const { t } = useTranslation();
-    const [statisticVisible, setStatistic] = React.useState(false);
-    const [guidanceVisible, setGuidance] = React.useState(false);
+  const [statisticVisible, setStatistic] = React.useState(false);
+  const [guidanceVisible, setGuidance] = React.useState(false);
 
-    const showStatistic = () => setStatistic(true);
-    const hideStatistic = () => setStatistic(false);
-    const showGuidance = () => setStatistic(true);
-    const hideGuidance = () => setStatistic(false);
+  const showStatistic = () => setStatistic(true);
+  const hideStatistic = () => setStatistic(false);
+  const showGuidance = () => setStatistic(true);
+  const hideGuidance = () => setStatistic(false);
 
 
   return (
@@ -26,8 +26,10 @@ const KuntotarkastajaScreen: React.FC = () => {
           source={require('../../assets/images/trustcarlogo.png')}
           style={styles.imageStyles}
         />
+        <StatisticModal onDismiss={hideStatistic} visible={statisticVisible} />
+        <GuidanceModal onDismiss={hideGuidance} visible={guidanceVisible} />
         <MainButton
-          title={t('Inspection begin')}
+          title={t('Start inspection')}
           icon="checklist"
           onPress={() => showInspection()}
           style={styles.button}
@@ -47,7 +49,7 @@ const KuntotarkastajaScreen: React.FC = () => {
           title={t('Guidance')}
           onPress={() => showGuidance()}
           icon="help"
-          style={styles.buttonContainer}
+          style={styles.buttonContainerOther}
         />
       </View>
     </SafeAreaProvider>

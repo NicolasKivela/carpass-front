@@ -24,13 +24,26 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 20,
   },
+  header: {
+    fontSize: 25,
+    color: colors.orange,
+    marginTop: 10,
+},
   buttonContainer: {
     height: '50%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 50,
+    bottom: 40,
+  },
+  buttonContainerOther: {
+    height: '50%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
 });
 
