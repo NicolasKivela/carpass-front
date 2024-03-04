@@ -16,9 +16,12 @@ import LogoTopBar from '../../components/logoTopBar';
 import Gradient from '../../components/gradient';
 import FrameProcessorCamera from '../../components/frameProcessorCamera';
 import {styles} from './styles';
+import {useAppDispatch} from '../../store/configureStore';
+import {setCarData} from '../../store/actions/report';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [readyToProceed, setReadyToProceed] = useState(false);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
@@ -74,7 +77,16 @@ const NewReportScreen: React.FC = () => {
   };
 
   const startInspectionHandler = () => {
-    //TODO: add values to redux and navigate to report screen
+    dispatch(
+      setCarData({
+        brand_and_model: otherData.brandAndModel,
+        odometer_reading: otherData.odometerReading,
+        production_number: otherData.vehicleIdentificationNumber,
+        registration_number: registerNumber.value,
+        report_type: 'petrol', //TODO: fix, when type input is added?
+      }),
+    );
+    //TODO: navigate to report screen
   };
 
   return (
@@ -129,6 +141,7 @@ const NewReportScreen: React.FC = () => {
         {registerNumber.value && (
           <View style={styles.footerContainer}>
             <Button
+              disabled={!readyToProceed}
               onPress={startInspectionHandler}
               textColor={colors.orange}
               style={styles.footerButton}>
