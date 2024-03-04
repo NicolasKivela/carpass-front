@@ -4,6 +4,8 @@
   "username" : "Username",
   "password" : "Password",
   "tos" : "Terms of use",
-  "login" : "Login"
-
+  "login": "Login",
+  "full": "FULL",
+  "lite": "LITE",
+  "part": "OSA"
 }

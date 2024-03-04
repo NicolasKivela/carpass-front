@@ -4,5 +4,8 @@
   "username": "Käyttäjätunnus",
   "password": "Salasana",
   "tos": "käyttöehdot",
-  "login": "Kirjaudu"
+  "login": "Kirjaudu",
+  "full": "LAAJA",
+  "lite": "KEVYT",
+  "part": "OSA"
 }

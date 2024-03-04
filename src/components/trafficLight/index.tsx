@@ -7,6 +7,7 @@ enum TrafficLightColor {
   RED = 'RED',
   YELLOW = 'YELLOW',
   GREEN = 'GREEN',
+  NULL = null
 }
 
 interface TrafficLightProps {
@@ -59,21 +60,21 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.RED && styles.activeChip1,
+            activeColor === TrafficLightColor.RED ? styles.activeChip1 : TrafficLightColor.NULL,
           ]}
-          onPress={() => toggleColor(TrafficLightColor.RED)}></Chip>
+          onPress={() => toggleColor(activeColor === TrafficLightColor.RED ? null : TrafficLightColor.RED)}></Chip>
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.YELLOW && styles.activeChip2,
+            activeColor === TrafficLightColor.YELLOW ? styles.activeChip2 : TrafficLightColor.NULL,
           ]}
-          onPress={() => toggleColor(TrafficLightColor.YELLOW)}></Chip>
+          onPress={() => toggleColor(activeColor === TrafficLightColor.YELLOW ? null : TrafficLightColor.YELLOW)}></Chip>
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.GREEN && styles.activeChip3,
+            activeColor === TrafficLightColor.GREEN ? styles.activeChip3 : TrafficLightColor.NULL,
           ]}
-          onPress={() => toggleColor(TrafficLightColor.GREEN)}></Chip>
+          onPress={() => toggleColor(activeColor === TrafficLightColor.GREEN ? null : TrafficLightColor.GREEN)}></Chip>
       </View>
     </View>
   );
