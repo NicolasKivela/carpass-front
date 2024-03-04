@@ -6,19 +6,17 @@ import LogoTopBar from '../../components/logoTopBar';
 import styles from './styles';
 interface ProgressProps{
     progress: number,
-    warning: number,
-    error: number
 }
 const ReviewProgressBar = ({ progress}:ProgressProps) => {
   return(
-  <ProgressBar progress={progress} style= {styles.navigationProgressBar}theme={{colors: styles.colors}} />
+  <ProgressBar progress={progress} style= {styles.navigationProgressBar} theme={{colors: styles.themeColors}} />
   )
   }
 
 
 const ReviewNavigation = () => {
       const { t } = useTranslation();
-      const [activeButton, setActiveButton] = useState(null);
+      const [activeButton, setActiveButton] = useState<string | null>(null);
       const [pageNumber, setPageNumber] = useState(1);
       const [warningNum, setWarningNum] = useState(0);
       const [errorNum, setErrorNum] = useState(0);

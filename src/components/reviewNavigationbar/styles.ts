@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         width: 200
 
     },
-    colors: {
+    themeColors: {
         primary: colors.orange,
         surfaceVariant: colors.darkOrange
     },
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'yellow',
     },
     container:{
-        flex: 0.4,
+        flex: 0.3,
         flexDirection: 'row',
         backgroundColor: colors.transparent,
     },
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around",
+        marginTop: 5
     },
     button: {
         backgroundColor: colors.darkGrey,
@@ -89,7 +90,8 @@ const styles = StyleSheet.create({
         width: '90%', // Ensure the image takes up the entire width of the parent view
         height: '90%', // Ensure the image takes up the entire height of the parent view
         resizeMode: 'contain', // Adjust the image size to fit the container while preserving aspect ratio
-   },
+        overflow: 'visible',
+    },
 
 })
 export default styles;
