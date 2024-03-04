@@ -1,9 +1,13 @@
 import React, {useEffect} from 'react';
 import BootSplash from 'react-native-bootsplash';
-
+import {Navigation} from 'react-native-navigation';
 import LoginScreen from './src/screens/loginScreen';
+import {PaperProvider} from 'react-native-paper';
+
 import {SCREENS} from './src/common/constants';
 import RegistrationNumberScreen from './src/screens/RegistrationNumberScreen';
+import ReviewerScreen from './src/screens/reviewerScreen';
+import SummaryScreen from './src/screens/summaryScreen';
 import {colors} from './src/common/styles';
 import './src/locales/index';
 
@@ -29,7 +33,12 @@ Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
 Navigation.registerComponent(SCREENS.REGISTRATION_NUMBER, () =>
   componentHOC(RegistrationNumberScreen),
 );
-import ReviewerScreen from './src/screens/reviewerScreen';
+Navigation.registerComponent(SCREENS.REVIEWER, () =>
+  componentHOC(ReviewerScreen),
+);
+Navigation.registerComponent(SCREENS.SUMMARY, () =>
+  componentHOC(SummaryScreen),
+);
 
 const App = () => {
   Navigation.events().registerAppLaunchedListener(() => {
@@ -52,9 +61,10 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.REGISTRATION_NUMBER,
+                name: SCREENS.SUMMARY,
               },
             },
+
           ],
         },
       },
