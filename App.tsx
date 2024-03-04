@@ -4,7 +4,7 @@ import {Navigation} from 'react-native-navigation';
 import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
-import LoginScreen from './src/screens/LoginScreen';
+import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
 import NewReportScreen from './src/screens/NewReportScreen';
 import {colors} from './src/common/styles';
