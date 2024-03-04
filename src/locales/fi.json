@@ -1,10 +1,15 @@
 {
+  "brandAndModel": "Merkki ja malli",
   "identificationInfo": "Tunnistetiedot",
   "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",
+  "modelYear": "Vuosimalli",
   "password": "Salasana",
+  "odometerReading": "Matkamittarin lukema",
+  "vehicleIdentificationNumber": "Valmistenumero",
   "registrationNumber": "Rekisterinumero",
   "search": "Hae tarkastuskoodilla",
+  "startInspection": "Aloita tarkastus",
   "tos": "käyttöehdot",
   "username": "Käyttäjätunnus"
 }

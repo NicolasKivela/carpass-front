@@ -6,7 +6,7 @@ import 'react-native-reanimated';
 
 import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
-import RegistrationNumberScreen from './src/screens/RegistrationNumberScreen';
+import NewReportScreen from './src/screens/NewReportScreen';
 import {colors} from './src/common/styles';
 import './src/locales/index';
 
@@ -29,8 +29,8 @@ const componentHOC = (Component, ...props) => {
 };
 
 Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
-Navigation.registerComponent(SCREENS.REGISTRATION_NUMBER, () =>
-  componentHOC(RegistrationNumberScreen),
+Navigation.registerComponent(SCREENS.NEW_REPORT_SCREEN, () =>
+  componentHOC(NewReportScreen),
 );
 
 const App = () => {
@@ -54,7 +54,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.REGISTRATION_NUMBER,
+                name: SCREENS.NEW_REPORT_SCREEN,
               },
             },
           ],
