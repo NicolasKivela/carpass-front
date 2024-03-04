@@ -3,21 +3,17 @@ import {styles} from './styles';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import LogoTopBar from '../../components/logoTopBar';
+import {ReviewProgressBar, ReviewNavigation} from '../../components/reviewNavigationbar';
+
 import Gradient from '../../components/gradient';
-import ReviewProgressBar from '../../components/reviewNavigationbar';
+
 
 const SummaryScreen: React.FC = () => {
     const {t} = useTranslation();
     return(
         <Gradient>
         <SafeAreaView style={styles.container}>
-            <LogoTopBar
-              leftButton={{
-                icon: 'arrow-back',
-                action: () => console.log('TODO: navigate back'),
-              }}
-            />
+            <ReviewNavigation/>
             <View style={styles.trafficLightView}>
             <View>
                 <Text style={styles.header}>YHTEENVETO</Text>
