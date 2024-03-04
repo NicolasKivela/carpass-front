@@ -87,6 +87,7 @@ const FrameProcessorCamera: React.FC<Props> = ({
           frameProcessor={frameProcessor}
           format={format}
           pixelFormat={'yuv'}
+          onError={e=>console.log(e)}
         />
       )}
       {!frameProcessorActive && (
