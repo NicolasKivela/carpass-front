@@ -6,18 +6,14 @@ const styles = StyleSheet.create({
         width: 200
 
     },
-    themeColors: {
-        primary: colors.orange,
-        surfaceVariant: colors.darkOrange
-    },
-    circle: {
+    circleStyle: {
         width: 50,
         height: 50,
         borderRadius: 50/2, // to make it a circle
         backgroundColor: 'yellow',
     },
     container:{
-        flex: 0.3,
+        flex: 0.2,
         flexDirection: 'row',
         backgroundColor: colors.transparent,
     },
@@ -43,7 +39,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: "center",
         backgroundColor: colors.black,
-
     },
     yellowCircle: {
         backgroundColor: colors.yellow
@@ -61,7 +56,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around",
-        marginTop: 5
     },
     button: {
         backgroundColor: colors.darkGrey,

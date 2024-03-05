@@ -2,46 +2,33 @@ import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { ProgressBar, MD3Colors, Chip } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import {colors} from '../../common/styles.tsx';
 import LogoTopBar from '../../components/logoTopBar';
 import styles from './styles';
 interface ProgressProps{
     progress: number,
 }
-const ReviewProgressBar = ({ progress}:ProgressProps) => {
+export const ReviewProgressBar = ({ progress}:ProgressProps) => {
   return(
-  <ProgressBar progress={progress} style= {styles.navigationProgressBar} theme={{colors: styles.themeColors}} />
+  <ProgressBar progress={progress} style= {styles.navigationProgressBar} theme={{colors: {primary: 'orange', surfaceVariant: colors.darkOrange}}} />
   )
   }
 
-
-const ReviewNavigation = () => {
-      const { t } = useTranslation();
-      const [activeButton, setActiveButton] = useState<string | null>(null);
-      const [pageNumber, setPageNumber] = useState(1);
-      const [warningNum, setWarningNum] = useState(0);
-      const [errorNum, setErrorNum] = useState(0);
-      const handlePress = (value: string) => {
-        if (activeButton === null || activeButton !== value) {
-          setActiveButton(value);
-        } else if (activeButton === value) {
-          setActiveButton(null);
-        }
-      };
-      const modifyWarningNum = (value: number) => {
-        if (warningNum === 0 && value < 0) {
-          return;
-        }
-        setWarningNum(warningNum + value);
-        console.log(warningNum, 'THIS IS WARNING');
-      };
-      const modifyErrorNum = (value: number) => {
-        if (errorNum === 0 && value < 0) {
-          return;
-        }
-        setErrorNum(errorNum + value);
-        console.log(errorNum, 'THIS IS ERROR');
-      };
-
+interface NavigationProps{
+    warningNum: number,
+    errorNum: number,
+    pageNumber: number
+}
+export const ReviewNavigation = ({warningNum, errorNum,pageNumber}: NavigationProps) => {
+    const { t } = useTranslation();
+    const [activeButton, setActiveButton] = useState<string | null>(null);
+    const handlePress = (value: string) => {
+      if (activeButton === null || activeButton !== value) {
+        setActiveButton(value);
+      } else if (activeButton === value) {
+        setActiveButton(null);
+      }
+    };
     return(
         <>
         <View style={styles.container}>

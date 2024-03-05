@@ -61,7 +61,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.SUMMARY,
+                name: SCREENS.REVIEWER,
               },
             },
 
