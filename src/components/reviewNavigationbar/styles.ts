@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'yellow',
     },
     container:{
-        flex: 0.2,
+        height: 100,
         flexDirection: 'row',
         backgroundColor: colors.transparent,
     },

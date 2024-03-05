@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   header:{
       fontSize: 25,
       color: colors.white,
-      marginTop: 10,
+      marginTop: 30,
       marginLeft: 10
   },
 
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       //marginVertical: 15,
       marginTop: 30,
-      marginLeft: 30,
+      marginLeft: 10,
   },
   image:{
       width: 40,
@@ -43,9 +43,10 @@ export const styles = StyleSheet.create({
     flex: 0.9,
     flexDirection: 'row',
     alignItems: 'flex-start',
+    justifyContent: 'center',
     //marginVertical: 15,
     marginTop: 22,
-    marginLeft: 30,
+    marginLeft: 10,
   },
   error:{
       fontSize:16,
@@ -71,7 +72,14 @@ export const styles = StyleSheet.create({
     color: colors.orange
   },
   centered: {
-    marginTop: 40,
+    marginTop: 60,
     alignItems: 'center'
-  }
+  },
+  pdfSection:{
+      flex: 0.9,
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      marginTop: 22,
+  },
  });

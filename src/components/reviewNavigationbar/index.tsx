@@ -15,9 +15,9 @@ export const ReviewProgressBar = ({ progress}:ProgressProps) => {
   }
 
 interface NavigationProps{
-    warningNum: number,
-    errorNum: number,
-    pageNumber: number
+    warningNum?: number,
+    errorNum?: number,
+    pageNumber?: number
 }
 export const ReviewNavigation = ({warningNum, errorNum,pageNumber}: NavigationProps) => {
     const { t } = useTranslation();
@@ -61,7 +61,7 @@ export const ReviewNavigation = ({warningNum, errorNum,pageNumber}: NavigationPr
                         </View>
                       )}
                     </View>
-                    <ReviewProgressBar progress={pageNumber / 10} />
+                    <ReviewProgressBar progress={pageNumber} />
                     <Text style={styles.pageNumber}>{pageNumber}/10</Text>
                   </View>
                 </View>
