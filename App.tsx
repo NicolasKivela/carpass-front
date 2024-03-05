@@ -1,6 +1,7 @@
 import React from 'react';
 import BootSplash from 'react-native-bootsplash';
 import {Navigation} from 'react-native-navigation';
+import { Provider } from 'react-redux'
 import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
@@ -8,6 +9,7 @@ import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
 import NewReportScreen from './src/screens/NewReportScreen';
 import {colors} from './src/common/styles';
+import store from './src/store/configureStore';
 import './src/locales/index';
 
 // Higher order component for injecting paper provider, and later redux
@@ -15,14 +17,16 @@ const componentHOC = (Component, ...props) => {
   return class App extends React.Component {
     render() {
       return (
-        <PaperProvider>
-          <Component
-            {...{
-              ...this.props,
-              ...props,
-            }}
-          />
-        </PaperProvider>
+        <Provider store={store}>
+          <PaperProvider>
+            <Component
+              {...{
+                ...this.props,
+                ...props,
+              }}
+            />
+          </PaperProvider>
+        </Provider>
       );
     }
   };
