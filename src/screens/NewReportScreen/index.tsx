@@ -15,9 +15,11 @@ import {colors} from '../../common/styles';
 import LogoTopBar from '../../components/logoTopBar';
 import Gradient from '../../components/gradient';
 import FrameProcessorCamera from '../../components/frameProcessorCamera';
-import {styles} from './styles';
 import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
+import DropdownNotification from '../../components/dropdownNotification';
+
+import {styles} from './styles';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -155,6 +157,7 @@ const NewReportScreen: React.FC = () => {
           </View>
         )}
       </SafeAreaView>
+      <DropdownNotification />
     </Gradient>
   );
 };
