@@ -5,6 +5,7 @@ import {
   SET_REPORT_ROW_ANSWER,
 } from './actionTypes';
 import {Report} from '../types/report';
+import {setError} from './error';
 
 export const setReportInitialState = () => {
   return {
@@ -50,12 +51,16 @@ export const fetchReportQuestions = () => {
       //     dispatch(setReportRows(reportRows));
       //   }
       //   else {
-      //     console.log('something went wrong in fetchReportQuestions1: ', response)
-      //     //TODO: add error handler, own reducer?
+      //     //TODO: add error handler, depends on error code?
       //   }
     } catch (err) {
-      console.log('something went wrong in fetchReportQuestions2: ', err);
-      //TODO: add error handler, own reducer?
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.fetchReportQuestinsTitle',
+          message: 'errors.fetchReportQuestinsMessage',
+        }),
+      );
     }
   };
 };

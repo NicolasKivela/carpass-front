@@ -1,5 +1,11 @@
 {
   "brandAndModel": "Brand and model",
+  "errors": {
+    "cameraTitle": "Camera error",
+    "cameraMessage": "You have denied camera permission. Check your permissions from App settings.",
+    "fetchReportQuestinsTitle": "Fetch error",
+    "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection"
+  },
   "identificationInfo": "Identification information",
   "login": "Log in to the application",
   "loginToApp": "Log in to the application",
@@ -10,6 +16,6 @@
   "registrationNumber": "Registration number",
   "search": "Search with a code",
   "startInspection": "Start inspection",
-  "tos" : "Terms of use",
+  "tos": "Terms of use",
   "username": "Username"
 }

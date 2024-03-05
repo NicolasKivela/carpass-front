@@ -4,6 +4,7 @@ import DropdownAlert, {
   DropdownAlertData,
 } from 'react-native-dropdownalert';
 import timer from 'react-native-timer';
+import {useTranslation} from 'react-i18next';
 
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {deleteError} from '../../store/actions/error';
@@ -14,6 +15,8 @@ import {styles} from './styles';
 const INTERVAL = 5000;
 
 const DropdownNotification: React.FC = ({}) => {
+  const {t} = useTranslation();
+
   const dispatch = useAppDispatch();
   const error = useAppSelector(state => state.error);
 
@@ -31,8 +34,8 @@ const DropdownNotification: React.FC = ({}) => {
     if (error.message && error.title) {
       alert({
         type: DropdownAlertType.Error,
-        title: error.title,
-        message: error.message,
+        title: t(error.title),
+        message: t(error.message),
       });
 
       timer.setTimeout(

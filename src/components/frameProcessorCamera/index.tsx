@@ -7,13 +7,15 @@ import {
   useCameraFormat,
 } from 'react-native-vision-camera';
 import {scanOCR} from '@ismaelmoreiraa/vision-camera-ocr';
-
+import {IconButton} from 'react-native-paper';
 import {Worklets} from 'react-native-worklets-core';
 
+import {useAppDispatch} from '../../store/configureStore';
 import {cameraPermissions} from '../../common/utilities/permissions';
-import {styles} from './styles';
-import {IconButton} from 'react-native-paper';
 import {colors} from '../../common/styles';
+
+import {styles} from './styles';
+import {setError} from '../../store/actions/error';
 
 interface Props {
   registerNumber: {
@@ -30,6 +32,7 @@ const FrameProcessorCamera: React.FC<Props> = ({
   setRegisterNumber,
 }) => {
   const device = useCameraDevice('back');
+  const dispatch = useAppDispatch();
 
   const [hasPermissions, setHasPermission] = useState(false);
   const [frameProcessorActive, setFrameProcessorActive] = useState(true);
@@ -42,8 +45,17 @@ const FrameProcessorCamera: React.FC<Props> = ({
     try {
       const result = await cameraPermissions();
       setHasPermission(result);
+      if (!result) {
+        throw new Error();
+      }
     } catch {
-      console.log('Camera permissions denied'); //TODO, error handling
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.cameraTitle',
+          message: 'errors.cameraMessage',
+        }),
+      );
     }
   };
 
@@ -87,7 +99,7 @@ const FrameProcessorCamera: React.FC<Props> = ({
           frameProcessor={frameProcessor}
           format={format}
           pixelFormat={'yuv'}
-          onError={e=>console.log(e)}
+          onError={e => console.log(e)}
         />
       )}
       {!frameProcessorActive && (
