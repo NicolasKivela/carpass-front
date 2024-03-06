@@ -8,5 +8,11 @@
   "login": "Login",
   "full": "FULL",
   "lite": "LITE",
-  "part": "OSA"
+  "part": "PART",
+  "summary": "SUMMARY",
+  "disqualifications": "Disqualifications",
+  "warnings": "Warnings",
+  "pictures": "Pictures",
+  "report": "Reports",
+  "reviewReady": "CHECK COMPLETE"
 }

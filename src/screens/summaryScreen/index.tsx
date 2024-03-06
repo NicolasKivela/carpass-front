@@ -8,6 +8,7 @@ import {
   ReviewNavigation,
 } from '../../components/reviewNavigationbar';
 
+import Logo from '../../assets/images/trustcarlogo.png';
 import Gradient from '../../components/gradient';
 
 const SummaryScreen: React.FC = () => {
@@ -27,11 +28,11 @@ const SummaryScreen: React.FC = () => {
         <ReviewNavigation pageNumber={pageNumber} />
 
         <View>
-          <Text style={styles.header}>YHTEENVETO</Text>
+          <Text style={styles.header}>{t('summary')}</Text>
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={handlePress}>
               <View style={styles.textContainer}>
-                <Text style={styles.carSectionText}>Hylkäykset</Text>
+                <Text style={styles.carSectionText}>{t('disqualifications')}</Text>
               </View>
             </TouchableOpacity>
             {showCarParts && (
@@ -45,7 +46,7 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={handleWarnings}>
               <View style={styles.textContainer}>
-                <Text style={styles.carSectionText}>Huomautukset</Text>
+                <Text style={styles.carSectionText}>{t('warnings')}</Text>
               </View>
             </TouchableOpacity>
             {showWarnings && (
@@ -57,15 +58,15 @@ const SummaryScreen: React.FC = () => {
             )}
           </View>
           <View style={styles.rowSection}>
-            <Text style={styles.carSectionText}>Kuvat</Text>
+            <Text style={styles.carSectionText}>{t('pictures')}</Text>
             <View style={styles.imageSection}>
-              <Image style={styles.image} />
-              <Image style={styles.image} />
+              <Image style={styles.image} source={Logo}/>
+              <Image style={styles.image} source={Logo}/>
             </View>
           </View>
           <View style={styles.rowSection}>
             <View style={styles.textContainer}>
-              <Text style={styles.carSectionText}>Raportti</Text>
+              <Text style={styles.carSectionText}>{t('report')}</Text>
             </View>
             <View style={styles.carParts}>
               <MaterialIcons name="picture-as-pdf" size={40} color="grey"/>
@@ -74,9 +75,9 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.centered}>
             <TouchableOpacity
               onPress={() => {
-                console.log('TODO: TARKASTUS VALMIS');
+                console.log('TODO: summary ready');
               }}>
-              <Text style={styles.sendReportText}>TARKASTUS VALMIS</Text>
+              <Text style={styles.sendReportText}>{t('reviewReady')}</Text>
             </TouchableOpacity>
           </View>
         </View>

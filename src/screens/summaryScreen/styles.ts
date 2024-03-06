@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     //marginVertical: 15,
     marginTop: 22,
-    marginLeft: 10,
+    //marginLeft: 10,
   },
   error:{
       fontSize:16,

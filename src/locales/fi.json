@@ -9,5 +9,11 @@
   "tos": "käyttöehdot",
   "full": "LAAJA",
   "lite": "KEVYT",
-  "part": "OSA"
+  "part": "OSA",
+  "summary": "YHTEENVETO",
+  "disqualifications": "Hylkäykset",
+  "warnings": "Huomautukset",
+  "pictures": "Kuvat",
+  "report": "Raportti",
+  "reviewReady": "TARKASTUS VALMIS"
 }
