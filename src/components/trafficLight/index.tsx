@@ -7,7 +7,6 @@ enum TrafficLightColor {
   RED = 'RED',
   YELLOW = 'YELLOW',
   GREEN = 'GREEN',
-  NULL = null
 }
 
 interface TrafficLightProps {
@@ -27,8 +26,8 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
     null,
   );
 
-  const toggleColor = (color: TrafficLightColor) => {
-    onStateChange(color);
+  const toggleColor = (color: TrafficLightColor | null) => {
+    onStateChange(color as TrafficLightColor);
     if (activeColor === color) {
       setActiveColor(null);
       if (color === TrafficLightColor.RED) {
@@ -60,21 +59,44 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.RED ? styles.activeChip1 : TrafficLightColor.NULL,
+            activeColor === TrafficLightColor.RED ? styles.activeChip1 : null,
           ]}
-          onPress={() => toggleColor(activeColor === TrafficLightColor.RED ? null : TrafficLightColor.RED)}></Chip>
+          onPress={() =>
+            toggleColor(
+              activeColor === TrafficLightColor.RED
+                ? null
+                : TrafficLightColor.RED,
+            )
+          }
+          children={undefined}></Chip>
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.YELLOW ? styles.activeChip2 : TrafficLightColor.NULL,
+            activeColor === TrafficLightColor.YELLOW
+              ? styles.activeChip2
+              : null,
           ]}
-          onPress={() => toggleColor(activeColor === TrafficLightColor.YELLOW ? null : TrafficLightColor.YELLOW)}></Chip>
+          onPress={() =>
+            toggleColor(
+              activeColor === TrafficLightColor.YELLOW
+                ? null
+                : TrafficLightColor.YELLOW,
+            )
+          }
+          children={undefined}></Chip>
         <Chip
           style={[
             styles.chip,
-            activeColor === TrafficLightColor.GREEN ? styles.activeChip3 : TrafficLightColor.NULL,
+            activeColor === TrafficLightColor.GREEN ? styles.activeChip3 : null,
           ]}
-          onPress={() => toggleColor(activeColor === TrafficLightColor.GREEN ? null : TrafficLightColor.GREEN)}></Chip>
+          onPress={() =>
+            toggleColor(
+              activeColor === TrafficLightColor.GREEN
+                ? null
+                : TrafficLightColor.GREEN,
+            )
+          }
+          children={undefined}></Chip>
       </View>
     </View>
   );

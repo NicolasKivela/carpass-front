@@ -8,7 +8,7 @@ import styles from './styles';
 interface ProgressProps{
     progress: number,
 }
-export const ReviewProgressBar = ({ progress}:ProgressProps) => {
+const ReviewProgressBar = ({ progress}:ProgressProps) => {
   return(
   <ProgressBar progress={progress} style= {styles.navigationProgressBar} theme={{colors: {primary: 'orange', surfaceVariant: colors.darkOrange}}} />
   )
@@ -19,7 +19,7 @@ interface NavigationProps{
     errorNum?: number,
     pageNumber?: number
 }
-export const ReviewNavigation = ({warningNum, errorNum,pageNumber}: NavigationProps) => {
+const ReviewNavigation = ({warningNum, errorNum=0,pageNumber=0}: NavigationProps) => {
     const { t } = useTranslation();
     const [activeButton, setActiveButton] = useState<string | null>(null);
     const handlePress = (value: string) => {
@@ -61,7 +61,7 @@ export const ReviewNavigation = ({warningNum, errorNum,pageNumber}: NavigationPr
                         </View>
                       )}
                     </View>
-                    <ReviewProgressBar progress={pageNumber} />
+                    <ReviewProgressBar progress={pageNumber / 10} />
                     <Text style={styles.pageNumber}>{pageNumber}/10</Text>
                   </View>
                 </View>
