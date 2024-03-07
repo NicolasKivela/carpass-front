@@ -1,4 +1,4 @@
-# Trustcar
+# CarPass
 Software Engineering Project course, Spring 2024
 
 ## Running application requires:
