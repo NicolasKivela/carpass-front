@@ -6,4 +6,5 @@ export const SCREENS = {
   REGISTRATION_NUMBER: 'registrationNumber',
   REVIEWER: 'reviewerScreen',
   SUMMARY: 'summaryScreen',
+  INSPECTOR: 'inspectorScreen',
 };

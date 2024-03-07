@@ -27,7 +27,7 @@ const NewReportScreen: React.FC = () => {
 
   const [readyToProceed, setReadyToProceed] = useState(false);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
-    useState('camera-outline');
+    useState('photo-camera');
   const [registerNumber, setRegisterNumber] = useState<{
     value: string;
     tempValues: string[];
@@ -187,14 +187,14 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
       label === 'registrationNumber' &&
       setRegistrationNumberIcon
     ) {
-      setRegistrationNumberIcon('keyboard-outline');
+      setRegistrationNumberIcon('keyboard');
     } else if (
       !isActive &&
       label === 'registrationNumber' &&
       setRegistrationNumberIcon &&
       !value
     ) {
-      setRegistrationNumberIcon('camera');
+      setRegistrationNumberIcon('photo-camera');
     }
   }, [isActive]);
 

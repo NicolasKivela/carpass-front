@@ -14,6 +14,8 @@ import SummaryScreen from './src/screens/summaryScreen';
 import {colors} from './src/common/styles';
 import store from './src/store/configureStore';
 import './src/locales/index';
+import InspectorScreen from './src/screens/inspectorScreen';
+import MUIIcons from 'react-native-vector-icons/MaterialIcons';
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
@@ -21,7 +23,10 @@ const componentHOC = (Component, ...props) => {
     render() {
       return (
         <Provider store={store}>
-          <PaperProvider>
+          <PaperProvider
+            settings={{
+              icon: props => <MUIIcons {...props} />,
+            }}>
             <Component
               {...{
                 ...this.props,
@@ -45,6 +50,9 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
 );
+Navigation.registerComponent(SCREENS.INSPECTOR, () =>
+  componentHOC(InspectorScreen),
+);
 
 const App = () => {
   Navigation.events().registerAppLaunchedListener(() => {
@@ -67,7 +75,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.REVIEWER,
+                name: SCREENS.INSPECTOR,
               },
             },
           ],

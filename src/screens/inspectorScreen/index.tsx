@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {View, Image} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import MainButton from '../../components/mainButton';
 import SecondaryButton from '../../components/secondaryButton';
 import StatisticModal from '../../components/modals/statisticModal';
@@ -9,7 +9,7 @@ import GuidanceModal from '../../components/modals/guidanceModal';
 import styles from './styles';
 
 const InspectorScreen: React.FC = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [statisticVisible, setStatistic] = React.useState(false);
   const [guidanceVisible, setGuidance] = React.useState(false);
 
@@ -17,7 +17,6 @@ const InspectorScreen: React.FC = () => {
   const hideStatistic = () => setStatistic(false);
   const showGuidance = () => setStatistic(true);
   const hideGuidance = () => setStatistic(false);
-
 
   return (
     <SafeAreaProvider>
@@ -42,13 +41,13 @@ const InspectorScreen: React.FC = () => {
           onPress={() => showOrders()}
           style={styles.button}
         />
-          <SecondaryButton
+        <SecondaryButton
           title={t('Statistics')}
           onPress={() => showStatistic()}
           icon="menu"
           style={styles.buttonContainer}
         />
-          <SecondaryButton
+        <SecondaryButton
           title={t('Guidance')}
           onPress={() => showGuidance()}
           icon="help"
@@ -58,6 +57,5 @@ const InspectorScreen: React.FC = () => {
     </SafeAreaProvider>
   );
 };
-
 
 export default InspectorScreen;
