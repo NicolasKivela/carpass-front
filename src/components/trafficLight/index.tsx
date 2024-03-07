@@ -52,7 +52,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
 
   return (
     <View style={styles.trafficLightView}>
-      <View style={{width: '42%'}}>
+      <View style={styles.textStyle}>
         <Text style={styles.carPartText}>{section}</Text>
       </View>
       <View style={styles.chipView}>
