@@ -1,5 +1,11 @@
 {
   "brandAndModel": "Merkki ja malli",
+  "errors": {
+    "cameraTitle": "Ongelma kameran käytössä",
+    "cameraMessage": "Olet hylännyt oikeuden käyttää puhelimen kameraa. Tarkista oikeudet sovelluksen asetuksista.",
+    "fetchReportQuestinsTitle": "Ongelma tietojen latauksessa",
+    "fetchReportQuestinsMessage": "Jotain meni vikaan ladatessa tietoja. Yritä uudelleen tai tarkista internet yhteytesi."
+  },
   "identificationInfo": "Tunnistetiedot",
   "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",

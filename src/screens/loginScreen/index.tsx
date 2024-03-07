@@ -7,6 +7,8 @@ import SecondaryButton from '../../components/secondaryButton';
 import LoginModal from '../../components/modals/loginmodal';
 import SearchModal from '../../components/modals/searchModal';
 import TOSModal from '../../components/modals/TOSmodal';
+import DropdownNotification from '../../components/dropdownNotification';
+
 import styles from './styles';
 
 const LoginScreen: React.FC = () => {
@@ -51,6 +53,7 @@ const LoginScreen: React.FC = () => {
           />
         </View>
       </View>
+      <DropdownNotification />
     </SafeAreaProvider>
   );
 };
