@@ -31,13 +31,16 @@ const KuntotarkastajaScreen: React.FC = () => {
         <MainButton
           title={t('Start inspection')}
           icon="checklist"
+          //Just a placeholder for getting into the next screen
           onPress={() => showInspection()}
           style={styles.button}
         />
         <MainButton
           title={t('Orders')}
           icon="mail"
+          //Just a placeholder for getting into the next screen
           onPress={() => showOrders()}
+          style={styles.button}
         />
           <SecondaryButton
           title={t('Statistics')}
