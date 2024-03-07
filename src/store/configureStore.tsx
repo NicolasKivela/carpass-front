@@ -4,11 +4,11 @@ import {ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 
 import reportReducer from './reducers/report';
-import errorReducer from './reducers/error'
+import errorReducer from './reducers/error';
 
 const appReducer = combineReducers({
   report: reportReducer,
-  error: errorReducer
+  error: errorReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
