@@ -1,7 +1,7 @@
 import React from 'react';
 import BootSplash from 'react-native-bootsplash';
 import {Navigation} from 'react-native-navigation';
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux';
 import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 

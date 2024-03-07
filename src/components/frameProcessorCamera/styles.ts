@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {colors} from '../../common/styles';
 
@@ -10,12 +10,12 @@ export const styles = StyleSheet.create({
     width: '100%',
     marginVertical: '15%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   camera: {
     flex: 1,
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   button: {
     flex: 0,
@@ -23,6 +23,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 3,
-    backgroundColor: colors.transparent
+    backgroundColor: colors.transparent,
   },
 });

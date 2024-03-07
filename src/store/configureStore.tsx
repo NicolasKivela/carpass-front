@@ -6,7 +6,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import reportReducer from './reducers/report';
 
 const appReducer = combineReducers({
-  report: reportReducer
+  report: reportReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -19,7 +19,7 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-      immutableCheck: false
+      immutableCheck: false,
     }),
 });
 

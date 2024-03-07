@@ -1,5 +1,4 @@
 import React, {ReactNode} from 'react';
-import {StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {colors} from '../../common/styles';
@@ -20,7 +19,5 @@ const Gradient: React.FC<Props> = ({children}) => {
     </LinearGradient>
   );
 };
-
-
 
 export default Gradient;
