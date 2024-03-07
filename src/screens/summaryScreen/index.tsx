@@ -3,10 +3,7 @@ import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {
-  ReviewProgressBar,
-  ReviewNavigation,
-} from '../../components/reviewNavigationbar';
+import {ReviewNavigation} from '../../components/reviewNavigationbar';
 
 import Logo from '../../assets/images/trustcarlogo.png';
 import Gradient from '../../components/gradient';
@@ -32,7 +29,9 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={handlePress}>
               <View style={styles.textContainer}>
-                <Text style={styles.carSectionText}>{t('disqualifications')}</Text>
+                <Text style={styles.carSectionText}>
+                  {t('disqualifications')}
+                </Text>
               </View>
             </TouchableOpacity>
             {showCarParts && (
@@ -60,8 +59,8 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.rowSection}>
             <Text style={styles.carSectionText}>{t('pictures')}</Text>
             <View style={styles.imageSection}>
-              <Image style={styles.image} source={Logo}/>
-              <Image style={styles.image} source={Logo}/>
+              <Image style={styles.image} source={Logo} />
+              <Image style={styles.image} source={Logo} />
             </View>
           </View>
           <View style={styles.rowSection}>
@@ -69,7 +68,7 @@ const SummaryScreen: React.FC = () => {
               <Text style={styles.carSectionText}>{t('report')}</Text>
             </View>
             <View style={styles.carParts}>
-              <MaterialIcons name="picture-as-pdf" size={40} color="grey"/>
+              <MaterialIcons name="picture-as-pdf" size={40} color="grey" />
             </View>
           </View>
           <View style={styles.centered}>

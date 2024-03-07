@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import BootSplash from 'react-native-bootsplash';
 import {Navigation} from 'react-native-navigation';
 import LoginScreen from './src/screens/loginScreen';
@@ -61,10 +61,9 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.SUMMARY,
+                name: SCREENS.REVIEWER,
               },
             },
-
           ],
         },
       },

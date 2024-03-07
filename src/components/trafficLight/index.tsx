@@ -68,7 +68,8 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
                 : TrafficLightColor.RED,
             )
           }
-          children={undefined}></Chip>
+          children={undefined}
+        />
         <Chip
           style={[
             styles.chip,
@@ -83,7 +84,8 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
                 : TrafficLightColor.YELLOW,
             )
           }
-          children={undefined}></Chip>
+          children={undefined}
+        />
         <Chip
           style={[
             styles.chip,
@@ -96,7 +98,8 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
                 : TrafficLightColor.GREEN,
             )
           }
-          children={undefined}></Chip>
+          children={undefined}
+        />
       </View>
     </View>
   );
