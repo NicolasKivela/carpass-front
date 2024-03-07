@@ -3,8 +3,12 @@ import {combineReducers} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 
+import reportReducer from './reducers/report';
+import errorReducer from './reducers/error';
+
 const appReducer = combineReducers({
-  // add reducers here
+  report: reportReducer,
+  error: errorReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -12,14 +16,12 @@ const rootReducer = (state: any, action: any) => {
 };
 
 const store = configureStore({
-  reducer: {
-    rootReducer: rootReducer,
-    // add reducers here
-  },
+  reducer: rootReducer,
   // Removes non-serializable errors
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
+      immutableCheck: false,
     }),
 });
 

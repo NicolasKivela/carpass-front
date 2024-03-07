@@ -6,31 +6,31 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkGrey,
     paddingTop: 20,
     width: '85%',
-    minHeight:'35%',
-    maxHeight:'80%',
+    minHeight: '35%',
+    maxHeight: '80%',
     alignSelf: 'center',
     borderColor: 'white',
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  iconStyle:{
+  iconStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 5,
   },
-  textStyle:{
+  textStyle: {
     color: 'white',
     marginBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
   },
-  inputStyle:{
+  inputStyle: {
     marginBottom: 10,
   },
-  btnStyle:{
+  btnStyle: {
     marginTop: 10,
-  }
+  },
 });
 
 export default styles;

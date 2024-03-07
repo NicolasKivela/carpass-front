@@ -1,8 +1,30 @@
 {
+  "brandAndModel": "Merkki ja malli",
+  "errors": {
+    "cameraTitle": "Ongelma kameran käytössä",
+    "cameraMessage": "Olet hylännyt oikeuden käyttää puhelimen kameraa. Tarkista oikeudet sovelluksen asetuksista.",
+    "fetchReportQuestinsTitle": "Ongelma tietojen latauksessa",
+    "fetchReportQuestinsMessage": "Jotain meni vikaan ladatessa tietoja. Yritä uudelleen tai tarkista internet yhteytesi."
+  },
+  "identificationInfo": "Tunnistetiedot",
+  "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",
-  "search": "Hae tarkastuskoodilla",
-  "username": "Käyttäjätunnus",
+  "modelYear": "Vuosimalli",
   "password": "Salasana",
+  "odometerReading": "Matkamittarin lukema",
+  "vehicleIdentificationNumber": "Valmistenumero",
+  "username": "Käyttäjätunnus",
+  "registrationNumber": "Rekisterinumero",
+  "search": "Hae tarkastuskoodilla",
+  "startInspection": "Aloita tarkastus",
   "tos": "käyttöehdot",
-  "login": "Kirjaudu"
+  "full": "LAAJA",
+  "lite": "KEVYT",
+  "part": "OSA",
+  "summary": "YHTEENVETO",
+  "disqualifications": "Hylkäykset",
+  "warnings": "Huomautukset",
+  "pictures": "Kuvat",
+  "report": "Raportti",
+  "reviewReady": "TARKASTUS VALMIS"
 }
