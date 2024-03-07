@@ -8,7 +8,7 @@ import StatisticModal from '../../components/modals/statisticModal';
 import GuidanceModal from '../../components/modals/guidanceModal';
 import styles from './styles';
 
-const KuntotarkastajaScreen: React.FC = () => {
+const InspectorScreen: React.FC = () => {
   const { t } = useTranslation();
   const [statisticVisible, setStatistic] = React.useState(false);
   const [guidanceVisible, setGuidance] = React.useState(false);
@@ -60,4 +60,4 @@ const KuntotarkastajaScreen: React.FC = () => {
 };
 
 
-export default KuntotarkastajaScreen;
+export default InspectorScreen;
