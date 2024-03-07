@@ -13,9 +13,18 @@
   "password": "Salasana",
   "odometerReading": "Matkamittarin lukema",
   "vehicleIdentificationNumber": "Valmistenumero",
+  "username": "Käyttäjätunnus",
   "registrationNumber": "Rekisterinumero",
   "search": "Hae tarkastuskoodilla",
   "startInspection": "Aloita tarkastus",
   "tos": "käyttöehdot",
-  "username": "Käyttäjätunnus"
+  "full": "LAAJA",
+  "lite": "KEVYT",
+  "part": "OSA",
+  "summary": "YHTEENVETO",
+  "disqualifications": "Hylkäykset",
+  "warnings": "Huomautukset",
+  "pictures": "Kuvat",
+  "report": "Raportti",
+  "reviewReady": "TARKASTUS VALMIS"
 }

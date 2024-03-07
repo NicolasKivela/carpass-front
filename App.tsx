@@ -2,12 +2,15 @@ import React from 'react';
 import BootSplash from 'react-native-bootsplash';
 import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
-import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
 import LoginScreen from './src/screens/loginScreen';
+import {PaperProvider} from 'react-native-paper';
+
 import {SCREENS} from './src/common/constants';
 import NewReportScreen from './src/screens/NewReportScreen';
+import ReviewerScreen from './src/screens/reviewerScreen';
+import SummaryScreen from './src/screens/summaryScreen';
 import {colors} from './src/common/styles';
 import store from './src/store/configureStore';
 import './src/locales/index';
@@ -36,6 +39,12 @@ Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
 Navigation.registerComponent(SCREENS.NEW_REPORT_SCREEN, () =>
   componentHOC(NewReportScreen),
 );
+Navigation.registerComponent(SCREENS.REVIEWER, () =>
+  componentHOC(ReviewerScreen),
+);
+Navigation.registerComponent(SCREENS.SUMMARY, () =>
+  componentHOC(SummaryScreen),
+);
 
 const App = () => {
   Navigation.events().registerAppLaunchedListener(() => {
@@ -58,7 +67,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.NEW_REPORT_SCREEN,
+                name: SCREENS.REVIEWER,
               },
             },
           ],

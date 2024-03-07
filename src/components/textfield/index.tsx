@@ -10,6 +10,7 @@ interface TextFieldProps {
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
   rightIcon?: string;
+  onIconPress?: () => void;
   backgroundColor?: string;
   style?: StyleProp<TextStyle>;
 }
@@ -19,6 +20,7 @@ const TextField = ({
   onChangeText,
   value,
   rightIcon,
+  onIconPress,
   secureTextEntry,
   style,
 }: TextFieldProps) => {
@@ -29,10 +31,7 @@ const TextField = ({
       value={value}
       right={
         rightIcon ? (
-          <TextInput.Icon
-            icon={rightIcon}
-            color={focused => (focused ? colors.orange : undefined)}
-          />
+          <TextInput.Icon icon={rightIcon} onPress={onIconPress} />
         ) : undefined
       }
       label={label}

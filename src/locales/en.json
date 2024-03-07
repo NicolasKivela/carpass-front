@@ -7,7 +7,6 @@
     "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection"
   },
   "identificationInfo": "Identification information",
-  "login": "Log in to the application",
   "loginToApp": "Log in to the application",
   "modelYear": "Model year",
   "odometerReading": "Odometer reading",
@@ -17,5 +16,15 @@
   "search": "Search with a code",
   "startInspection": "Start inspection",
   "tos": "Terms of use",
-  "username": "Username"
+  "username": "Username",
+  "login": "Login",
+  "full": "FULL",
+  "lite": "LITE",
+  "part": "PART",
+  "summary": "SUMMARY",
+  "disqualifications": "Disqualifications",
+  "warnings": "Warnings",
+  "pictures": "Pictures",
+  "report": "Reports",
+  "reviewReady": "CHECK COMPLETE"
 }
