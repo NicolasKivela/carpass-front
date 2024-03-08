@@ -13,9 +13,9 @@ import {Worklets} from 'react-native-worklets-core';
 import {useAppDispatch} from '../../store/configureStore';
 import {cameraPermissions} from '../../common/utilities/permissions';
 import {colors} from '../../common/styles';
+import {setError} from '../../store/actions/error';
 
 import {styles} from './styles';
-import {setError} from '../../store/actions/error';
 
 interface Props {
   registerNumber: {

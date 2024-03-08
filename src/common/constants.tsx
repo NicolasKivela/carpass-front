@@ -7,3 +7,9 @@ export const SCREENS = {
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
 };
+
+export const REPORT_TYPE = {
+  FULL: 'FULL',
+  PART: 'PART',
+  LITE: 'LITE',
+};

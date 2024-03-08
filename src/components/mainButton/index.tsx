@@ -1,8 +1,9 @@
-import {Button} from 'react-native-paper';
-import styles from './styles';
 import React from 'react';
-import {colors} from '../../common/styles';
+import {Button} from 'react-native-paper';
 import {StyleProp, ViewStyle} from 'react-native';
+
+import {colors} from '../../common/styles';
+import styles from './styles';
 
 interface ButtonProps {
   title: string;

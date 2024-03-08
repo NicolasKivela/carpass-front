@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
-import {IconButton} from 'react-native-paper';
-import styles from './styles';
-import {colors} from '../../common/styles';
-import {Text} from 'react-native-paper';
+import {IconButton, Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import ImagePicker from 'react-native-image-crop-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+import {colors} from '../../common/styles';
+import styles from './styles';
 
 type Picture = {
   id: number;
@@ -19,7 +19,7 @@ type Picture = {
 */
 
 const PictureAddition = ({}) => {
-  const [Pictures, setPictures] = useState<Picture[]>([]);
+  const [pictures, setPictures] = useState<Picture[]>([]);
 
   const {t} = useTranslation();
 
@@ -27,7 +27,7 @@ const PictureAddition = ({}) => {
     ImagePicker.openCamera({mediaType: 'photo'})
       .then(image => {
         const newId =
-          Pictures.length > 0 ? Pictures[Pictures.length - 1].id + 1 : 1;
+          pictures.length > 0 ? pictures[pictures.length - 1].id + 1 : 1;
         const newPicture: Picture = {id: newId, uri: image.path};
         setPictures(prevPictures => [...prevPictures, newPicture]);
         console.log(newId);
@@ -35,24 +35,25 @@ const PictureAddition = ({}) => {
       .catch(e => console.log(e));
   };
   const removePicture = (id: number) => {
-    setPictures(pictures => pictures.filter(icon => icon.id !== id));
+    setPictures(prevPictures => prevPictures.filter(icon => icon.id !== id));
   };
 
   return (
-    <View style={styles.View}>
+    <View style={styles.view}>
       <Text style={styles.textStyle}>{t('images')}</Text>
       <IconButton
         icon={() => (
           <MaterialIcons
             name="add-circle-outline"
             size={25}
-            color={colors.orange}></MaterialIcons>
+            color={colors.orange}
+          />
         )}
         onPress={addPicture}
       />
-      {Pictures.map(icon => (
+      {pictures.map(icon => (
         <TouchableOpacity key={icon.id} onPress={() => removePicture(icon.id)}>
-          <Image style={styles.image} source={{uri: icon.uri}}></Image>
+          <Image style={styles.image} source={{uri: icon.uri}} />
         </TouchableOpacity>
       ))}
     </View>

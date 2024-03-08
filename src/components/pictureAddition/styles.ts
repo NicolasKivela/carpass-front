@@ -1,27 +1,24 @@
 import {StyleSheet} from 'react-native';
+
 import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
-
-  View: {
+  view: {
     width: '85%',
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
-  textStyle:{
+  textStyle: {
     color: colors.midGrey,
-
   },
-  image:{
+  image: {
     width: 40,
     height: 40,
-    borderRadius:20,
+    borderRadius: 20,
     borderWidth: 2,
-    borderColor: colors.orange
-
+    borderColor: colors.orange,
   },
-
 });
 
 export default styles;

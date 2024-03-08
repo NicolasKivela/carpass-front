@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {colors} from '../../common/styles';
 import Logo from '../../../resources/trustcar_logo.svg';
+import {colors} from '../../common/styles';
 
 interface Props {
   leftButton?: {

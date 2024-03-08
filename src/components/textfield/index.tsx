@@ -1,8 +1,9 @@
 import React from 'react';
+import {StyleProp, TextStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
+
 import {colors} from '../../common/styles';
 import styles from './styles';
-import {StyleProp, TextStyle} from 'react-native';
 
 interface TextFieldProps {
   label: string;

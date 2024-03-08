@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {Chip} from 'react-native-paper';
+
 import styles from './styles';
 
 enum TrafficLightColor {

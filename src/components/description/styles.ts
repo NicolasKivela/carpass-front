@@ -1,22 +1,18 @@
 import {StyleSheet} from 'react-native';
 
+import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
-
-  View: {
+  view: {
     paddingTop: 20,
     paddingBottom: 20,
     width: '95%',
-    maxHeight:'80%',
+    maxHeight: '80%',
     alignSelf: 'center',
-    //borderColor: 'white',
-    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: 'rgba(255,255,255,0)'
-    
-
-  }
+    backgroundColor: colors.transparent,
+  },
 });
 
 export default styles;
