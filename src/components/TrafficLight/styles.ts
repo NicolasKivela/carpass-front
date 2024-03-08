@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     margin: 16,
     marginVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: colors.darkGrey,
+    borderBottomColor: colors.darkerGrey,
   },
   chipView: {
     flexDirection: 'row',
