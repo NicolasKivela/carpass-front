@@ -4,8 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {MainButton, SecondaryButton} from '../../components/index';
-import StatisticModal from '../../modals/StatisticModal';
-import GuidanceModal from '../../modals/GuidanceModal';
+import {StatisticModal, GuidanceModal} from '../../modals/index';
 
 import styles from './styles';
 

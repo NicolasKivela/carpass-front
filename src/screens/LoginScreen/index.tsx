@@ -8,9 +8,7 @@ import {
   SecondaryButton,
   DropdownNotification,
 } from '../../components/index';
-import LoginModal from '../../modals/loginmodal';
-import SearchModal from '../../modals/searchModal';
-import TOSModal from '../../modals/TOSmodal';
+import {LoginModal, SearchModal, TOSModal} from '../../modals/index';
 
 import styles from './styles';
 
