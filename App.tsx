@@ -8,10 +8,12 @@ import 'react-native-reanimated';
 
 import {SCREENS} from './src/common/constants';
 import {colors} from './src/common/styles';
-import LoginScreen from './src/screens/LoginScreen';
-import NewReportScreen from './src/screens/NewReportScreen';
-import ReviewerScreen from './src/screens/ReviewerScreen';
-import SummaryScreen from './src/screens/SummaryScreen';
+import {
+  LoginScreen,
+  NewReportScreen,
+  ReviewerScreen,
+  SummaryScreen,
+} from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
 import InspectorScreen from './src/screens/InspectorScreen';
@@ -39,8 +41,11 @@ const componentHOC = (Component, ...props) => {
   };
 };
 
+Navigation.registerComponent(SCREENS.INSPECTOR, () =>
+  componentHOC(InspectorScreen),
+);
 Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
-Navigation.registerComponent(SCREENS.NEW_REPORT_SCREEN, () =>
+Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
   componentHOC(NewReportScreen),
 );
 Navigation.registerComponent(SCREENS.REVIEWER, () =>
@@ -48,9 +53,6 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 );
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
-);
-Navigation.registerComponent(SCREENS.INSPECTOR, () =>
-  componentHOC(InspectorScreen),
 );
 
 const App = () => {
@@ -74,7 +76,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.INSPECTOR,
+                name: SCREENS.LOGIN,
               },
             },
           ],
