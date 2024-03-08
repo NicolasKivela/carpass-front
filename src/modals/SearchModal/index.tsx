@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text} from 'react-native-paper';
 import {Portal, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
-import {colors} from '../../../common/styles';
+
+import {colors} from '../../common/styles';
+import TextField from '../../components/textfield';
+import SecondaryButton from '../../components/secondaryButton';
 import styles from '../styles';
-import TextField from '../../textfield';
-import SecondaryButton from '../../secondaryButton';
 
 interface ModalContentProps {
   visible: boolean;
@@ -14,8 +15,9 @@ interface ModalContentProps {
 }
 
 const SearchModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
-  const [search, setSearch] = React.useState('');
   const {t} = useTranslation();
+
+  const [search, setSearch] = useState('');
 
   if (!visible) {
     return null;

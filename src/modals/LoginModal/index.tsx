@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text} from 'react-native-paper';
 import {Portal, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
-import {colors} from '../../../common/styles';
+
+import {colors} from '../../common/styles';
+import SecondaryButton from '../../components/secondaryButton';
+import TextField from '../../components/textfield';
 import styles from '../styles';
-import SecondaryButton from '../../secondaryButton';
-import TextField from '../../textfield';
 
 interface ModalContentProps {
   visible: boolean;
@@ -14,9 +15,10 @@ interface ModalContentProps {
 }
 
 const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
   const {t} = useTranslation();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   if (!visible) {
     return null;

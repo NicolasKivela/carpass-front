@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text} from 'react-native-paper';
-import {Portal, Modal, Button, Checkbox} from 'react-native-paper';
+import {Portal, Modal, Checkbox} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import {useTranslation} from 'react-i18next';
-import {colors} from '../../../common/styles';
+
+import {colors} from '../../common/styles';
+import SecondaryButton from '../../components/secondaryButton';
 import styles from '../styles';
-import SecondaryButton from '../../secondaryButton';
 
 interface ModalContentProps {
   visible: boolean;
@@ -14,7 +14,7 @@ interface ModalContentProps {
 }
 
 const StatisticModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
   const {t} = useTranslation();
 
   if (!visible) {
@@ -42,7 +42,7 @@ const StatisticModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
         <Checkbox.Android
           status={checked ? 'checked' : 'unchecked'}
           onPress={() => setChecked(!checked)}
-          color="white"
+          color={colors.white}
         />
 
         <SecondaryButton

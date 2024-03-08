@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../../common/styles';
+
+import {colors} from '../common/styles';
 
 const styles = StyleSheet.create({
   modal: {
