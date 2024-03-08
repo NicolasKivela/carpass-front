@@ -10,6 +10,12 @@ enum TrafficLightColor {
   GREEN = 'GREEN',
 }
 
+const chipData = [
+  {color: TrafficLightColor.RED, activeStyle: styles.activeChip1},
+  {color: TrafficLightColor.YELLOW, activeStyle: styles.activeChip2},
+  {color: TrafficLightColor.GREEN, activeStyle: styles.activeChip3},
+];
+
 interface TrafficLightProps {
   section: string;
   modifyWarning: (count: number) => void;
@@ -57,50 +63,21 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
         <Text style={styles.carPartText}>{section}</Text>
       </View>
       <View style={styles.chipView}>
-        <Chip
-          style={[
-            styles.chip,
-            activeColor === TrafficLightColor.RED ? styles.activeChip1 : null,
-          ]}
-          onPress={() =>
-            toggleColor(
-              activeColor === TrafficLightColor.RED
-                ? null
-                : TrafficLightColor.RED,
-            )
-          }
-          children={undefined}
-        />
-        <Chip
-          style={[
-            styles.chip,
-            activeColor === TrafficLightColor.YELLOW
-              ? styles.activeChip2
-              : null,
-          ]}
-          onPress={() =>
-            toggleColor(
-              activeColor === TrafficLightColor.YELLOW
-                ? null
-                : TrafficLightColor.YELLOW,
-            )
-          }
-          children={undefined}
-        />
-        <Chip
-          style={[
-            styles.chip,
-            activeColor === TrafficLightColor.GREEN ? styles.activeChip3 : null,
-          ]}
-          onPress={() =>
-            toggleColor(
-              activeColor === TrafficLightColor.GREEN
-                ? null
-                : TrafficLightColor.GREEN,
-            )
-          }
-          children={undefined}
-        />
+        {chipData.map(item => {
+          return (
+            <Chip
+              key={item.color}
+              style={[
+                styles.chip,
+                activeColor === item.color ? item.activeStyle : null,
+              ]}
+              onPress={() =>
+                toggleColor(activeColor === item.color ? null : item.color)
+              }
+              children={undefined}
+            />
+          );
+        })}
       </View>
     </View>
   );
