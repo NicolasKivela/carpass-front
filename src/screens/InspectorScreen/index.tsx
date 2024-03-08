@@ -31,27 +31,27 @@ const InspectorScreen: React.FC = () => {
           visible={guidanceVisible}
         />
         <MainButton
-          title={t('Start inspection')}
+          title={t('startInspection')}
           icon="checklist"
           //Just a placeholder for getting into the next screen
           onPress={() => showInspection()}
           style={styles.button}
         />
         <MainButton
-          title={t('Orders')}
+          title={t('orders')}
           icon="mail"
           //Just a placeholder for getting into the next screen
           onPress={() => showOrders()}
           style={styles.button}
         />
         <SecondaryButton
-          title={t('Statistics')}
+          title={t('statistics')}
           onPress={() => setStatistic(true)}
           icon="menu"
           style={styles.buttonContainer}
         />
         <SecondaryButton
-          title={t('Guidance')}
+          title={t('guidance')}
           onPress={() => setGuidance(true)}
           icon="help"
           style={styles.buttonContainerOther}

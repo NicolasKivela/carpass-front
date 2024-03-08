@@ -6,6 +6,7 @@
     "fetchReportQuestinsTitle": "Fetch error",
     "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection"
   },
+  "guidance": "Guidance",
   "identificationInfo": "Identification information",
   "loginToApp": "Log in to the application",
   "modelYear": "Model year",
@@ -20,7 +21,9 @@
   "login": "Login",
   "full": "FULL",
   "lite": "LITE",
+  "orders": "Orders",
   "part": "PART",
+  "statistics": "Statistics",
   "summary": "SUMMARY",
   "disqualifications": "Disqualifications",
   "warnings": "Warnings",

@@ -6,6 +6,7 @@
     "fetchReportQuestinsTitle": "Ongelma tietojen latauksessa",
     "fetchReportQuestinsMessage": "Jotain meni vikaan ladatessa tietoja. Yritä uudelleen tai tarkista internet yhteytesi."
   },
+  "guidance": "Ohjeet",
   "identificationInfo": "Tunnistetiedot",
   "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",
@@ -20,7 +21,9 @@
   "tos": "käyttöehdot",
   "full": "LAAJA",
   "lite": "KEVYT",
+  "orders": "Tilaukset",
   "part": "OSA",
+  "statistics": "Tilastoja",
   "summary": "YHTEENVETO",
   "disqualifications": "Hylkäykset",
   "warnings": "Huomautukset",
