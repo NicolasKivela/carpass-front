@@ -83,51 +83,23 @@ const ReviewNavigation = ({
       </View>
 
       <View style={styles.gap}>
-        <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => handlePress(REPORT_TYPE.FULL)}
-          activeOpacity={1}>
-          <Text
-            style={[
-              styles.buttonText,
-              activeButton === REPORT_TYPE.FULL && styles.activeButtonText,
-            ]}>
-            {t('full')}
-          </Text>
-          {activeButton === REPORT_TYPE.FULL && (
-            <View style={styles.underline} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handlePress(REPORT_TYPE.LITE)}
-          activeOpacity={1}>
-          <Text
-            style={[
-              styles.buttonText,
-              activeButton === REPORT_TYPE.LITE && styles.activeButtonText,
-            ]}>
-            {t('lite')}
-          </Text>
-          {activeButton === REPORT_TYPE.LITE && (
-            <View style={styles.underline} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handlePress(REPORT_TYPE.PART)}
-          activeOpacity={1}>
-          <Text
-            style={[
-              styles.buttonText,
-              activeButton === REPORT_TYPE.PART && styles.activeButtonText,
-            ]}>
-            {t('part')}
-          </Text>
-          {activeButton === REPORT_TYPE.PART && (
-            <View style={styles.underline} />
-          )}
-        </TouchableOpacity>
+        {[REPORT_TYPE.FULL, REPORT_TYPE.LITE, REPORT_TYPE.PART].map(item => {
+          return (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handlePress(item)}
+              activeOpacity={1}>
+              <Text
+                style={[
+                  styles.buttonText,
+                  activeButton === item && styles.activeButtonText,
+                ]}>
+                {t(item.toLowerCase())}
+              </Text>
+              {activeButton === item && <View style={styles.underline} />}
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </>
   );
