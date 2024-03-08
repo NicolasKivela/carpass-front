@@ -1,21 +1,20 @@
 import React from 'react';
 import BootSplash from 'react-native-bootsplash';
+import MUIIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
+import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
-import LoginScreen from './src/screens/loginScreen';
-import {PaperProvider} from 'react-native-paper';
-
 import {SCREENS} from './src/common/constants';
-import NewReportScreen from './src/screens/NewReportScreen';
-import ReviewerScreen from './src/screens/reviewerScreen';
-import SummaryScreen from './src/screens/summaryScreen';
 import {colors} from './src/common/styles';
+import LoginScreen from './src/screens/LoginScreen';
+import NewReportScreen from './src/screens/NewReportScreen';
+import ReviewerScreen from './src/screens/ReviewerScreen';
+import SummaryScreen from './src/screens/SummaryScreen';
 import store from './src/store/configureStore';
 import './src/locales/index';
-import InspectorScreen from './src/screens/inspectorScreen';
-import MUIIcons from 'react-native-vector-icons/MaterialIcons';
+import InspectorScreen from './src/screens/InspectorScreen';
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
