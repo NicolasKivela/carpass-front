@@ -13,8 +13,8 @@ import {Button, TextInput} from 'react-native-paper';
 
 import {colors} from '../../common/styles';
 import LogoTopBar from '../../components/logoTopBar';
-import Gradient from '../../components/gradienttemp';
-import FrameProcessorCamera from '../../components/frameProcessorCameratemp';
+import Gradient from '../../components/gradient';
+import FrameProcessorCamera from '../../components/frameProcessorCamera';
 import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 import DropdownNotification from '../../components/dropdownNotificationtemp';
