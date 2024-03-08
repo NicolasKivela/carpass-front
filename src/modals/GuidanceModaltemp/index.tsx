@@ -13,7 +13,7 @@ interface ModalContentProps {
   onDismiss: () => void;
 }
 
-const guidanceModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
+const GuidanceModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   const [checked, setChecked] = React.useState(false);
   const {t} = useTranslation();
 
@@ -33,8 +33,7 @@ const guidanceModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           color={colors.orange}
           style={styles.iconStyle}
         />
-        <Text
-          style={styles.textStyle}>
+        <Text style={styles.textStyle}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           consequat odio ornare luctus feugiat. Curabitur ut metus interdum,
           laoreet dui.
@@ -46,10 +45,15 @@ const guidanceModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           color="white"
         />
 
-        <SecondaryButton style={styles.btnStyle} onPress={() => console.log('checked: ', checked)} title={t('login')} fontSize={16} />
+        <SecondaryButton
+          style={styles.btnStyle}
+          onPress={() => console.log('checked: ', checked)}
+          title={t('login')}
+          fontSize={16}
+        />
       </Modal>
     </Portal>
   );
 };
 
-export default guidanceModal;
+export default GuidanceModal;
