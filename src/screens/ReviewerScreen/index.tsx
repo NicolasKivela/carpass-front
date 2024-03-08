@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {FlatList, View, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import TrafficLight from '../../components/trafficLight';
 import {ReviewNavigation} from '../../components/reviewNavigationbar';
-import styles from './styles';
 import Description from '../../components/description';
+import styles from './styles';
 
 const ReviewerScreen: React.FC = () => {
+  //TODO: remove later when test data not needed
   const data1 = [
     {key: '1', section: 'Ajettavuus'},
     {key: '2', section: 'Tuulilasi ja sen puhdistuslaitteet'},
@@ -19,6 +21,7 @@ const ReviewerScreen: React.FC = () => {
     {key: '9', section: 'Muut mittarit'},
   ];
   const text1 = '1. Ajettavuus, hallintalaitteet ja sisätilat';
+
   const [displayData, setData] = useState(data1);
   const [displayText, setText] = useState(text1);
   const [visibleDescriptions, setVisibleDescriptions] = useState<{
@@ -36,6 +39,7 @@ const ReviewerScreen: React.FC = () => {
     setWarningNum(warningNum + value);
     console.log(warningNum, 'THIS IS WARNING');
   };
+
   const modifyErrorNum = (value: number) => {
     if (errorNum === 0 && value < 0) {
       return;

@@ -1,24 +1,19 @@
 import React, {useState} from 'react';
 import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
-import {styles} from './styles';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {ReviewNavigation} from '../../components/reviewNavigationbar';
 
+import {ReviewNavigation} from '../../components/reviewNavigationbar';
 import Logo from '../../assets/images/trustcarlogo.png';
 import Gradient from '../../components/gradient';
+import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {
   const {t} = useTranslation();
   const [showCarParts, setShowCarParts] = useState(true);
   const [showWarnings, setShowWarnings] = useState(true);
   const [pageNumber, setPageNumber] = useState<number>(10);
-  const handlePress = () => {
-    setShowCarParts(!showCarParts);
-  };
-  const handleWarnings = () => {
-    setShowWarnings(!showWarnings);
-  };
+
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -27,7 +22,7 @@ const SummaryScreen: React.FC = () => {
         <View>
           <Text style={styles.header}>{t('summary')}</Text>
           <View style={styles.rowSection}>
-            <TouchableOpacity onPress={handlePress}>
+            <TouchableOpacity onPress={() => setShowCarParts(!showCarParts)}>
               <View style={styles.textContainer}>
                 <Text style={styles.carSectionText}>
                   {t('disqualifications')}
@@ -43,7 +38,7 @@ const SummaryScreen: React.FC = () => {
             )}
           </View>
           <View style={styles.rowSection}>
-            <TouchableOpacity onPress={handleWarnings}>
+            <TouchableOpacity onPress={() => setShowWarnings(!showWarnings)}>
               <View style={styles.textContainer}>
                 <Text style={styles.carSectionText}>{t('warnings')}</Text>
               </View>

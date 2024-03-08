@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    //marginVertical: 15,
     marginTop: 30,
     marginLeft: 40,
   },
@@ -44,9 +43,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    //marginVertical: 15,
     marginTop: 22,
-    marginLeft: 40
+    marginLeft: 40,
   },
   error: {
     fontSize: 16,

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import MainButton from '../../components/mainButton';
 import SecondaryButton from '../../components/secondaryButton';
 import StatisticModal from '../../components/modals/statisticModal';
@@ -10,13 +11,9 @@ import styles from './styles';
 
 const InspectorScreen: React.FC = () => {
   const {t} = useTranslation();
-  const [statisticVisible, setStatistic] = React.useState(false);
-  const [guidanceVisible, setGuidance] = React.useState(false);
 
-  const showStatistic = () => setStatistic(true);
-  const hideStatistic = () => setStatistic(false);
-  const showGuidance = () => setStatistic(true);
-  const hideGuidance = () => setStatistic(false);
+  const [statisticVisible, setStatistic] = useState(false);
+  const [guidanceVisible, setGuidance] = useState(false);
 
   return (
     <SafeAreaProvider>
@@ -25,8 +22,14 @@ const InspectorScreen: React.FC = () => {
           source={require('../../assets/images/trustcarlogo.png')}
           style={styles.imageStyles}
         />
-        <StatisticModal onDismiss={hideStatistic} visible={statisticVisible} />
-        <GuidanceModal onDismiss={hideGuidance} visible={guidanceVisible} />
+        <StatisticModal
+          onDismiss={() => setStatistic(false)}
+          visible={statisticVisible}
+        />
+        <GuidanceModal
+          onDismiss={() => setGuidance(false)}
+          visible={guidanceVisible}
+        />
         <MainButton
           title={t('Start inspection')}
           icon="checklist"
@@ -43,13 +46,13 @@ const InspectorScreen: React.FC = () => {
         />
         <SecondaryButton
           title={t('Statistics')}
-          onPress={() => showStatistic()}
+          onPress={() => setStatistic(true)}
           icon="menu"
           style={styles.buttonContainer}
         />
         <SecondaryButton
           title={t('Guidance')}
-          onPress={() => showGuidance()}
+          onPress={() => setGuidance(true)}
           icon="help"
           style={styles.buttonContainerOther}
         />

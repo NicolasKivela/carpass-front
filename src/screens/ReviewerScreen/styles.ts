@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+
 import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
@@ -6,7 +7,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: colors.white,
     marginTop: 10,
-
     marginLeft: 10,
   },
   gap: {

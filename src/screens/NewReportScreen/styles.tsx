@@ -1,11 +1,11 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {colors} from '../../common/styles';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   innerContainer: {
     flex: 1,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    width: '100%', 
+    width: '100%',
     height: '100%',
     justifyContent: 'center',
   },

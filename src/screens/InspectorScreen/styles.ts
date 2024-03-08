@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+
 import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: colors.orange,
     marginTop: 10,
-},
+  },
   buttonContainer: {
     height: '50%',
     width: '100%',
