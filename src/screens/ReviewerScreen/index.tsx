@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import {FlatList, View, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import TrafficLight from '../../components/trafficLight';
-import {ReviewNavigation} from '../../components/reviewNavigationbar';
-import Description from '../../components/description';
+import {
+  TrafficLight,
+  ReviewNavigation,
+  Description,
+} from '../../components/index';
 import styles from './styles';
 
 const ReviewerScreen: React.FC = () => {

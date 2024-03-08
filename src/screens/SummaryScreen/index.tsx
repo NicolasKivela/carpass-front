@@ -3,9 +3,8 @@ import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {ReviewNavigation} from '../../components/reviewNavigationbar';
+import {ReviewNavigation, Gradient} from '../../components/index';
 import Logo from '../../assets/images/trustcarlogo.png';
-import Gradient from '../../components/Gradient';
 import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {

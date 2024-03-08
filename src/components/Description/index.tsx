@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import TextField from '../textfield';
-import PictureAddition from '../pictureAddition';
+import {TextField, PictureAddition} from '../index';
 import styles from './styles';
 
 interface ModalContentProps {

@@ -5,8 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 
 import {colors} from '../../common/styles';
-import TextField from '../../components/textfield';
-import SecondaryButton from '../../components/secondaryButton';
+import {SecondaryButton, TextField} from '../../components/index';
 import styles from '../styles';
 
 interface ModalContentProps {

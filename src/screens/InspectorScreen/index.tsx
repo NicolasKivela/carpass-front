@@ -3,10 +3,10 @@ import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import MainButton from '../../components/MainButton';
-import SecondaryButton from '../../components/SecondaryButton';
-import StatisticModal from '../../components/modals/statisticModal';
-import GuidanceModal from '../../components/modals/guidanceModal';
+import {MainButton, SecondaryButton} from '../../components/index';
+import StatisticModal from '../../modals/StatisticModal';
+import GuidanceModal from '../../modals/GuidanceModal';
+
 import styles from './styles';
 
 const InspectorScreen: React.FC = () => {
