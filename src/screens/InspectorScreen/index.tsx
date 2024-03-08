@@ -3,8 +3,8 @@ import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import MainButton from '../../components/mainButtontemp';
-import SecondaryButton from '../../components/secondaryButtontemp';
+import MainButton from '../../components/MainButton';
+import SecondaryButton from '../../components/SecondaryButton';
 import StatisticModal from '../../components/modals/statisticModal';
 import GuidanceModal from '../../components/modals/guidanceModal';
 import styles from './styles';

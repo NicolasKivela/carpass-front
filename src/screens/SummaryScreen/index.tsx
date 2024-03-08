@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {ReviewNavigation} from '../../components/reviewNavigationbar';
 import Logo from '../../assets/images/trustcarlogo.png';
-import Gradient from '../../components/gradienttemp';
+import Gradient from '../../components/Gradient';
 import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {

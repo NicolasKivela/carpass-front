@@ -12,12 +12,12 @@ import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
 
 import {colors} from '../../common/styles';
-import LogoTopBar from '../../components/logoTopBar';
-import Gradient from '../../components/gradienttemp';
-import FrameProcessorCamera from '../../components/frameProcessorCameratemp';
+import LogoTopBar from '../../components/logoTopBartemp';
+import Gradient from '../../components/Gradient';
+import FrameProcessorCamera from '../../components/FrameProcessorCamera';
 import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
-import DropdownNotification from '../../components/dropdownNotificationtemp';
+import DropdownNotification from '../../components/DropdownNotification';
 
 import {styles} from './styles';
 

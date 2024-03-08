@@ -3,12 +3,12 @@ import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import MainButton from '../../components/mainButtontemp';
-import SecondaryButton from '../../components/secondaryButtontemp';
+import MainButton from '../../components/MainButton';
+import SecondaryButton from '../../components/SecondaryButton';
 import LoginModal from '../../components/modals/loginmodal';
 import SearchModal from '../../components/modals/searchModal';
 import TOSModal from '../../components/modals/TOSmodal';
-import DropdownNotification from '../../components/dropdownNotificationtemp';
+import DropdownNotification from '../../components/DropdownNotification';
 
 import styles from './styles';
 
