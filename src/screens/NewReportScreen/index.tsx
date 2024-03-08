@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
+import {Navigation} from 'react-native-navigation';
 
 import {
   LogoTopBar,
@@ -18,6 +19,7 @@ import {
   DropdownNotification,
 } from '../../components/index';
 import {colors} from '../../common/styles';
+import {SCREENS} from '../../common/constants';
 import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 
@@ -75,7 +77,19 @@ const NewReportScreen: React.FC = () => {
         odometerReading: null,
       });
     } else {
-      //TODO: go back to start report/orders screen (not implemented)
+      Navigation.setRoot({
+        root: {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: SCREENS.INSPECTOR,
+                },
+              },
+            ],
+          },
+        },
+      });
     }
     return true;
   };
@@ -90,7 +104,20 @@ const NewReportScreen: React.FC = () => {
         report_type: 'petrol', //TODO: fix, when type input is added?
       }),
     );
-    //TODO: navigate to report screen
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.REVIEWER,
+              },
+            },
+          ],
+        },
+      },
+    });
+  }
   };
 
   return (
