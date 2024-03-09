@@ -23,13 +23,13 @@ const ReviewProgressBar = ({progress}: ProgressProps) => {
 };
 
 interface NavigationProps {
-  warningNum?: number;
-  errorNum?: number;
-  pageNumber?: number;
+  warningNum: number;
+  errorNum: number;
+  pageNumber: number;
 }
 
 const ReviewNavigation = ({
-  warningNum,
+  warningNum = 0,
   errorNum = 0,
   pageNumber = 0,
 }: NavigationProps) => {
@@ -57,7 +57,7 @@ const ReviewNavigation = ({
 
         <View style={styles.rightView}>
           <View style={styles.circleRow}>
-            {warningNum && warningNum > 0 && (
+            {warningNum > 0 && (
               <View
                 style={[
                   styles.circle,
@@ -86,6 +86,7 @@ const ReviewNavigation = ({
         {[REPORT_TYPE.FULL, REPORT_TYPE.LITE, REPORT_TYPE.PART].map(item => {
           return (
             <TouchableOpacity
+              key={item}
               style={styles.button}
               onPress={() => handlePress(item)}
               activeOpacity={1}>

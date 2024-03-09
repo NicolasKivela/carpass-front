@@ -117,7 +117,6 @@ const NewReportScreen: React.FC = () => {
         },
       },
     });
-  }
   };
 
   return (
@@ -130,10 +129,11 @@ const NewReportScreen: React.FC = () => {
           }}
         />
 
-        <ScrollView keyboardShouldPersistTaps="handled">
-          <KeyboardAvoidingView
-            style={styles.innerContainer}
-            behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+        <KeyboardAvoidingView
+          style={styles.innerContainer}
+          behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+          keyboardVerticalOffset={0}>
+          <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('identificationInfo')}</Text>
             <NewReportTextInput
               label={'registrationNumber'}
@@ -155,10 +155,26 @@ const NewReportScreen: React.FC = () => {
                       setOnChange={(value: string) => {
                         setOtherData({...otherData, [item]: value});
                       }}
-                      icon={'keyboard-outline'}
+                      icon={'keyboard'}
                     />
                   );
                 })}
+                <View style={styles.footerContainer}>
+                  <Button
+                    disabled={!readyToProceed}
+                    onPress={startInspectionHandler}
+                    textColor={colors.orange}
+                    style={styles.footerButton}>
+                    <Text
+                      style={
+                        readyToProceed
+                          ? styles.footerTextDone
+                          : styles.footerText
+                      }>
+                      {t('startInspection')}
+                    </Text>
+                  </Button>
+                </View>
               </View>
             ) : (
               <FrameProcessorCamera
@@ -166,25 +182,8 @@ const NewReportScreen: React.FC = () => {
                 setRegisterNumber={setRegisterNumber}
               />
             )}
-          </KeyboardAvoidingView>
-        </ScrollView>
-
-        {registerNumber.value && (
-          <View style={styles.footerContainer}>
-            <Button
-              disabled={!readyToProceed}
-              onPress={startInspectionHandler}
-              textColor={colors.orange}
-              style={styles.footerButton}>
-              <Text
-                style={
-                  readyToProceed ? styles.footerTextDone : styles.footerText
-                }>
-                {t('startInspection')}
-              </Text>
-            </Button>
-          </View>
-        )}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       <DropdownNotification />
     </Gradient>

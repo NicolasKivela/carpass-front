@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     height: 60,
     backgroundColor: colors.black,
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   icon: {
     paddingTop: 7,

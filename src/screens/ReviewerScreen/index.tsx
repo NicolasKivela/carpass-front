@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, View, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Navigation} from 'react-native-navigation';
 
 import {
   TrafficLight,
   ReviewNavigation,
   Description,
 } from '../../components/index';
+import {SCREENS} from '../../common/constants';
 import styles from './styles';
 
 const ReviewerScreen: React.FC = () => {
@@ -24,6 +26,7 @@ const ReviewerScreen: React.FC = () => {
   ];
   const text1 = '1. Ajettavuus, hallintalaitteet ja sisätilat';
 
+  const [countToNavigate, setCountToNavigate] = useState(0); //TODO: remove later, only for demo and testing
   const [displayData, setData] = useState(data1);
   const [displayText, setText] = useState(text1);
   const [visibleDescriptions, setVisibleDescriptions] = useState<{
@@ -33,6 +36,25 @@ const ReviewerScreen: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
+
+  //TODO: remove useeffect later, only for demo and testing
+  useEffect(() => {
+    if (countToNavigate === 4) {
+      Navigation.setRoot({
+        root: {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: SCREENS.SUMMARY,
+                },
+              },
+            ],
+          },
+        },
+      });
+    }
+  }, [countToNavigate]);
 
   const modifyWarningNum = (value: number) => {
     if (warningNum === 0 && value < 0) {
@@ -77,9 +99,10 @@ const ReviewerScreen: React.FC = () => {
                 section={item.section}
                 modifyError={modifyErrorNum}
                 modifyWarning={modifyWarningNum}
-                onStateChange={color =>
-                  setDescriptionVisibility(item.key, color)
-                }
+                onStateChange={color => {
+                  setDescriptionVisibility(item.key, color);
+                  setCountToNavigate(prevState => prevState + 1);
+                }}
               />
               <Description visible={visibleDescriptions[item.key]} />
             </View>

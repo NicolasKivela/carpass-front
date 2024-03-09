@@ -3,8 +3,10 @@ import {Text} from 'react-native-paper';
 import {Portal, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
+import {Navigation} from 'react-native-navigation';
 
 import {colors} from '../../common/styles';
+import {SCREENS} from '../../common/constants';
 import {SecondaryButton, TextField} from '../../components/index';
 import styles from '../styles';
 
@@ -22,6 +24,23 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   if (!visible) {
     return null;
   }
+
+  const loginHandler = () => {
+    //TODO: dispatch login and if success then navigate and if not show error
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.INSPECTOR,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
 
   return (
     <Portal>
@@ -51,10 +70,8 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           rightIcon="password"
         />
         <SecondaryButton
-          onPress={() => {
-            console.log('username: ', username, '\n password: ', password);
-          }}
           title={t('login')}
+          onPress={loginHandler}
           fontSize={16}
           style={styles.btnStyle}
         />

@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Navigation} from 'react-native-navigation';
 
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
+import {SCREENS} from '../../common/constants';
 
 import styles from './styles';
 
@@ -13,6 +15,22 @@ const InspectorScreen: React.FC = () => {
 
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
+
+  const startInspectionHandler = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.NEW_REPORT,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
 
   return (
     <SafeAreaProvider>
@@ -32,8 +50,7 @@ const InspectorScreen: React.FC = () => {
         <MainButton
           title={t('startInspection')}
           icon="checklist"
-          //Just a placeholder for getting into the next screen
-          onPress={() => showInspection()}
+          onPress={startInspectionHandler}
           style={styles.button}
         />
         <MainButton

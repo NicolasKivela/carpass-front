@@ -13,10 +13,10 @@ import {
   NewReportScreen,
   ReviewerScreen,
   SummaryScreen,
+  InspectorScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
-import InspectorScreen from './src/screens/InspectorScreen';
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
