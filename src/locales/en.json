@@ -29,5 +29,8 @@
   "tos": "Terms of use",
   "username": "Username",
   "vehicleIdentificationNumber": "Vehicle Identification Number",
-  "warnings": "Warnings"
+  "warnings": "Warnings",
+  "description":"Description",
+  "images":"Images"
+
 }

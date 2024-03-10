@@ -29,5 +29,7 @@
   "tos": "käyttöehdot",
   "username": "Käyttäjätunnus",
   "vehicleIdentificationNumber": "Valmistenumero",
-  "warnings": "Huomautukset"
+  "warnings": "Huomautukset",
+  "description":"Selitys",
+  "images":"Kuvat"
 }
