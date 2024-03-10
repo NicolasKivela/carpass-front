@@ -24,7 +24,7 @@ const Description: React.FC<ModalContentProps> = ({visible}) => {
         label={t('description')}
         onChangeText={value => setText(value)}
         value={text}
-        rightIcon="microphone"
+        rightIcon="keyboard-voice"
         onIconPress={() => console.log('click')}
       />
       <PictureAddition />
