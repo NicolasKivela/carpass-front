@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {IconButton, Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import ImagePicker from 'react-native-image-crop-picker';
-import ImageFull from '../imageFull';
+import ImageFull from '../ImageFull';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {colors} from '../../common/styles';
@@ -21,7 +21,6 @@ type Picture = {
 */
 
 const PictureAddition = ({}) => {
-<<<<<<< HEAD:src/components/pictureAddition/index.tsx
   const [Pictures, setPictures] = useState<Picture[]>([]);
   const [activePicture, setActivePicture] = useState<Picture>({
     id: 0,
@@ -29,25 +28,21 @@ const PictureAddition = ({}) => {
     timestamp: null,
   });
   const [imageUri, setUri] = useState<string | null>('');
-  const [imageVisible, setVisible] = React.useState(false);
+  const [imageVisible, setVisible] = useState(false);
+
+  const {t} = useTranslation();
+
   const showImage = (picture: Picture) => {
     setUri(picture.uri);
     setVisible(true);
     console.log(imageUri);
     setActivePicture(picture);
   };
-  const hideImage = () => setVisible(false);
-=======
-  const [pictures, setPictures] = useState<Picture[]>([]);
->>>>>>> 7ab7f2dad50c6d6544424366356c391c56e28f17:src/components/PictureAddition/index.tsx
-
-  const {t} = useTranslation();
 
   const addPicture = () => {
     ImagePicker.openCamera({mediaType: 'photo'})
       .then(image => {
         const newId =
-<<<<<<< HEAD:src/components/pictureAddition/index.tsx
           Pictures.length > 0 ? Pictures[Pictures.length - 1].id + 1 : 1;
         const newPicture: Picture = {
           id: newId,
@@ -55,10 +50,6 @@ const PictureAddition = ({}) => {
           timestamp: image.modificationDate ? image.modificationDate : null,
         };
 
-=======
-          pictures.length > 0 ? pictures[pictures.length - 1].id + 1 : 1;
-        const newPicture: Picture = {id: newId, uri: image.path};
->>>>>>> 7ab7f2dad50c6d6544424366356c391c56e28f17:src/components/PictureAddition/index.tsx
         setPictures(prevPictures => [...prevPictures, newPicture]);
         console.log(newId);
         console.log(image.modificationDate);
@@ -87,7 +78,6 @@ const PictureAddition = ({}) => {
         )}
         onPress={addPicture}
       />
-<<<<<<< HEAD:src/components/pictureAddition/index.tsx
       {Pictures.map(icon => (
         <TouchableOpacity
           key={icon.id}
@@ -96,21 +86,17 @@ const PictureAddition = ({}) => {
           }>
           <Image
             style={styles.image}
-            source={{uri: icon.uri ? icon.uri : ''}}></Image>
-=======
-      {pictures.map(icon => (
-        <TouchableOpacity key={icon.id} onPress={() => removePicture(icon.id)}>
-          <Image style={styles.image} source={{uri: icon.uri}} />
->>>>>>> 7ab7f2dad50c6d6544424366356c391c56e28f17:src/components/PictureAddition/index.tsx
+            source={{uri: icon.uri ? icon.uri : ''}}
+          />
         </TouchableOpacity>
       ))}
       <ImageFull
         visible={imageVisible}
-        onDismiss={hideImage}
+        onDismiss={() => setVisible(false)}
         onChange={s => changePicture(activePicture.id, s)}
         onDelete={() => {
           removePicture(activePicture.id);
-          hideImage();
+          setVisible(false);
         }}
         uri={activePicture.uri ? activePicture.uri : ''} // may add placeholder image here
         timestamp={activePicture.timestamp ? activePicture.timestamp : ''}

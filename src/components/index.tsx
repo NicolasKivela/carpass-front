@@ -9,6 +9,7 @@ import {ReviewProgressBar, ReviewNavigation} from './ReviewNavigationBar/index';
 import SecondaryButton from './SecondaryButton/index';
 import TextField from './TextField/index';
 import TrafficLight from './TrafficLight';
+import ImageFull from './ImageFull';
 
 export {
   Description,
@@ -23,4 +24,5 @@ export {
   SecondaryButton,
   TextField,
   TrafficLight,
+  ImageFull,
 };

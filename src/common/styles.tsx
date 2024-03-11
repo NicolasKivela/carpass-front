@@ -14,4 +14,5 @@ export const colors = {
   green: 'rgb(0, 128, 0)',
   yellow: 'rgb(200,200,0)',
   red: 'rgb(200,0,0)',
+  black70: 'rgba(0,0,0,0.7)',
 };
