@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
-import {Portal, Modal, Button, Checkbox} from 'react-native-paper';
+import {Portal, Modal, Checkbox} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {useTranslation} from 'react-i18next';
@@ -33,8 +33,7 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           color={colors.orange}
           style={styles.iconStyle}
         />
-        <Text
-          style={styles.textStyle}>
+        <Text style={styles.textStyle}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           consequat odio ornare luctus feugiat. Curabitur ut metus interdum,
           laoreet dui.
@@ -46,7 +45,12 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           color="white"
         />
 
-        <SecondaryButton style={styles.btnStyle} onPress={() => console.log('checked: ', checked)} title={t('login')} fontSize={16} />
+        <SecondaryButton
+          style={styles.btnStyle}
+          onPress={() => console.log('checked: ', checked)}
+          title={t('login')}
+          fontSize={16}
+        />
       </Modal>
     </Portal>
   );

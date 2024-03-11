@@ -1,18 +1,25 @@
 #import "AppDelegate.h"
 #import "RNBootSplash.h"
 
+#import <ReactNativeNavigation/ReactNativeNavigation.h>
+#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"Trustcar";
-  // You can add your custom initial props in the dictionary below.
-  // They will be passed down to the ViewController used by React Native.
-  self.initialProps = @{};
+  [[UIDatePicker appearance] setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_GB"]];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor blackColor];
+  
+  NSURL *jsCodeLocation;
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:self.window.rootViewController.view];
+
+  return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
@@ -29,16 +36,9 @@
 #endif
 }
 
-- (UIView *)createRootViewWithBridge:(RCTBridge *)bridge
-                          moduleName:(NSString *)moduleName
-                           initProps:(NSDictionary *)initProps {
-  UIView *rootView = [super createRootViewWithBridge:bridge
-                                          moduleName:moduleName
-                                           initProps:initProps];
-
-  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // ⬅️ initialize the splash screen
-
-  return rootView;
+- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
+	return [ReactNativeNavigation extraModulesForBridge:bridge];
 }
+
 
 @end

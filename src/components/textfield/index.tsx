@@ -1,7 +1,7 @@
+import React from 'react';
 import {TextInput} from 'react-native-paper';
 import {colors} from '../../common/styles';
 import styles from './styles';
-import {Style} from 'react-native-paper/lib/typescript/components/List/utils';
 import {StyleProp, TextStyle} from 'react-native';
 
 interface TextFieldProps {
