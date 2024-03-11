@@ -1,21 +1,22 @@
 import React from 'react';
 import BootSplash from 'react-native-bootsplash';
+import MUIIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
+import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
-import LoginScreen from './src/screens/loginScreen';
-import {PaperProvider} from 'react-native-paper';
-
 import {SCREENS} from './src/common/constants';
-import NewReportScreen from './src/screens/NewReportScreen';
-import ReviewerScreen from './src/screens/reviewerScreen';
-import SummaryScreen from './src/screens/summaryScreen';
 import {colors} from './src/common/styles';
+import {
+  LoginScreen,
+  NewReportScreen,
+  ReviewerScreen,
+  SummaryScreen,
+  InspectorScreen,
+} from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
-import InspectorScreen from './src/screens/inspectorScreen';
-import MUIIcons from 'react-native-vector-icons/MaterialIcons';
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
@@ -40,8 +41,11 @@ const componentHOC = (Component, ...props) => {
   };
 };
 
+Navigation.registerComponent(SCREENS.INSPECTOR, () =>
+  componentHOC(InspectorScreen),
+);
 Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
-Navigation.registerComponent(SCREENS.NEW_REPORT_SCREEN, () =>
+Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
   componentHOC(NewReportScreen),
 );
 Navigation.registerComponent(SCREENS.REVIEWER, () =>
@@ -49,9 +53,6 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 );
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
-);
-Navigation.registerComponent(SCREENS.INSPECTOR, () =>
-  componentHOC(InspectorScreen),
 );
 
 const App = () => {
@@ -75,7 +76,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.INSPECTOR,
+                name: SCREENS.LOGIN,
               },
             },
           ],

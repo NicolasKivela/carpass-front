@@ -10,14 +10,18 @@ import {
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
+import {Navigation} from 'react-native-navigation';
 
+import {
+  LogoTopBar,
+  Gradient,
+  FrameProcessorCamera,
+  DropdownNotification,
+} from '../../components/index';
 import {colors} from '../../common/styles';
-import LogoTopBar from '../../components/logoTopBar';
-import Gradient from '../../components/gradient';
-import FrameProcessorCamera from '../../components/frameProcessorCamera';
+import {SCREENS} from '../../common/constants';
 import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
-import DropdownNotification from '../../components/dropdownNotification';
 
 import {styles} from './styles';
 
@@ -73,7 +77,19 @@ const NewReportScreen: React.FC = () => {
         odometerReading: null,
       });
     } else {
-      //TODO: go back to start report/orders screen (not implemented)
+      Navigation.setRoot({
+        root: {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: SCREENS.INSPECTOR,
+                },
+              },
+            ],
+          },
+        },
+      });
     }
     return true;
   };
@@ -88,7 +104,19 @@ const NewReportScreen: React.FC = () => {
         report_type: 'petrol', //TODO: fix, when type input is added?
       }),
     );
-    //TODO: navigate to report screen
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.REVIEWER,
+              },
+            },
+          ],
+        },
+      },
+    });
   };
 
   return (
@@ -101,10 +129,11 @@ const NewReportScreen: React.FC = () => {
           }}
         />
 
-        <ScrollView keyboardShouldPersistTaps="handled">
-          <KeyboardAvoidingView
-            style={styles.innerContainer}
-            behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+        <KeyboardAvoidingView
+          style={styles.innerContainer}
+          behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+          keyboardVerticalOffset={0}>
+          <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('identificationInfo')}</Text>
             <NewReportTextInput
               label={'registrationNumber'}
@@ -126,10 +155,26 @@ const NewReportScreen: React.FC = () => {
                       setOnChange={(value: string) => {
                         setOtherData({...otherData, [item]: value});
                       }}
-                      icon={'keyboard-outline'}
+                      icon={'keyboard'}
                     />
                   );
                 })}
+                <View style={styles.footerContainer}>
+                  <Button
+                    disabled={!readyToProceed}
+                    onPress={startInspectionHandler}
+                    textColor={colors.orange}
+                    style={styles.footerButton}>
+                    <Text
+                      style={
+                        readyToProceed
+                          ? styles.footerTextDone
+                          : styles.footerText
+                      }>
+                      {t('startInspection')}
+                    </Text>
+                  </Button>
+                </View>
               </View>
             ) : (
               <FrameProcessorCamera
@@ -137,25 +182,8 @@ const NewReportScreen: React.FC = () => {
                 setRegisterNumber={setRegisterNumber}
               />
             )}
-          </KeyboardAvoidingView>
-        </ScrollView>
-
-        {registerNumber.value && (
-          <View style={styles.footerContainer}>
-            <Button
-              disabled={!readyToProceed}
-              onPress={startInspectionHandler}
-              textColor={colors.orange}
-              style={styles.footerButton}>
-              <Text
-                style={
-                  readyToProceed ? styles.footerTextDone : styles.footerText
-                }>
-                {t('startInspection')}
-              </Text>
-            </Button>
-          </View>
-        )}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       <DropdownNotification />
     </Gradient>
