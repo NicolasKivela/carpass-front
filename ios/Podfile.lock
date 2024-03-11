@@ -1196,6 +1196,15 @@ PODS:
     - React-RCTText
   - RNBootSplash (5.4.0):
     - React-Core
+  - RNImageCropPicker (0.40.3):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.40.3)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.40.3):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
   - RNPermissions (4.1.1):
     - React-Core
   - RNReanimated (3.7.0):
@@ -1210,6 +1219,7 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - SocketRocket (0.6.1)
+  - TOCropViewController (2.6.1)
   - VisionCamera (3.9.0):
     - React
     - React-callinvoker
@@ -1298,6 +1308,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1336,6 +1347,7 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - SocketRocket
+    - TOCropViewController
 
 EXTERNAL SOURCES:
   boost:
@@ -1443,6 +1455,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-navigation"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
@@ -1538,11 +1552,13 @@ SPEC CHECKSUMS:
   ReactCommon: 840a955d37b7f3358554d819446bffcf624b2522
   ReactNativeNavigation: 87b603144cfe2cac1fa04b6c71d0be814d73993b
   RNBootSplash: 009c55e0258f3e56be9c5f7a578bf2baf140c4bc
+  RNImageCropPicker: e7ab6fb43d2fc3e84651e786ef4a080d63b0ed3d
   RNPermissions: b366b43ff08314585f3ee61f51f00b4b182c33f7
   RNReanimated: 7d6d32f238f914f13d9d6fb45c0aef557f7f901e
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNVectorIcons: 210f910e834e3485af40693ad4615c1ec22fc02b
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   VisionCamera: 72ec2908dff5de402074d0cfd41932cd33c1fe65
   VisionCameraOcr: ebd8fed14c8021dcd47c11be7727d312cc3a2f3c
   Yoga: 64cd2a583ead952b0315d5135bf39e053ae9be70
