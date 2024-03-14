@@ -4,3 +4,6 @@ export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const SET_REPORT_ROW_ANSWER = 'SET_REPORT_ROW_ANSWER';
 export const SET_ERROR = 'SET_ERROR';
 export const DELETE_ERROR = 'DELETE ERROR';
+export const LOG_IN = 'LOG_IN';
+export const LOG_OUT = 'LOG_OUT';
+export const SET_STATE = 'SET_STATE';
