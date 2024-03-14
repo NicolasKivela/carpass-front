@@ -2,6 +2,7 @@ import {Navigation} from 'react-native-navigation';
 import {decode} from 'base-64';
 import {jwtDecode} from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Keyboard} from 'react-native';
 
 import {LOCAL_STORAGE, SCREENS} from '../../common/constants';
 import {User} from '../types/user';
@@ -39,6 +40,7 @@ export const loginUser = (username: string, password: string) => {
         },
         body: JSON.stringify({username, password}),
       }); // remove later and use this from apimanager
+      Keyboard.dismiss();
       if (response.ok) {
         const token = (await response.json()).authtoken;
         await AsyncStorage.setItem(LOCAL_STORAGE.TOKEN, token); // for autologin in the future
