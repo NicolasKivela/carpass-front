@@ -13,3 +13,7 @@ export const REPORT_TYPE = {
   PART: 'PART',
   LITE: 'LITE',
 };
+
+export const LOCAL_STORAGE = {
+  TOKEN: 'carpass:token',
+};

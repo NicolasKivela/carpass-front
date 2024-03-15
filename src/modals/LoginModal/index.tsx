@@ -3,11 +3,12 @@ import {Text} from 'react-native-paper';
 import {Portal, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
-import {Navigation} from 'react-native-navigation';
 
 import {colors} from '../../common/styles';
-import {SCREENS} from '../../common/constants';
 import {SecondaryButton, TextField} from '../../components/index';
+import {useAppDispatch} from '../../store/configureStore';
+import {loginUser} from '../../store/actions/user';
+
 import styles from '../styles';
 
 interface ModalContentProps {
@@ -17,6 +18,7 @@ interface ModalContentProps {
 
 const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,25 +28,17 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   }
 
   const loginHandler = () => {
-    //TODO: dispatch login and if success then navigate and if not show error
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.INSPECTOR,
-              },
-            },
-          ],
-        },
-      },
-    });
+    dispatch(loginUser(username, password));
   };
 
   return (
     <Portal>
       <Modal
+        theme={{
+          colors: {
+            backdrop: 'transparent',
+          },
+        }}
         visible={visible}
         onDismiss={onDismiss}
         contentContainerStyle={styles.modal}>

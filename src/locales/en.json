@@ -1,15 +1,21 @@
 {
   "brandAndModel": "Brand and model",
+  "description": "Description",
   "disqualifications": "Disqualifications",
   "errors": {
+    "authLoginTitle": "Error during login",
+    "authLoginMessage": "Something went wrong during logging in. Check your username and password and try again.",
     "cameraTitle": "Camera error",
     "cameraMessage": "You have denied camera permission. Check your permissions from App settings.",
     "fetchReportQuestinsTitle": "Fetch error",
-    "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection"
+    "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection",
+    "loginTitle": "Error during login",
+    "loginMessage": "Something went wrong during logging in. Try again or check your internet connection."
   },
   "full": "FULL",
   "guidance": "Guidance",
   "identificationInfo": "Identification information",
+  "images": "Images",
   "lite": "LITE",
   "login": "Login",
   "loginToApp": "Log in to the application",
@@ -29,8 +35,5 @@
   "tos": "Terms of use",
   "username": "Username",
   "vehicleIdentificationNumber": "Vehicle Identification Number",
-  "warnings": "Warnings",
-  "description":"Description",
-  "images":"Images"
-
+  "warnings": "Warnings"
 }
