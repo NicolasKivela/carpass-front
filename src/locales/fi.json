@@ -10,7 +10,9 @@
     "fetchReportQuestinsTitle": "Ongelma tietojen latauksessa",
     "fetchReportQuestinsMessage": "Jotain meni vikaan ladatessa tietoja. Yritä uudelleen tai tarkista internet yhteytesi.",
     "loginTitle": "Ongelma sisäänkirjautumisen aikana",
-    "loginMessage": "Jotain meni vikaan sisäänkirjautumisen aikana. Yritä uudelleen tai tarkista internet yhteytesi."
+    "loginMessage": "Jotain meni vikaan sisäänkirjautumisen aikana. Yritä uudelleen tai tarkista internet yhteytesi.",
+    "saveReportTitle": "Ongelma tallentaessa tarkastusta",
+    "saveReportMessage": "Jotain meni vikaan tallentamisen aikana. Yritä uudelleen tai tarkista internet yhteytesi."
   },
   "full": "LAAJA",
   "guidance": "Ohjeet",

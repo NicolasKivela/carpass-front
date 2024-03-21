@@ -3,12 +3,20 @@ import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {ReviewNavigation, Gradient} from '../../components/index';
+import {
+  ReviewNavigation,
+  Gradient,
+  DropdownNotification,
+} from '../../components/index';
 import Logo from '../../assets/images/trustcarlogo.png';
+import {useAppDispatch} from '../../store/configureStore';
+import {saveReport} from '../../store/actions/report';
 import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+
   const [showCarParts, setShowCarParts] = useState(true);
   const [showWarnings, setShowWarnings] = useState(true);
   const [pageNumber, setPageNumber] = useState<number>(10);
@@ -68,12 +76,13 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.centered}>
             <TouchableOpacity
               onPress={() => {
-                console.log('TODO: summary ready');
+                dispatch(saveReport());
               }}>
               <Text style={styles.sendReportText}>{t('reviewReady')}</Text>
             </TouchableOpacity>
           </View>
         </View>
+        <DropdownNotification />
       </SafeAreaView>
     </Gradient>
   );

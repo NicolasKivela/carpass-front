@@ -10,6 +10,7 @@ import {
   ReviewNavigation,
   Description,
   Spinner,
+  DropdownNotification,
 } from '../../components/index';
 import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
@@ -65,7 +66,9 @@ const ReviewerScreen: React.FC = () => {
   };
 
   const summaryAllowedHandler = () => {
-    return reportRows.some(item => item.id && item.inspection_status === null);
+    return reportRows.some(
+      item => item.question_id && item.inspection_status === null,
+    );
   };
 
   return (
@@ -125,6 +128,7 @@ const ReviewerScreen: React.FC = () => {
       ) : (
         <Spinner text={'loadingQuestions'} />
       )}
+      <DropdownNotification />
     </SafeAreaProvider>
   );
 };

@@ -10,7 +10,9 @@
     "fetchReportQuestinsTitle": "Fetch error",
     "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection",
     "loginTitle": "Error during login",
-    "loginMessage": "Something went wrong during logging in. Try again or check your internet connection."
+    "loginMessage": "Something went wrong during logging in. Try again or check your internet connection.",
+    "saveReportTitle": "Error during saving report",
+    "saveReportMessage": "Something went wrong when saving report. Try again or check your internet connection."
   },
   "full": "FULL",
   "guidance": "Guidance",

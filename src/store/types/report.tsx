@@ -2,7 +2,7 @@ export interface Report {
   brand_and_model: string;
   odometer_reading: number | null;
   production_number: string;
-  registration_number: string;
+  registeration_number: string;
   engine_type: EngineType;
   report_structure: {
     id: number;

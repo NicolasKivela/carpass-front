@@ -8,7 +8,7 @@ import {
 } from '../actions/actionTypes';
 
 export const initialState: Report = {
-  registration_number: '',
+  registeration_number: '',
   brand_and_model: '',
   odometer_reading: null,
   production_number: '',
@@ -45,11 +45,11 @@ const reportReducer = (state = initialState, action: any) => {
     case SET_CAR_DATA:
       return {
         ...state,
-        registration_number: action.payload.registration_number,
+        registeration_number: action.payload.registeration_number,
         brand_and_model: action.payload.brand_and_model,
         odometer_reading: action.payload.odometer_reading,
         production_number: action.payload.production_number,
-        engine_type: action.payload.report_type,
+        engine_type: action.payload.engine_type,
       };
 
     case SET_INITIAL_STATE:
