@@ -26,12 +26,14 @@ interface NavigationProps {
   warningNum: number;
   errorNum: number;
   pageNumber: number;
+  totalPages: number;
 }
 
 const ReviewNavigation = ({
   warningNum = 0,
   errorNum = 0,
   pageNumber = 0,
+  totalPages = 0,
 }: NavigationProps) => {
   const {t} = useTranslation();
 
@@ -77,8 +79,10 @@ const ReviewNavigation = ({
               </View>
             )}
           </View>
-          <ReviewProgressBar progress={pageNumber / 10} />
-          <Text style={styles.pageNumber}>{pageNumber}/10</Text>
+          <ReviewProgressBar progress={pageNumber / totalPages} />
+          <Text style={styles.pageNumber}>
+            {pageNumber}/{totalPages}
+          </Text>
         </View>
       </View>
 

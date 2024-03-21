@@ -1,45 +1,151 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
 import {FlatList, View, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Button} from 'react-native-paper';
+import {useTranslation} from 'react-i18next';
 import {Navigation} from 'react-native-navigation';
 
 import {
   TrafficLight,
   ReviewNavigation,
   Description,
+  Spinner,
 } from '../../components/index';
-import {SCREENS} from '../../common/constants';
+import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {
+  fetchReportQuestions,
+  setReportRowAnswer,
+} from '../../store/actions/report';
+import {colors} from '../../common/styles';
 import styles from './styles';
 
 const ReviewerScreen: React.FC = () => {
-  //TODO: remove later when test data not needed
-  const data1 = [
-    {key: '1', section: 'Ajettavuus'},
-    {key: '2', section: 'Tuulilasi ja sen puhdistuslaitteet'},
-    {key: '3', section: 'Lämmitys ja huurteenpoisto'},
-    {key: '4', section: 'Sisätilat'},
-    {key: '5', section: 'Hallintalaitteet ja merkkivalot'},
-    {key: '6', section: 'Ohjauslukko'},
-    {key: '7', section: 'Vaihdelukko'},
-    {key: '8', section: 'Nopeusmittari'},
-    {key: '9', section: 'Muut mittarit'},
-  ];
-  const text1 = '1. Ajettavuus, hallintalaitteet ja sisätilat';
+  const dispatch = useAppDispatch();
 
-  const [countToNavigate, setCountToNavigate] = useState(0); //TODO: remove later, only for demo and testing
-  const [displayData, setData] = useState(data1);
-  const [displayText, setText] = useState(text1);
-  const [visibleDescriptions, setVisibleDescriptions] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const reportStructure = useAppSelector(
+    state => state.report.report_structure,
+  );
+  const reportRows = useAppSelector(state => state.report.report_rows);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
 
-  //TODO: remove useeffect later, only for demo and testing
   useEffect(() => {
-    if (countToNavigate === 4) {
+    dispatch(fetchReportQuestions());
+  }, []);
+
+  const modifyWarningNum = (value: number) => {
+    if (warningNum === 0 && value < 0) {
+      return;
+    }
+    setWarningNum(warningNum + value);
+  };
+
+  const modifyErrorNum = (value: number) => {
+    if (errorNum === 0 && value < 0) {
+      return;
+    }
+    setErrorNum(errorNum + value);
+  };
+
+  const setQuestionInspectionStatus = (id: string, color: string | null) => {
+    dispatch(setReportRowAnswer(id, color ? color.toLowerCase() : null));
+  };
+
+  const descriptionVisibleHandler = (id: number) => {
+    const status = reportRows.find(
+      i => i.question_id === id,
+    )?.inspection_status;
+    return (
+      status === REPORT_QUESTION_STATUS.RED ||
+      status === REPORT_QUESTION_STATUS.YELLOW
+    );
+  };
+
+  const summaryAllowedHandler = () => {
+    return reportRows.some(item => item.id && item.inspection_status === null);
+  };
+
+  return (
+    <SafeAreaProvider>
+      <ReviewNavigation
+        pageNumber={pageNumber}
+        totalPages={reportStructure.length || 1}
+        warningNum={warningNum}
+        errorNum={errorNum}
+      />
+
+      {reportStructure.length ? (
+        <View style={styles.section3}>
+          <Text style={styles.header}>
+            {reportStructure[pageNumber - 1].id}.{' '}
+            {
+              Object.values<string>(
+                reportStructure[pageNumber - 1].traslations,
+              )[0]
+            }
+          </Text>
+
+          <FlatList
+            data={reportStructure[pageNumber - 1]?.question_map.sort(
+              (a, b) => a.question.id - b.question.id,
+            )}
+            extraData={[reportRows, reportStructure]}
+            renderItem={({item}) => (
+              <View>
+                <TrafficLight
+                  section={Object.values<string>(item.question.traslations)[0]}
+                  activeColor={reportRows
+                    .find(i => i.question_id === item.question.id)
+                    ?.inspection_status?.toUpperCase()}
+                  modifyError={modifyErrorNum}
+                  modifyWarning={modifyWarningNum}
+                  onStateChange={color =>
+                    setQuestionInspectionStatus(item.question.id, color)
+                  }
+                />
+                <Description
+                  visible={descriptionVisibleHandler(item.question.id)}
+                />
+              </View>
+            )}
+            keyExtractor={item => item.question.id}
+            ListFooterComponent={
+              <FooterButtons
+                pageNumber={pageNumber}
+                setPageNumber={setPageNumber}
+                totalPages={reportStructure.length}
+                summaryNotAllowed={summaryAllowedHandler()}
+              />
+            }
+          />
+        </View>
+      ) : (
+        <Spinner text={'loadingQuestions'} />
+      )}
+    </SafeAreaProvider>
+  );
+};
+
+interface FooterProps {
+  pageNumber: number;
+  setPageNumber: Dispatch<SetStateAction<number>>;
+  totalPages: number;
+  summaryNotAllowed: boolean;
+}
+
+const FooterButtons: React.FC<FooterProps> = ({
+  pageNumber,
+  setPageNumber,
+  totalPages,
+  summaryNotAllowed,
+}) => {
+  const {t} = useTranslation();
+
+  const buttonHandler = () => {
+    if (pageNumber === totalPages && !summaryNotAllowed) {
       Navigation.setRoot({
         root: {
           stack: {
@@ -53,64 +159,51 @@ const ReviewerScreen: React.FC = () => {
           },
         },
       });
+    } else {
+      setPageNumber(pageNumber + 1);
     }
-  }, [countToNavigate]);
-
-  const modifyWarningNum = (value: number) => {
-    if (warningNum === 0 && value < 0) {
-      return;
-    }
-    setWarningNum(warningNum + value);
-    console.log(warningNum, 'THIS IS WARNING');
-  };
-
-  const modifyErrorNum = (value: number) => {
-    if (errorNum === 0 && value < 0) {
-      return;
-    }
-    setErrorNum(errorNum + value);
-    console.log(errorNum, 'THIS IS ERROR');
-  };
-
-  const setDescriptionVisibility = (key: string, color: string) => {
-    const value = color === null ? false : color === 'GREEN' ? false : true;
-    console.log(color, '===', value);
-    setVisibleDescriptions(prevVisibility => ({
-      ...prevVisibility,
-      [key]: value,
-    }));
   };
 
   return (
-    <SafeAreaProvider>
-      <ReviewNavigation
-        pageNumber={pageNumber}
-        warningNum={warningNum}
-        errorNum={errorNum}
-      />
-
-      <View style={styles.section3}>
-        <FlatList
-          ListHeaderComponent={<Text style={styles.header}>{displayText}</Text>}
-          data={displayData}
-          renderItem={({item}) => (
-            <View>
-              <TrafficLight
-                section={item.section}
-                modifyError={modifyErrorNum}
-                modifyWarning={modifyWarningNum}
-                onStateChange={color => {
-                  setDescriptionVisibility(item.key, color);
-                  setCountToNavigate(prevState => prevState + 1);
-                }}
-              />
-              <Description visible={visibleDescriptions[item.key]} />
-            </View>
-          )}
-          keyExtractor={item => item.key}
-        />
+    <View>
+      <View style={styles.footer}>
+        {pageNumber > 1 ? (
+          <Button
+            mode="outlined"
+            icon={'arrow-back'}
+            textColor={colors.orange}
+            labelStyle={styles.footerButtonLabel}
+            style={styles.footerButton}
+            onPress={() => setPageNumber(pageNumber - 1)}>
+            {t('previous')}
+          </Button>
+        ) : (
+          <View />
+        )}
+        <Button
+          mode="outlined"
+          icon={'arrow-forward'}
+          textColor={
+            pageNumber === totalPages && summaryNotAllowed
+              ? colors.lightGrey
+              : colors.orange
+          }
+          labelStyle={styles.footerButtonLabel}
+          contentStyle={styles.footerButtonContentStyle}
+          style={[
+            styles.footerButton,
+            pageNumber === totalPages &&
+              summaryNotAllowed &&
+              styles.footerButtonDisabled,
+          ]}
+          onPress={buttonHandler}>
+          {pageNumber === totalPages ? t('summary') : t('next')}
+        </Button>
       </View>
-    </SafeAreaProvider>
+      {pageNumber === totalPages && summaryNotAllowed && (
+        <Text style={styles.infoText}>{t('summaryInfo')}</Text>
+      )}
+    </View>
   );
 };
 export default ReviewerScreen;

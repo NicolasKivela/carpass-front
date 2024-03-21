@@ -16,7 +16,7 @@ const SummaryScreen: React.FC = () => {
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
-        <ReviewNavigation pageNumber={pageNumber} />
+        <ReviewNavigation pageNumber={pageNumber} totalPages={pageNumber} />
 
         <View>
           <Text style={styles.header}>{t('summary')}</Text>

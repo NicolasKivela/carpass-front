@@ -18,25 +18,23 @@ const chipData = [
 
 interface TrafficLightProps {
   section: string;
+  activeColor: string;
   modifyWarning: (count: number) => void;
   modifyError: (count: number) => void;
-  onStateChange: (color: TrafficLightColor) => void;
+  onStateChange: (color: TrafficLightColor | null) => void;
 }
 
 const TrafficLight: React.FC<TrafficLightProps> = ({
   section,
+  activeColor,
   modifyWarning,
   modifyError,
   onStateChange,
 }) => {
-  const [activeColor, setActiveColor] = useState<TrafficLightColor | null>(
-    null,
-  );
-
   const toggleColor = (color: TrafficLightColor | null) => {
     onStateChange(color as TrafficLightColor);
     if (activeColor === color) {
-      setActiveColor(null);
+      onStateChange(null);
       if (color === TrafficLightColor.RED) {
         modifyError(-1);
       } else if (color === TrafficLightColor.YELLOW) {
@@ -48,7 +46,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
       } else if (activeColor === TrafficLightColor.YELLOW) {
         modifyWarning(-1);
       }
-      setActiveColor(color);
+      onStateChange(color);
       if (color === TrafficLightColor.RED) {
         modifyError(1);
       } else if (color === TrafficLightColor.YELLOW) {
@@ -69,11 +67,11 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
               key={item.color}
               style={[
                 styles.chip,
-                activeColor === item.color ? item.activeStyle : null,
+                activeColor && activeColor === item.color
+                  ? item.activeStyle
+                  : null,
               ]}
-              onPress={() =>
-                toggleColor(activeColor === item.color ? null : item.color)
-              }
+              onPress={() => toggleColor(item.color)}
               children={undefined}
             />
           );

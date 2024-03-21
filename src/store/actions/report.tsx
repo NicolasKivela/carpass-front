@@ -1,6 +1,7 @@
 import {
   SET_CAR_DATA,
   SET_INITIAL_STATE,
+  SET_REPORT_STRUCTURE,
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
 } from './actionTypes';
@@ -18,7 +19,7 @@ export const setCarData = (carData: {
   odometer_reading: Number | null;
   production_number: string;
   registration_number: string;
-  report_type: string;
+  engine_type: string;
 }) => {
   return {
     type: SET_CAR_DATA,
@@ -26,33 +27,61 @@ export const setCarData = (carData: {
   };
 };
 
-export const setReportRowAnswer = (id: string, answer: string) => {
+export const setReportRowAnswer = (id: string, answer: string | null) => {
   return {
     type: SET_REPORT_ROW_ANSWER,
     payload: {id, answer},
   };
 };
 
-export const setReportRows = (reportRows: Report['report_rows']) => {
+export const setReportRows = (rows: Report['report_rows']) => {
   return {
     type: SET_REPORT_ROWS,
-    payload: reportRows,
+    payload: rows,
+  };
+};
+
+export const setReportStructure = (structure: Report['report_structure']) => {
+  return {
+    type: SET_REPORT_STRUCTURE,
+    payload: structure,
   };
 };
 
 export const fetchReportQuestions = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: any, getState: any) => {
     try {
-      // TODO: fix when API endpoint is done
-      //   const response = await ApiManager.get(PATHS.REPORT_QUESTIONS) -> add all paths to constants.tsx file
-      //   if (response.ok) {
-      //     const reportQuestionRows = response.json()
-      //     const reportRows = reportQuestionRows.map(row => ({...row, inspection_status: null}))
-      //     dispatch(setReportRows(reportRows));
-      //   }
-      //   else {
-      //     //TODO: add error handler, depends on error code?
-      //   }
+      // const response = await ApiManager.post(PATHS.REPORT_STRUCTURE)
+      const response = await fetch(
+        'http://10.0.2.2:8080/api/v1/report/structure',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+          },
+        },
+      ); // TODO: remove later and use this from apimanager
+      if (response.ok) {
+        const reportStructure = await response.json();
+        dispatch(
+          setReportStructure(reportStructure.data.sort((a, b) => a.id - b.id)),
+        );
+        const reportRows = reportStructure.data
+          .map((item: any) => {
+            return item.question_map.map((innerItem: any) => {
+              return {
+                question_id: innerItem.question.id,
+                inspection_status: null,
+                comment: '',
+                attachment: [],
+              };
+            });
+          })
+          .flat();
+        dispatch(setReportRows(reportRows));
+      } else {
+        throw Error;
+      }
     } catch (err) {
       dispatch(
         setError({
