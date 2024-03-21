@@ -137,6 +137,7 @@ export const saveReport = () => {
             },
           },
         });
+        dispatch(setReportInitialState());
         // TODO: some kind of toast that report is saved?
       } else {
         throw Error;

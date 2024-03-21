@@ -15,6 +15,7 @@
     "saveReportMessage": "Something went wrong when saving report. Try again or check your internet connection."
   },
   "full": "FULL",
+  "goBack": "Go back to make changes",
   "guidance": "Guidance",
   "identificationInfo": "Identification information",
   "images": "Images",

@@ -15,6 +15,7 @@
     "saveReportMessage": "Jotain meni vikaan tallentamisen aikana. Yritä uudelleen tai tarkista internet yhteytesi."
   },
   "full": "LAAJA",
+  "goBack": "Palaa tekemään muutoksia",
   "guidance": "Ohjeet",
   "identificationInfo": "Tunnistetiedot",
   "images": "Kuvat",

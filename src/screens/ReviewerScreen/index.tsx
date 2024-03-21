@@ -21,7 +21,11 @@ import {
 import {colors} from '../../common/styles';
 import styles from './styles';
 
-const ReviewerScreen: React.FC = () => {
+interface Props {
+  defaultPageNumber?: number;
+}
+
+const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const dispatch = useAppDispatch();
 
   const reportStructure = useAppSelector(
@@ -29,12 +33,12 @@ const ReviewerScreen: React.FC = () => {
   );
   const reportRows = useAppSelector(state => state.report.report_rows);
 
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(defaultPageNumber || 1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchReportQuestions());
+    !defaultPageNumber && dispatch(fetchReportQuestions());
   }, []);
 
   const modifyWarningNum = (value: number) => {
@@ -163,7 +167,7 @@ const FooterButtons: React.FC<FooterProps> = ({
           },
         },
       });
-    } else {
+    } else if (pageNumber !== totalPages) {
       setPageNumber(pageNumber + 1);
     }
   };
