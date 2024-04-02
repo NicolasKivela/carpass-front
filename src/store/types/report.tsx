@@ -23,6 +23,7 @@ export interface Report {
 }
 
 export interface Attachment {
+  id: string;
   attachment_type: AttachmentType;
   data: string;
 }

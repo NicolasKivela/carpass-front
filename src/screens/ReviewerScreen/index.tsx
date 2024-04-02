@@ -110,7 +110,10 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
                     setQuestionInspectionStatus(item.id, color)
                   }
                 />
-                <Description visible={descriptionVisibleHandler(item.id)} />
+                <Description
+                  visible={descriptionVisibleHandler(item.id)}
+                  id={item.id}
+                />
               </View>
             )}
             keyExtractor={item => item.id}

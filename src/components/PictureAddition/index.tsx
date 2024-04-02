@@ -3,39 +3,43 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {IconButton, Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import ImagePicker from 'react-native-image-crop-picker';
-import ImageFull from '../ImageFull';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {colors} from '../../common/styles';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import ImageFull from '../ImageFull';
 import styles from './styles';
-
-type Picture = {
-  id: number;
-  uri: string | null;
-  timestamp: string | null;
-};
+import {
+  changeReportRowImage,
+  removeReportRowImage,
+  setReportRowImage,
+} from '../../store/actions/report';
+import {Attachment} from '../../store/types/report';
 
 /* Some sort of dialog needed if user should be able to choose between camera or gallery.
   Here are react native paper recommended Bottom sheets https://callstack.github.io/react-native-paper/docs/guides/recommended-libraries
   launchCamera for camera, launchImageLibrary for gallery
 */
 
-const PictureAddition = ({}) => {
-  const [Pictures, setPictures] = useState<Picture[]>([]);
-  const [activePicture, setActivePicture] = useState<Picture>({
-    id: 0,
-    uri: null,
-    timestamp: null,
-  });
-  const [imageUri, setUri] = useState<string | null>('');
-  const [imageVisible, setVisible] = useState(false);
+interface Props {
+  id: string;
+}
 
+const PictureAddition = ({id}: Props) => {
   const {t} = useTranslation();
 
-  const showImage = (picture: Picture) => {
-    setUri(picture.uri);
+  const dispatch = useAppDispatch();
+  const report_rows = useAppSelector(state => state.report.report_rows);
+
+  const [activePicture, setActivePicture] = useState<Attachment>({
+    id: '',
+    attachment_type: 'image',
+    data: '',
+  });
+  const [imageVisible, setVisible] = useState(false);
+
+  const showImage = (picture: Attachment) => {
     setVisible(true);
-    console.log(imageUri);
     setActivePicture(picture);
   };
 
@@ -43,26 +47,31 @@ const PictureAddition = ({}) => {
     ImagePicker.openCamera({mediaType: 'photo'})
       .then(image => {
         const newId =
-          Pictures.length > 0 ? Pictures[Pictures.length - 1].id + 1 : 1;
-        const newPicture: Picture = {
-          id: newId,
-          uri: image.path,
-          timestamp: image.modificationDate ? image.modificationDate : null,
-        };
-
-        setPictures(prevPictures => [...prevPictures, newPicture]);
-        console.log(newId);
-        console.log(image.modificationDate);
+          report_rows.find((item: any) => item.question_id === id)?.attachments
+            .length + 1 || 0;
+        dispatch(
+          setReportRowImage(id, {
+            id: newId.toString(),
+            attachment_type: 'image',
+            data: image.path,
+          }),
+        );
       })
       .catch(e => console.log(e));
   };
-  const changePicture = (id: number, newPath: string) => {
-    setPictures(pictures =>
-      pictures.map(pic => (pic.id === id ? {...pic, uri: newPath} : pic)),
+
+  const changePicture = (idImage: string, newPath: string) => {
+    dispatch(
+      changeReportRowImage(id, {
+        id: idImage,
+        attachment_type: 'image',
+        data: newPath,
+      }),
     );
   };
-  const removePicture = (id: number) => {
-    setPictures(prevPictures => prevPictures.filter(icon => icon.id !== id));
+
+  const removePicture = (idImage: string) => {
+    dispatch(removeReportRowImage(id, idImage));
   };
 
   return (
@@ -78,18 +87,22 @@ const PictureAddition = ({}) => {
         )}
         onPress={addPicture}
       />
-      {Pictures.map(icon => (
-        <TouchableOpacity
-          key={icon.id}
-          onPress={() =>
-            showImage(icon ? icon : {id: 0, uri: null, timestamp: null})
-          }>
-          <Image
-            style={styles.image}
-            source={{uri: icon.uri ? icon.uri : ''}}
-          />
-        </TouchableOpacity>
-      ))}
+      {report_rows
+        .find((item: any) => item.question_id === id)
+        ?.attachments?.map((attachment: any) => (
+          <TouchableOpacity
+            key={attachment.id}
+            onPress={() =>
+              showImage(
+                attachment ? attachment : {id: 0, uri: null, timestamp: null},
+              )
+            }>
+            <Image
+              style={styles.image}
+              source={{uri: attachment.data ? attachment.data : ''}}
+            />
+          </TouchableOpacity>
+        ))}
       <ImageFull
         visible={imageVisible}
         onDismiss={() => setVisible(false)}
@@ -98,8 +111,8 @@ const PictureAddition = ({}) => {
           removePicture(activePicture.id);
           setVisible(false);
         }}
-        uri={activePicture.uri ? activePicture.uri : ''} // may add placeholder image here
-        timestamp={activePicture.timestamp ? activePicture.timestamp : ''}
+        uri={activePicture.data ? activePicture.data : ''} // may add placeholder image here
+        timestamp={''}
       />
     </View>
   );

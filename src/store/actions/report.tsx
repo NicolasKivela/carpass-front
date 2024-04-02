@@ -1,16 +1,20 @@
 import {Navigation} from 'react-native-navigation';
+import i18next from 'i18next';
 
 import {REPORT_TYPE, SCREENS} from '../../common/constants';
-import {Report} from '../types/report';
+import {Attachment, Report} from '../types/report';
 import {
   SET_CAR_DATA,
   SET_INITIAL_STATE,
   SET_REPORT_STRUCTURE,
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
+  SET_REPORT_ROW_COMMENT,
+  SET_REPORT_ROW_IMAGE,
+  CHANGE_REPORT_ROW_IMAGE,
+  REMOVE_REPORT_ROW_IMAGE,
 } from './actionTypes';
 import {setError} from './error';
-import i18next from 'i18next';
 
 export const setReportInitialState = () => {
   return {
@@ -35,6 +39,34 @@ export const setReportRowAnswer = (id: string, answer: string | null) => {
   return {
     type: SET_REPORT_ROW_ANSWER,
     payload: {id, answer},
+  };
+};
+
+export const setReportRowComment = (id: string, comment: string | null) => {
+  return {
+    type: SET_REPORT_ROW_COMMENT,
+    payload: {id, comment},
+  };
+};
+
+export const setReportRowImage = (id: string, attachment: Attachment) => {
+  return {
+    type: SET_REPORT_ROW_IMAGE,
+    payload: {id, attachment},
+  };
+};
+
+export const changeReportRowImage = (id: string, attachment: Attachment) => {
+  return {
+    type: CHANGE_REPORT_ROW_IMAGE,
+    payload: {id, attachment},
+  };
+};
+
+export const removeReportRowImage = (id: string, idImage: string) => {
+  return {
+    type: REMOVE_REPORT_ROW_IMAGE,
+    payload: {id, idImage},
   };
 };
 
@@ -81,7 +113,7 @@ export const fetchReportQuestions = () => {
                 question_id: innerItem.id,
                 inspection_status: null,
                 comment: '',
-                attachment: [],
+                attachments: [],
               };
             });
           })
