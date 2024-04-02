@@ -36,10 +36,8 @@ const SummaryScreen: React.FC = () => {
 
   const summaryValueHandler = id => {
     return reportStructure.map(item =>
-      item.question_map.map(innerItem =>
-        innerItem.question.id === id
-          ? Object.values(innerItem.question.traslations)[0]
-          : null,
+      item.questions.map(innerItem =>
+        innerItem.id === id ? Object.values(innerItem.name) : null,
       ),
     );
   };
@@ -85,7 +83,7 @@ const SummaryScreen: React.FC = () => {
                 {reportRows.map(row => {
                   return row.inspection_status ===
                     REPORT_QUESTION_STATUS.RED ? (
-                    <Text style={styles.error}>
+                    <Text key={row.id} style={styles.error}>
                       {summaryValueHandler(row.question_id)}
                     </Text>
                   ) : null;

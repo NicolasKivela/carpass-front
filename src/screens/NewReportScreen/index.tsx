@@ -100,7 +100,7 @@ const NewReportScreen: React.FC = () => {
         brand_and_model: otherData.brandAndModel,
         odometer_reading: otherData.odometerReading,
         production_number: otherData.vehicleIdentificationNumber,
-        registeration_number: registerNumber.value,
+        registration_number: registerNumber.value,
         engine_type: 'petrol', //TODO: fix, when type input is added?
       }),
     );

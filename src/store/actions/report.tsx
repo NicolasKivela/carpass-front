@@ -26,7 +26,7 @@ export const setCarData = (carData: {
   brand_and_model: string;
   odometer_reading: Number | null;
   production_number: string;
-  registeration_number: string;
+  registration_number: string;
   engine_type: string;
 }) => {
   return {
@@ -148,18 +148,29 @@ export const saveReport = () => {
           brand_and_model: getState().report.brand_and_model,
           odometer_reading: getState().report.odometer_reading,
           production_number: getState().report.production_number,
-          registeration_number: getState().report.registeration_number,
+          registration_number: getState().report.registration_number,
           engine_type: getState().report.engine_type,
-          report_rows: getState().report.report_rows.map(item => {
-            return {
-              ...item,
-              comment: 'asd',
-              attachment: [{attachment_type: 'image', data: 'test'}],
-            };
-          }),
+          report_rows: getState()
+            .report.report_rows.map((item: any) => {
+              return {
+                ...item,
+                attachments: item.attachments.map((attachment: any) => ({
+                  attachment_type: attachment.attachment_type,
+                  data: attachment.data,
+                })),
+              };
+            }) //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
+            .reduce((accumulator: any, current: any) => {
+              let exists = accumulator.find((item: any) => {
+                return item.id === current.id;
+              });
+              if (!exists) {
+                accumulator = accumulator.concat(current);
+              }
+              return accumulator;
+            }, []),
         }),
       }); // TODO: remove later and use this from apimanager
-      //TODO: remove report_rows mapping when backend fixed
       if (response.ok) {
         Navigation.setRoot({
           root: {
@@ -174,7 +185,6 @@ export const saveReport = () => {
             },
           },
         });
-        dispatch(setReportInitialState());
         // TODO: some kind of toast that report is saved?
       } else {
         throw Error;
