@@ -33,7 +33,7 @@ export const loginUser = (username: string, password: string) => {
   return async (dispatch: any) => {
     try {
       // const response = await ApiManager.post(PATHS.LOGIN, {username, password})
-      const response = await fetch('http://10.0.2.2:8080/api/v1/user/login', {
+      const response = await fetch('http://carpass.fi/api/v1/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const loginUser = (username: string, password: string) => {
       }); // remove later and use this from apimanager
       Keyboard.dismiss();
       if (response.ok) {
-        const token = (await response.json()).authtoken;
+        const token = (await response.json()).authToken;
         await AsyncStorage.setItem(LOCAL_STORAGE.TOKEN, token); // for autologin in the future
         const credentials = jwtDecode(token) as {
           username: string;

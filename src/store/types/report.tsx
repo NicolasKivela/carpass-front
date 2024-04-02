@@ -1,16 +1,16 @@
 export interface Report {
+  registration_number: string;
+  engine_type: EngineType;
   brand_and_model: string;
   odometer_reading: number | null;
   production_number: string;
-  registeration_number: string;
-  engine_type: EngineType;
   report_structure: {
     id: number;
-    translations: {[key: string]: string};
-    question_map: {
+    name: string;
+    questions: {
       question: {
         id: number;
-        translations: {[key: string]: string};
+        name: string;
       };
     }[];
   }[];
@@ -18,7 +18,7 @@ export interface Report {
     question_id: number | null;
     inspection_status: InspectionStatus | null;
     comment: string;
-    attachment: Attachment[];
+    attachments: Attachment[];
   }[];
 }
 

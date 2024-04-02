@@ -87,38 +87,33 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
       {reportStructure.length ? (
         <View style={styles.section3}>
           <Text style={styles.header}>
-            {reportStructure[pageNumber - 1].id}.{' '}
-            {
-              Object.values<string>(
-                reportStructure[pageNumber - 1].traslations,
-              )[0]
-            }
+            {`${reportStructure[pageNumber - 1].id}. ${
+              reportStructure[pageNumber - 1].name
+            }`}
           </Text>
 
           <FlatList
-            data={reportStructure[pageNumber - 1]?.question_map.sort(
-              (a, b) => a.question.id - b.question.id,
+            data={reportStructure[pageNumber - 1]?.questions.sort(
+              (a, b) => a.id - b.id,
             )}
             extraData={[reportRows, reportStructure]}
             renderItem={({item}) => (
               <View>
                 <TrafficLight
-                  section={Object.values<string>(item.question.traslations)[0]}
+                  section={item.name}
                   activeColor={reportRows
-                    .find(i => i.question_id === item.question.id)
+                    .find(i => i.question_id === item.id)
                     ?.inspection_status?.toUpperCase()}
                   modifyError={modifyErrorNum}
                   modifyWarning={modifyWarningNum}
                   onStateChange={color =>
-                    setQuestionInspectionStatus(item.question.id, color)
+                    setQuestionInspectionStatus(item.id, color)
                   }
                 />
-                <Description
-                  visible={descriptionVisibleHandler(item.question.id)}
-                />
+                <Description visible={descriptionVisibleHandler(item.id)} />
               </View>
             )}
-            keyExtractor={item => item.question.id}
+            keyExtractor={item => item.id}
             ListFooterComponent={
               <FooterButtons
                 pageNumber={pageNumber}

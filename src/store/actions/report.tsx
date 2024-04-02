@@ -1,6 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 
-import {SCREENS} from '../../common/constants';
+import {REPORT_TYPE, SCREENS} from '../../common/constants';
 import {Report} from '../types/report';
 import {
   SET_CAR_DATA,
@@ -10,6 +10,7 @@ import {
   SET_REPORT_ROW_ANSWER,
 } from './actionTypes';
 import {setError} from './error';
+import i18next from 'i18next';
 
 export const setReportInitialState = () => {
   return {
@@ -56,7 +57,11 @@ export const fetchReportQuestions = () => {
     try {
       // const response = await ApiManager.post(PATHS.REPORT_STRUCTURE)
       const response = await fetch(
-        'http://10.0.2.2:8080/api/v1/report/structure',
+        `http://carpass.fi/api/v1/report/structure?language=${
+          i18next.language
+        }&engine_type=${
+          getState().report.engine_type
+        }&report_type=${REPORT_TYPE.FULL.toLowerCase()}`,
         {
           method: 'GET',
           headers: {
@@ -67,13 +72,13 @@ export const fetchReportQuestions = () => {
       if (response.ok) {
         const reportStructure = await response.json();
         dispatch(
-          setReportStructure(reportStructure.data.sort((a, b) => a.id - b.id)),
+          setReportStructure(reportStructure.sort((a, b) => a.id - b.id)),
         );
-        const reportRows = reportStructure.data
+        const reportRows = reportStructure
           .map((item: any) => {
-            return item.question_map.map((innerItem: any) => {
+            return item.questions.map((innerItem: any) => {
               return {
-                question_id: innerItem.question.id,
+                question_id: innerItem.id,
                 inspection_status: null,
                 comment: '',
                 attachment: [],
@@ -101,7 +106,7 @@ export const saveReport = () => {
   return async (dispatch: any, getState: any) => {
     try {
       // const response = await ApiManager.post(PATHS.SAVE_REPORT)
-      const response = await fetch('http://10.0.2.2:8080/api/v1/report', {
+      const response = await fetch('http://carpass.fi/api/v1/report', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getState().user.token}`,
