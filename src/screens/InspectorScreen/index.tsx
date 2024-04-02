@@ -10,9 +10,13 @@ import {SCREENS} from '../../common/constants';
 
 import styles from './styles';
 
-const InspectorScreen: React.FC = () => {
-  const {t} = useTranslation();
+interface Props {
+  userType: string; // Assuming userType is a string
+}
 
+const InspectorScreen: React.FC<Props> = ({userType}) => {
+  const {t} = useTranslation();
+  userType = 'carDealer';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
 
@@ -47,12 +51,22 @@ const InspectorScreen: React.FC = () => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
-        <MainButton
-          title={t('startInspection')}
-          icon="checklist"
-          onPress={startInspectionHandler}
-          style={styles.button}
-        />
+        {userType === 'inspector' && (
+          <MainButton
+            title={t('startInspection')}
+            icon="checklist"
+            onPress={startInspectionHandler}
+            style={styles.button}
+          />
+        )}
+        {userType === 'carDealer' && (
+          <MainButton
+            title={t('carInspection')}
+            icon="search"
+            onPress={startInspectionHandler}
+            style={styles.button}
+          />
+        )}
         <MainButton
           title={t('orders')}
           icon="mail"
