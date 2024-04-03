@@ -35,7 +35,21 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
       },
     });
   };
-
+  const startCarDealerHandler = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.DEALERSHIP,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
@@ -63,7 +77,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
           <MainButton
             title={t('carInspection')}
             icon="search"
-            onPress={startInspectionHandler}
+            onPress={startCarDealerHandler}
             style={styles.button}
           />
         )}

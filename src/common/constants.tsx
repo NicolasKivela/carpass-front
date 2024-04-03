@@ -4,6 +4,7 @@ export const SCREENS = {
   LOGIN: 'loginScreen',
   NEW_REPORT: 'newReportScreen',
   REVIEWER: 'reviewerScreen',
+  DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
 };
