@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import styles from './styles';
-import MainButton from '../MainButton';
 
 const CarInspections: React.FC = ({}) => {
   const {t} = useTranslation();
