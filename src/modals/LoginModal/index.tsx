@@ -62,6 +62,7 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           onChangeText={text => setPassword(text)}
           value={password}
           rightIcon="password"
+          secureTextEntry
         />
         <SecondaryButton
           title={t('login')}
