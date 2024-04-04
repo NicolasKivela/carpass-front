@@ -50,7 +50,7 @@ const ReviewNavigation = ({
       <View style={styles.container}>
         <View style={styles.leftView}>
           <Image
-            source={require('../../assets/images/trustcarlogo.png')}
+            source={require('../../assets/images/carpasslogo.png')}
             style={styles.imageStyles}
           />
         </View>

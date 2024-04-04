@@ -36,7 +36,7 @@ const InspectorScreen: React.FC = () => {
     <SafeAreaProvider>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/trustcarlogo.png')}
+          source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
         />
         <StatisticModal

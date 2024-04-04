@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {ReviewNavigation, Gradient} from '../../components/index';
-import Logo from '../../assets/images/trustcarlogo.png';
+import Logo from '../../assets/images/carpasslogo.png';
 import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {
