@@ -29,6 +29,7 @@ const TextField = ({
     <TextInput
       style={[styles.textInput, style]}
       mode="outlined"
+      textColor={colors.white}
       value={value}
       right={
         rightIcon ? (
