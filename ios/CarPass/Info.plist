@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to the photo library for selecting images</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We use your camera for license plate recognition to make it easier for you to add your vehicle.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -30,13 +26,23 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>carpass.fi</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera for license plate recognition to make it easier for you to add your vehicle.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to the photo library for selecting images</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
