@@ -17,3 +17,9 @@ export const REPORT_TYPE = {
 export const LOCAL_STORAGE = {
   TOKEN: 'carpass:token',
 };
+
+export const REPORT_QUESTION_STATUS = {
+  GREEN: 'green',
+  YELLOW: 'yellow',
+  RED: 'red',
+};

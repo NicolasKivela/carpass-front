@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
   },
   leftView: {
-    flex: 0.5,
+    flex: 1,
     backgroundColor: colors.black,
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
   section3: {
     flex: 1,
     backgroundColor: colors.black,
-    alignItems: 'center',
     justifyContent: 'space-between',
     gap: 10,
   },
@@ -99,6 +98,35 @@ const styles = StyleSheet.create({
   circleRow: {
     flexDirection: 'row',
     marginLeft: 135,
+  },
+  footer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  footerButton: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: colors.orange,
+  },
+  footerButtonDisabled: {
+    borderColor: colors.lightGrey,
+  },
+  footerButtonContentStyle: {
+    flexDirection: 'row-reverse',
+  },
+  footerButtonLabel: {
+    fontSize: 16,
+    textTransform: 'uppercase',
+  },
+  infoText: {
+    textAlign: 'right',
+    paddingRight: 15,
+    color: colors.orange,
   },
 });
 export default styles;

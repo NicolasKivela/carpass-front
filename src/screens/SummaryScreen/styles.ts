@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
     marginLeft: 40,
+    gap: 5,
   },
   image: {
     width: 40,
@@ -67,9 +68,13 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.orange,
   },
+  goBackText: {
+    paddingVertical: 20,
+  },
   centered: {
-    marginTop: 60,
+    marginVertical: 60,
     alignItems: 'center',
+    gap: 20,
   },
   pdfSection: {
     flex: 0.9,

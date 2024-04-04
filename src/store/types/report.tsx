@@ -1,18 +1,29 @@
 export interface Report {
-  brand_and_model: string;
-  odometer_reading: number;
-  production_number: string;
   registration_number: string;
   engine_type: EngineType;
+  brand_and_model: string;
+  odometer_reading: number | null;
+  production_number: string;
+  report_structure: {
+    id: number;
+    name: string;
+    questions: {
+      question: {
+        id: number;
+        name: string;
+      };
+    }[];
+  }[];
   report_rows: {
-    question_id: number;
-    inspection_status: InspectionStatus;
+    question_id: number | null;
+    inspection_status: InspectionStatus | null;
     comment: string;
-    attachment: Attachment[];
+    attachments: Attachment[];
   }[];
 }
 
 export interface Attachment {
+  id: string;
   attachment_type: AttachmentType;
   data: string;
 }

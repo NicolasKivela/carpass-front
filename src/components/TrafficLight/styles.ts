@@ -4,7 +4,7 @@ import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
   textStyle: {
-    width: '42%',
+    flex: 1,
   },
   chip: {
     borderColor: colors.betweenGrey,
@@ -52,24 +52,25 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   trafficLightView: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: 16,
+    paddingHorizontal: 5,
+    marginHorizontal: 16,
     marginVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.darkerGrey,
   },
   chipView: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginLeft: 25,
     margin: 16,
     marginVertical: 10,
   },
   carPartText: {
     fontSize: 15,
-    marginRight: 49,
     color: colors.midGrey,
   },
 });
