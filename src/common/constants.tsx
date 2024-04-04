@@ -1,4 +1,4 @@
-export const APP_NAME = 'Trustcar';
+export const APP_NAME = 'CarPass';
 
 export const SCREENS = {
   LOGIN: 'loginScreen',

@@ -1,4 +1,4 @@
-package com.trustcar;
+package com.carpass;
 
 import android.os.Bundle;
 import com.zoontek.rnbootsplash.RNBootSplash;
@@ -15,7 +15,7 @@ public class MainActivity extends NavigationActivity {
   }
 
     protected String getMainComponentName() {
-        return "Trustcar";
+        return "CarPass";
     }
 
 }

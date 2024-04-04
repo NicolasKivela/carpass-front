@@ -1,4 +1,4 @@
-package com.trustcar;
+package com.carpass;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
