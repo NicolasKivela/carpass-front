@@ -1,6 +1,7 @@
 {
   "brandAndModel": "Brand and model",
   "carInspection": "Car Inspections",
+  "carInspectionHistory": "Car Inspection History",
   "description": "Description",
   "disqualifications": "Disqualifications",
   "errors": {
@@ -21,7 +22,10 @@
   "login": "Login",
   "loginToApp": "Log in to the application",
   "modelYear": "Model year",
+  "noReviews": "No Reviews",
   "odometerReading": "Odometer reading",
+  "open": "Open",
+  "order": "Order",
   "orders": "Orders",
   "part": "PART",
   "password": "Password",

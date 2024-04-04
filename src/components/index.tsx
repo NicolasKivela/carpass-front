@@ -1,3 +1,4 @@
+import CarInspections from './CarInspections/index';
 import Description from './Description';
 import DropdownNotification from './DropdownNotification/index';
 import FrameProcessorCamera from './FrameProcessorCamera/index';
@@ -12,6 +13,7 @@ import TrafficLight from './TrafficLight';
 import ImageFull from './ImageFull';
 
 export {
+  CarInspections,
   Description,
   DropdownNotification,
   FrameProcessorCamera,

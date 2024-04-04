@@ -16,6 +16,7 @@ interface Props {
 
 const InspectorScreen: React.FC<Props> = ({userType}) => {
   const {t} = useTranslation();
+  //TODO: get usertype from backend when user logs in
   userType = 'carDealer';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
