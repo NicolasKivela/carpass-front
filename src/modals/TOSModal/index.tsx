@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {colors} from '../../common/styles';
 import {SecondaryButton} from '../../components';
 import styles from '../styles';
-import TOSWebViewModal from '../TOSWebViewModal';
+import {TOSWebViewModal} from '../index';
 
 interface ModalContentProps {
   visible: boolean;
@@ -50,8 +50,10 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
         <SecondaryButton
           style={styles.btnStyle}
           onPress={() => {
-            console.log(checked);
-            onDismiss();
+            if (checked) {
+              console.log(checked);
+              onDismiss();
+            } else console.log('What happens if TOS not accepted');
           }}
           title={t('continue')}
           fontSize={16}

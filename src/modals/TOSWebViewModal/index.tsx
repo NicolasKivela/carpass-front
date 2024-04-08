@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Portal, Modal, IconButton} from 'react-native-paper';
-import {WebView} from 'react-native-webview';
+import Pdf from 'react-native-pdf';
 
 import styles from './styles';
 
@@ -20,10 +20,15 @@ const TOSWebViewModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
         visible={visible}
         onDismiss={onDismiss}
         contentContainerStyle={styles.modal}>
-        <WebView
-          source={{uri: 'https://reactnative.dev/'}} //Change to TOS
+        <Pdf
+          source={{uri: 'http://carpass.fi/terms_of_use.pdf'}}
           style={styles.webView}
+          trustAllCerts={false} // This should be removed when server has ssl certificate
+          onError={error => {
+            console.error(error);
+          }}
         />
+
         <IconButton style={styles.button} icon="clear" onPress={onDismiss} />
       </Modal>
     </Portal>
