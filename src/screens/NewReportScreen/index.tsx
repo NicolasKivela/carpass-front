@@ -131,7 +131,7 @@ const NewReportScreen: React.FC = () => {
 
         <KeyboardAvoidingView
           style={styles.innerContainer}
-          behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('identificationInfo')}</Text>

@@ -11,13 +11,13 @@ import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 
+import Logo from '../../assets/images/carpasslogo.png';
 import {
   ReviewNavigation,
   Gradient,
   DropdownNotification,
 } from '../../components/index';
 import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
-import Logo from '../../assets/images/trustcarlogo.png';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {saveReport} from '../../store/actions/report';
 import {styles} from './styles';
