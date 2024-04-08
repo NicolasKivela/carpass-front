@@ -1,5 +1,5 @@
 {
-  "name": "Trustcar",
+  "name": "CarPass",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -43,7 +43,7 @@
     "react-native-vector-icons": "^10.0.3",
     "react-native-vision-camera": "^3.8.0",
     "react-native-webview": "^13.8.2",
-    "react-native-worklets-core": "^0.3.0",
+    "react-native-worklets-core": "^0.4.0",
     "react-redux": "^9.0.4",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0"

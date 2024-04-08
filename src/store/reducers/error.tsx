@@ -7,7 +7,7 @@ export const initialState: Error = {
   message: '',
 };
 
-// This reducer handles updating the user state in the app
+// This reducer handles updating the error state in the app
 const errorReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_ERROR:

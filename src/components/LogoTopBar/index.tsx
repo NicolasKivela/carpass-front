@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import Logo from '../../../resources/trustcar_logo.svg';
+import Logo from '../../../resources/carpass_logo.svg';
 import {colors} from '../../common/styles';
 
 interface Props {

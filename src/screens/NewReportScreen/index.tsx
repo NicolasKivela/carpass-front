@@ -101,7 +101,7 @@ const NewReportScreen: React.FC = () => {
         odometer_reading: otherData.odometerReading,
         production_number: otherData.vehicleIdentificationNumber,
         registration_number: registerNumber.value,
-        report_type: 'petrol', //TODO: fix, when type input is added?
+        engine_type: 'petrol', //TODO: fix, when type input is added?
       }),
     );
     Navigation.setRoot({
@@ -131,7 +131,7 @@ const NewReportScreen: React.FC = () => {
 
         <KeyboardAvoidingView
           style={styles.innerContainer}
-          behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('identificationInfo')}</Text>

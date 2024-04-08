@@ -1,4 +1,4 @@
-export const APP_NAME = 'Trustcar';
+export const APP_NAME = 'CarPass';
 
 export const SCREENS = {
   LOGIN: 'loginScreen',
@@ -16,4 +16,10 @@ export const REPORT_TYPE = {
 
 export const LOCAL_STORAGE = {
   TOKEN: 'carpass:token',
+};
+
+export const REPORT_QUESTION_STATUS = {
+  GREEN: 'green',
+  YELLOW: 'yellow',
+  RED: 'red',
 };
