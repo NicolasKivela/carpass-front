@@ -11,6 +11,7 @@ import {
   Description,
   Spinner,
   DropdownNotification,
+  Switch,
 } from '../../components/index';
 import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
@@ -27,6 +28,7 @@ interface Props {
 
 const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const reportStructure = useAppSelector(
     state => state.report.report_structure,
@@ -36,10 +38,15 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const [pageNumber, setPageNumber] = useState(defaultPageNumber || 1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
+  const [toggleAll, setToggleAll] = useState(false);
 
   useEffect(() => {
     !defaultPageNumber && dispatch(fetchReportQuestions());
   }, []);
+
+  useEffect(() => {
+    setToggleAll(false);
+  }, [pageNumber]);
 
   const modifyWarningNum = (value: number) => {
     if (warningNum === 0 && value < 0) {
@@ -55,7 +62,22 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
     setErrorNum(errorNum + value);
   };
 
+  const toggleAllHandler = () => {
+    reportStructure[pageNumber - 1]?.questions.map(({id}) =>
+      dispatch(
+        setReportRowAnswer(
+          id,
+          !toggleAll ? REPORT_QUESTION_STATUS.GREEN.toLowerCase() : null,
+        ),
+      ),
+    );
+    setToggleAll(prevState => !prevState);
+  };
+
   const setQuestionInspectionStatus = (id: string, color: string | null) => {
+    color !== null &&
+      color !== REPORT_QUESTION_STATUS.GREEN &&
+      setToggleAll(false);
     dispatch(setReportRowAnswer(id, color ? color.toLowerCase() : null));
   };
 
@@ -91,6 +113,25 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
               reportStructure[pageNumber - 1].name
             }`}
           </Text>
+
+          <Switch
+            switchText={
+              !toggleAll ? t('switchReviewerNo') : t('switchReviewerYes')
+            }
+            switchValue={toggleAll}
+            setSwitchValue={toggleAllHandler}
+            switchDisabled={reportStructure[pageNumber - 1]?.questions.some(
+              ({id}) =>
+                reportRows.some(
+                  item =>
+                    item.question_id === id &&
+                    item.inspection_status !== null &&
+                    item.inspection_status !==
+                      REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
+                ),
+            )}
+            containerStyle={styles.switchContainerStyle}
+          />
 
           <FlatList
             data={reportStructure[pageNumber - 1]?.questions.sort(

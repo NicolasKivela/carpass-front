@@ -128,5 +128,12 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     color: colors.orange,
   },
+  switchContainerStyle: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingRight: 34,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 });
 export default styles;

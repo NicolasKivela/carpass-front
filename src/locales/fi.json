@@ -39,6 +39,8 @@
   "statistics": "Tilastoja",
   "summary": "YHTEENVETO",
   "summaryInfo": "Pääset yhteenvetoon kun kaikki kohdat on täytetty",
+  "switchReviewerNo": "Merkitse kaikki hyväksytyksi",
+  "switchReviewerYes": "Poista kaikki hyväksytyt valinnat",
   "tos": "käyttöehdot",
   "username": "Käyttäjätunnus",
   "vehicleIdentificationNumber": "Valmistenumero",
