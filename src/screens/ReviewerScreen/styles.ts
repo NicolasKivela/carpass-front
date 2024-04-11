@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
     justifyContent: 'space-between',
     gap: 10,
+    paddingHorizontal: 15,
   },
   button: {
     backgroundColor: colors.darkGrey,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   switchContainerStyle: {
     flexDirection: 'row',
     gap: 10,
-    paddingRight: 34,
+    paddingRight: 2,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

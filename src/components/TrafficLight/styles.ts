@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.betweenGrey,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 27,
   },
   activeChip1: {
     borderColor: colors.black,
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.red,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 27,
   },
   activeChip2: {
     borderWidth: 0,
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 27,
   },
   activeChip3: {
     borderWidth: 0,
@@ -46,7 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 27,
   },
   icon: {
     alignSelf: 'center',
@@ -56,8 +52,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 5,
-    marginHorizontal: 16,
     marginVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.darkerGrey,
@@ -66,12 +60,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 16,
     marginVertical: 10,
   },
   carPartText: {
-    fontSize: 15,
-    color: colors.midGrey,
+    fontSize: 16,
+    color: colors.white,
   },
 });
 export default styles;
