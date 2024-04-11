@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chip: {
-    borderColor: colors.betweenGrey,
+    borderColor: colors.lightGrey,
     borderWidth: 0,
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.betweenGrey,
+    backgroundColor: colors.lightGrey,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -62,9 +62,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 10,
   },
+  carPartTextPad: {
+    fontSize: 18,
+    color: colors.white,
+  },
   carPartText: {
     fontSize: 16,
     color: colors.white,
+  },
+  touchablePadding: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
 });
 export default styles;

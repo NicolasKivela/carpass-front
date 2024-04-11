@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text} from 'react-native';
-import {Chip} from 'react-native-paper';
+import React from 'react';
+import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
 
@@ -58,22 +57,32 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
   return (
     <View style={styles.trafficLightView}>
       <View style={styles.textStyle}>
-        <Text style={styles.carPartText}>{section}</Text>
+        <Text
+          style={
+            Dimensions.get('window').width > 600
+              ? styles.carPartTextPad
+              : styles.carPartText
+          }>
+          {section}
+        </Text>
       </View>
       <View style={styles.chipView}>
         {chipData.map(item => {
           return (
-            <Chip
+            <TouchableOpacity
               key={item.color}
-              style={[
-                styles.chip,
-                activeColor && activeColor === item.color
-                  ? item.activeStyle
-                  : null,
-              ]}
-              onPress={() => toggleColor(item.color)}
-              children={undefined}
-            />
+              onPress={() => toggleColor(item.color)}>
+              <View style={styles.touchablePadding}>
+                <View
+                  style={[
+                    styles.chip,
+                    activeColor && activeColor === item.color
+                      ? item.activeStyle
+                      : null,
+                  ]}
+                />
+              </View>
+            </TouchableOpacity>
           );
         })}
       </View>

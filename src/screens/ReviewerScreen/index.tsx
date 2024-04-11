@@ -134,6 +134,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
           />
 
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={reportStructure[pageNumber - 1]?.questions.sort(
               (a, b) => a.id - b.id,
             )}
