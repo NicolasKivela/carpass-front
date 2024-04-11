@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    //backgroundColor: colors.darkOrange,
     alignItems: 'center',
   },
   header: {
@@ -20,23 +19,21 @@ const styles = StyleSheet.create({
     height: 60,
     flexDirection: 'row',
     backgroundColor: colors.darkerGrey,
-    //borderColor: colors.lightGrey,
-    //borderWidth: 2,
     marginBottom: 30,
-    borderRadius: 8, // Adjust the radius value to control the curvature
+    borderRadius: 8,
     borderColor: 'transparent',
     borderWidth: 2,
   },
   leftContainer: {
     width: '50%',
-    //backgroundColor: colors.orange,
+    
     justifyContent: 'center',
   },
   rigthContainer: {
     width: '50%',
     flexDirection: 'row',
     alignItems: 'center',
-    //backgroundColor: colors.green,
+   
     justifyContent: 'flex-end',
   },
   textstyle: {color: colors.white},

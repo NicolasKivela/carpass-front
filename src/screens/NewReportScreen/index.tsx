@@ -58,9 +58,7 @@ const NewReportScreen: React.FC = () => {
       listener.remove();
     };
   }, []);
-  useEffect(() => {
-    console.log('THIS IS CURRENT', currentScreen);
-  }, [currentScreen]);
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
     return () => {
