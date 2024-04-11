@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 import {colors} from '../../common/styles';
 
@@ -139,6 +139,19 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  swipeContainer: {
+    position: 'absolute',
+    top: Dimensions.get('window').height / 2,
+    zIndex: 15,
+    justifyContent: 'center',
+    backgroundColor: colors.transparent,
+  },
+  swipeContainerRight: {
+    right: 5,
+  },
+  swipeContainerLeft: {
+    left: 5,
   },
 });
 export default styles;

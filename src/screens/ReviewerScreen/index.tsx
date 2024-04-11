@@ -14,8 +14,11 @@ import {
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Button} from 'react-native-paper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 import {Navigation} from 'react-native-navigation';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {
   TrafficLight,
@@ -44,6 +47,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const flatListRef = useRef<any>(null);
+  const swipeRef = useRef<any>(null);
 
   const reportStructure = useAppSelector(
     state => state.report.report_structure,
@@ -54,6 +58,8 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
   const [toggleAll, setToggleAll] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
 
   useEffect(() => {
     !defaultPageNumber && dispatch(fetchReportQuestions());
@@ -114,97 +120,164 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
     );
   };
 
+  const swipeCloseHandler = (direction: string) => {
+    if (direction === 'right') {
+      setShowRightArrow(true);
+      if (pageNumber !== reportStructure.length) {
+        setPageNumber(prevState => prevState + 1);
+      } else if (
+        pageNumber === reportStructure.length &&
+        !summaryAllowedHandler()
+      ) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: SCREENS.SUMMARY,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
+      setTimeout(() => {
+        setShowRightArrow(false);
+      }, 3000);
+    } else if (direction === 'left') {
+      setShowLeftArrow(true);
+      pageNumber > 1 && setPageNumber(prevState => prevState - 1);
+      setTimeout(() => {
+        setShowLeftArrow(false);
+      }, 3000);
+    }
+  };
+
+  const swipeHandler = () => {
+    swipeRef.current.close();
+  };
+
+  const leftArrow = () => {
+    return pageNumber > 1 ? (
+      <View style={[styles.swipeContainer, styles.swipeContainerLeft]}>
+        <MaterialIcons name="arrow-back" size={40} color={colors.orange} />
+      </View>
+    ) : null;
+  };
+
+  const rightArrow = () => {
+    return (
+      <View style={[styles.swipeContainer, styles.swipeContainerRight]}>
+        <MaterialIcons name="arrow-forward" size={40} color={colors.orange} />
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaProvider>
-      <ReviewNavigation
-        pageNumber={pageNumber}
-        totalPages={reportStructure.length || 1}
-        warningNum={warningNum}
-        errorNum={errorNum}
-      />
+    <GestureHandlerRootView style={styles.flex}>
+      <SafeAreaProvider>
+        {showRightArrow && rightArrow()}
+        {showLeftArrow && leftArrow()}
+        <ReviewNavigation
+          pageNumber={pageNumber}
+          totalPages={reportStructure.length || 1}
+          warningNum={warningNum}
+          errorNum={errorNum}
+        />
 
-      {reportStructure.length ? (
-        <View style={styles.section3}>
-          <Text style={styles.header}>
-            {`${reportStructure[pageNumber - 1].id}. ${
-              reportStructure[pageNumber - 1].name
-            }`}
-          </Text>
+        {reportStructure.length ? (
+          <View style={styles.section3}>
+            <Text style={styles.header}>
+              {`${reportStructure[pageNumber - 1].id}. ${
+                reportStructure[pageNumber - 1].name
+              }`}
+            </Text>
 
-          <KeyboardAvoidingView
-            style={styles.flex}
-            keyboardVerticalOffset={
-              ReviewNavigationStyle.default.container.height +
-              ReviewNavigationStyle.default.gap.height +
-              10
-            }
-            behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
-            <FlatList
-              removeClippedSubviews={false}
-              ref={flatListRef}
-              showsVerticalScrollIndicator={false}
-              data={reportStructure[pageNumber - 1]?.questions.sort(
-                (a: ReportStructureItem, b: ReportStructureItem) => a.id - b.id,
-              )}
-              extraData={[reportRows, reportStructure, pageNumber]}
-              renderItem={({item}) => (
-                <View>
-                  <TrafficLight
-                    section={item.name}
-                    activeColor={reportRows
-                      .find((i: ReportRow) => i.question_id === item.id)
-                      ?.inspection_status?.toUpperCase()}
-                    modifyError={modifyErrorNum}
-                    modifyWarning={modifyWarningNum}
-                    onStateChange={color =>
-                      setQuestionInspectionStatus(item.id, color)
-                    }
-                  />
-
-                  <Description
-                    visible={descriptionVisibleHandler(item.id)}
-                    id={item.id}
-                  />
-                </View>
-              )}
-              keyExtractor={item => item.id}
-              ListHeaderComponent={
-                <Switch
-                  switchText={
-                    !toggleAll ? t('switchReviewerNo') : t('switchReviewerYes')
-                  }
-                  switchValue={toggleAll}
-                  setSwitchValue={toggleAllHandler}
-                  switchDisabled={reportStructure[
-                    pageNumber - 1
-                  ]?.questions.some(({id}: {id: number}) =>
-                    reportRows.some(
-                      (item: ReportRow) =>
-                        item.question_id === id &&
-                        item.inspection_status !== null &&
-                        item.inspection_status !==
-                          REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
-                    ),
+            <KeyboardAvoidingView
+              style={styles.flex}
+              keyboardVerticalOffset={
+                ReviewNavigationStyle.default.container.height +
+                ReviewNavigationStyle.default.gap.height +
+                10
+              }
+              behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+              <Swipeable
+                ref={swipeRef}
+                onSwipeableOpen={swipeHandler}
+                onSwipeableClose={swipeCloseHandler}>
+                <FlatList
+                  removeClippedSubviews={false}
+                  ref={flatListRef}
+                  showsVerticalScrollIndicator={false}
+                  data={reportStructure[pageNumber - 1]?.questions.sort(
+                    (a: ReportStructureItem, b: ReportStructureItem) =>
+                      a.id - b.id,
                   )}
-                  containerStyle={styles.switchContainerStyle}
+                  extraData={[reportRows, reportStructure, pageNumber]}
+                  renderItem={({item}) => (
+                    <View>
+                      <TrafficLight
+                        section={item.name}
+                        activeColor={reportRows
+                          .find((i: ReportRow) => i.question_id === item.id)
+                          ?.inspection_status?.toUpperCase()}
+                        modifyError={modifyErrorNum}
+                        modifyWarning={modifyWarningNum}
+                        onStateChange={color =>
+                          setQuestionInspectionStatus(item.id, color)
+                        }
+                      />
+
+                      <Description
+                        visible={descriptionVisibleHandler(item.id)}
+                        id={item.id}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={item => item.id}
+                  ListHeaderComponent={
+                    <Switch
+                      switchText={
+                        !toggleAll
+                          ? t('switchReviewerNo')
+                          : t('switchReviewerYes')
+                      }
+                      switchValue={toggleAll}
+                      setSwitchValue={toggleAllHandler}
+                      switchDisabled={reportStructure[
+                        pageNumber - 1
+                      ]?.questions.some(({id}: {id: number}) =>
+                        reportRows.some(
+                          (item: ReportRow) =>
+                            item.question_id === id &&
+                            item.inspection_status !== null &&
+                            item.inspection_status !==
+                              REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
+                        ),
+                      )}
+                      containerStyle={styles.switchContainerStyle}
+                    />
+                  }
+                  ListFooterComponent={
+                    <FooterButtons
+                      pageNumber={pageNumber}
+                      setPageNumber={setPageNumber}
+                      totalPages={reportStructure.length}
+                      summaryNotAllowed={summaryAllowedHandler()}
+                    />
+                  }
                 />
-              }
-              ListFooterComponent={
-                <FooterButtons
-                  pageNumber={pageNumber}
-                  setPageNumber={setPageNumber}
-                  totalPages={reportStructure.length}
-                  summaryNotAllowed={summaryAllowedHandler()}
-                />
-              }
-            />
-          </KeyboardAvoidingView>
-        </View>
-      ) : (
-        <Spinner text={'loadingQuestions'} />
-      )}
-      <DropdownNotification />
-    </SafeAreaProvider>
+              </Swipeable>
+            </KeyboardAvoidingView>
+          </View>
+        ) : (
+          <Spinner text={'loadingQuestions'} />
+        )}
+        <DropdownNotification />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 
