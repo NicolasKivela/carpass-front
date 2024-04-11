@@ -4,7 +4,7 @@ import {jwtDecode} from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Keyboard} from 'react-native';
 
-import {LOCAL_STORAGE, SCREENS} from '../../common/constants';
+import {BASE_PATH, LOCAL_STORAGE, PATHS, SCREENS} from '../../common/constants';
 import {User} from '../types/user';
 import {LOG_IN, LOG_OUT, SET_STATE} from './actionTypes';
 import {setError} from './error';
@@ -33,7 +33,7 @@ export const loginUser = (username: string, password: string) => {
   return async (dispatch: any) => {
     try {
       // const response = await ApiManager.post(PATHS.LOGIN, {username, password})
-      const response = await fetch('http://carpass.fi/api/v1/user/login', {
+      const response = await fetch(BASE_PATH + PATHS.LOGIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

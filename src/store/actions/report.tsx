@@ -1,7 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 import i18next from 'i18next';
 
-import {REPORT_TYPE, SCREENS} from '../../common/constants';
+import {BASE_PATH, PATHS, REPORT_TYPE, SCREENS} from '../../common/constants';
 import {Attachment, Report} from '../types/report';
 import {
   SET_CAR_DATA,
@@ -89,7 +89,7 @@ export const fetchReportQuestions = () => {
     try {
       // const response = await ApiManager.post(PATHS.REPORT_STRUCTURE)
       const response = await fetch(
-        `http://carpass.fi/api/v1/report/structure?language=${
+        `${BASE_PATH}${PATHS.REPORT_STRUCTURE}?language=${
           i18next.language
         }&engine_type=${
           getState().report.engine_type
@@ -138,7 +138,7 @@ export const saveReport = () => {
   return async (dispatch: any, getState: any) => {
     try {
       // const response = await ApiManager.post(PATHS.SAVE_REPORT)
-      const response = await fetch('http://carpass.fi/api/v1/report', {
+      const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getState().user.token}`,
