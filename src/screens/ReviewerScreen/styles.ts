@@ -3,6 +3,9 @@ import {StyleSheet} from 'react-native';
 import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   header: {
     fontSize: 25,
     color: colors.white,
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 30,
+    gap: 20,
     paddingVertical: 20,
     paddingHorizontal: 10,
   },
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
   switchContainerStyle: {
     flexDirection: 'row',
     gap: 10,
-    paddingRight: 2,
+    paddingRight: 10,
     paddingVertical: 5,
     justifyContent: 'flex-end',
     alignItems: 'center',

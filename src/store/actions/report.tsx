@@ -35,35 +35,35 @@ export const setCarData = (carData: {
   };
 };
 
-export const setReportRowAnswer = (id: string, answer: string | null) => {
+export const setReportRowAnswer = (id: number, answer: string | null) => {
   return {
     type: SET_REPORT_ROW_ANSWER,
     payload: {id, answer},
   };
 };
 
-export const setReportRowComment = (id: string, comment: string | null) => {
+export const setReportRowComment = (id: number, comment: string | null) => {
   return {
     type: SET_REPORT_ROW_COMMENT,
     payload: {id, comment},
   };
 };
 
-export const setReportRowImage = (id: string, attachment: Attachment) => {
+export const setReportRowImage = (id: number, attachment: Attachment) => {
   return {
     type: SET_REPORT_ROW_IMAGE,
     payload: {id, attachment},
   };
 };
 
-export const changeReportRowImage = (id: string, attachment: Attachment) => {
+export const changeReportRowImage = (id: number, attachment: Attachment) => {
   return {
     type: CHANGE_REPORT_ROW_IMAGE,
     payload: {id, attachment},
   };
 };
 
-export const removeReportRowImage = (id: string, idImage: string) => {
+export const removeReportRowImage = (id: number, idImage: string) => {
   return {
     type: REMOVE_REPORT_ROW_IMAGE,
     payload: {id, idImage},

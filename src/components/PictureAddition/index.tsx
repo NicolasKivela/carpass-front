@@ -22,7 +22,7 @@ import {Attachment} from '../../store/types/report';
 */
 
 interface Props {
-  id: string;
+  id: number;
 }
 
 const PictureAddition = ({id}: Props) => {

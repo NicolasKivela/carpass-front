@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 
+import {TABLET_WIDTH} from '../../common/constants';
 import styles from './styles';
 
 enum TrafficLightColor {
@@ -10,9 +11,9 @@ enum TrafficLightColor {
 }
 
 const chipData = [
-  {color: TrafficLightColor.RED, activeStyle: styles.activeChip1},
-  {color: TrafficLightColor.YELLOW, activeStyle: styles.activeChip2},
-  {color: TrafficLightColor.GREEN, activeStyle: styles.activeChip3},
+  {color: TrafficLightColor.RED, activeStyle: styles.chipRed},
+  {color: TrafficLightColor.YELLOW, activeStyle: styles.chipYellow},
+  {color: TrafficLightColor.GREEN, activeStyle: styles.chipGreen},
 ];
 
 interface TrafficLightProps {
@@ -59,7 +60,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
       <View style={styles.textStyle}>
         <Text
           style={
-            Dimensions.get('window').width > 600
+            Dimensions.get('window').width > TABLET_WIDTH
               ? styles.carPartTextPad
               : styles.carPartText
           }>
@@ -75,7 +76,9 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
               <View style={styles.touchablePadding}>
                 <View
                   style={[
-                    styles.chip,
+                    Dimensions.get('window').width > TABLET_WIDTH
+                      ? styles.chipDefaultPad
+                      : styles.chipDefault,
                     activeColor && activeColor === item.color
                       ? item.activeStyle
                       : null,

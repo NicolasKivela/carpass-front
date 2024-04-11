@@ -31,3 +31,5 @@ export const REPORT_QUESTION_STATUS = {
   YELLOW: 'yellow',
   RED: 'red',
 };
+
+export const TABLET_WIDTH = 600;

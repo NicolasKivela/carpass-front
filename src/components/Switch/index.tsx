@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, ViewStyle} from 'react-native';
+import {View, Text, ViewStyle, Dimensions} from 'react-native';
 import {Switch as SwitchNative} from 'react-native-switch';
 
 import {colors} from '../../common/styles';
+import {TABLET_WIDTH} from '../../common/constants';
 import styles from './style';
 
 interface Props {
@@ -27,7 +28,7 @@ const Switch: React.FC<Props> = ({
       </Text>
       <SwitchNative
         disabled={switchDisabled}
-        circleSize={40}
+        circleSize={Dimensions.get('window').width > TABLET_WIDTH ? 48 : 40}
         circleBorderWidth={0}
         backgroundActive={colors.grey}
         backgroundInactive={colors.grey}

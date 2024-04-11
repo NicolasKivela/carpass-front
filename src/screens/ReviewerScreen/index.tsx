@@ -1,5 +1,17 @@
-import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
-import {FlatList, View, Text} from 'react-native';
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useRef,
+} from 'react';
+import {
+  FlatList,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Button} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
@@ -21,6 +33,8 @@ import {
 } from '../../store/actions/report';
 import {colors} from '../../common/styles';
 import styles from './styles';
+import {ReportRow, ReportStructureItem} from '../../store/types/report';
+import * as ReviewNavigationStyle from '../../components/ReviewNavigationBar/styles';
 
 interface Props {
   defaultPageNumber?: number;
@@ -29,6 +43,7 @@ interface Props {
 const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
+  const flatListRef = useRef<any>(null);
 
   const reportStructure = useAppSelector(
     state => state.report.report_structure,
@@ -45,6 +60,8 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   }, []);
 
   useEffect(() => {
+    flatListRef.current &&
+      flatListRef.current.scrollToOffset({animated: false, offset: 0});
     setToggleAll(false);
   }, [pageNumber]);
 
@@ -63,7 +80,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   };
 
   const toggleAllHandler = () => {
-    reportStructure[pageNumber - 1]?.questions.map(({id}) =>
+    reportStructure[pageNumber - 1]?.questions.map(({id}: {id: number}) =>
       dispatch(
         setReportRowAnswer(
           id,
@@ -74,7 +91,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
     setToggleAll(prevState => !prevState);
   };
 
-  const setQuestionInspectionStatus = (id: string, color: string | null) => {
+  const setQuestionInspectionStatus = (id: number, color: string | null) => {
     color !== null &&
       color !== REPORT_QUESTION_STATUS.GREEN &&
       setToggleAll(false);
@@ -83,7 +100,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
 
   const descriptionVisibleHandler = (id: number) => {
     const status = reportRows.find(
-      i => i.question_id === id,
+      (i: ReportRow) => i.question_id === id,
     )?.inspection_status;
     return (
       status === REPORT_QUESTION_STATUS.RED ||
@@ -93,7 +110,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
 
   const summaryAllowedHandler = () => {
     return reportRows.some(
-      item => item.question_id && item.inspection_status === null,
+      (item: ReportRow) => item.question_id && item.inspection_status === null,
     );
   };
 
@@ -114,60 +131,74 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
             }`}
           </Text>
 
-          <Switch
-            switchText={
-              !toggleAll ? t('switchReviewerNo') : t('switchReviewerYes')
+          <KeyboardAvoidingView
+            style={styles.flex}
+            keyboardVerticalOffset={
+              ReviewNavigationStyle.default.container.height +
+              ReviewNavigationStyle.default.gap.height +
+              10
             }
-            switchValue={toggleAll}
-            setSwitchValue={toggleAllHandler}
-            switchDisabled={reportStructure[pageNumber - 1]?.questions.some(
-              ({id}) =>
-                reportRows.some(
-                  item =>
-                    item.question_id === id &&
-                    item.inspection_status !== null &&
-                    item.inspection_status !==
-                      REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
-                ),
-            )}
-            containerStyle={styles.switchContainerStyle}
-          />
+            behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+            <FlatList
+              removeClippedSubviews={false}
+              ref={flatListRef}
+              showsVerticalScrollIndicator={false}
+              data={reportStructure[pageNumber - 1]?.questions.sort(
+                (a: ReportStructureItem, b: ReportStructureItem) => a.id - b.id,
+              )}
+              extraData={[reportRows, reportStructure, pageNumber]}
+              renderItem={({item}) => (
+                <View>
+                  <TrafficLight
+                    section={item.name}
+                    activeColor={reportRows
+                      .find((i: ReportRow) => i.question_id === item.id)
+                      ?.inspection_status?.toUpperCase()}
+                    modifyError={modifyErrorNum}
+                    modifyWarning={modifyWarningNum}
+                    onStateChange={color =>
+                      setQuestionInspectionStatus(item.id, color)
+                    }
+                  />
 
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={reportStructure[pageNumber - 1]?.questions.sort(
-              (a, b) => a.id - b.id,
-            )}
-            extraData={[reportRows, reportStructure]}
-            renderItem={({item}) => (
-              <View>
-                <TrafficLight
-                  section={item.name}
-                  activeColor={reportRows
-                    .find(i => i.question_id === item.id)
-                    ?.inspection_status?.toUpperCase()}
-                  modifyError={modifyErrorNum}
-                  modifyWarning={modifyWarningNum}
-                  onStateChange={color =>
-                    setQuestionInspectionStatus(item.id, color)
+                  <Description
+                    visible={descriptionVisibleHandler(item.id)}
+                    id={item.id}
+                  />
+                </View>
+              )}
+              keyExtractor={item => item.id}
+              ListHeaderComponent={
+                <Switch
+                  switchText={
+                    !toggleAll ? t('switchReviewerNo') : t('switchReviewerYes')
                   }
+                  switchValue={toggleAll}
+                  setSwitchValue={toggleAllHandler}
+                  switchDisabled={reportStructure[
+                    pageNumber - 1
+                  ]?.questions.some(({id}: {id: number}) =>
+                    reportRows.some(
+                      (item: ReportRow) =>
+                        item.question_id === id &&
+                        item.inspection_status !== null &&
+                        item.inspection_status !==
+                          REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
+                    ),
+                  )}
+                  containerStyle={styles.switchContainerStyle}
                 />
-                <Description
-                  visible={descriptionVisibleHandler(item.id)}
-                  id={item.id}
+              }
+              ListFooterComponent={
+                <FooterButtons
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
+                  totalPages={reportStructure.length}
+                  summaryNotAllowed={summaryAllowedHandler()}
                 />
-              </View>
-            )}
-            keyExtractor={item => item.id}
-            ListFooterComponent={
-              <FooterButtons
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                totalPages={reportStructure.length}
-                summaryNotAllowed={summaryAllowedHandler()}
-              />
-            }
-          />
+              }
+            />
+          </KeyboardAvoidingView>
         </View>
       ) : (
         <Spinner text={'loadingQuestions'} />
