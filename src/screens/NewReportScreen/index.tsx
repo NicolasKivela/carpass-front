@@ -17,6 +17,7 @@ import {
   Gradient,
   FrameProcessorCamera,
   DropdownNotification,
+  CarInspections,
 } from '../../components/index';
 import {colors} from '../../common/styles';
 import {SCREENS} from '../../common/constants';
@@ -45,6 +46,18 @@ const NewReportScreen: React.FC = () => {
     modelYear: null,
     odometerReading: null,
   });
+  const [currentScreen, setCurrentScreen] = useState('');
+  useEffect(() => {
+    const listener = Navigation.events().registerComponentDidAppearListener(
+      ({componentId, componentName}) => {
+        console.log(componentName);
+        setCurrentScreen(componentName);
+      },
+    );
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
@@ -77,20 +90,40 @@ const NewReportScreen: React.FC = () => {
         odometerReading: null,
       });
     } else {
-      Navigation.setRoot({
-        root: {
-          stack: {
-            children: [
-              {
-                component: {
-                  name: SCREENS.INSPECTOR,
+      if (currentScreen === SCREENS.NEW_REPORT) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: SCREENS.INSPECTOR,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
-      });
+        });
+      }
+
+      if (currentScreen === SCREENS.DEALERSHIP) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    //TODO: needs navigation screen to Car dealer home screen
+                    name: SCREENS.INSPECTOR,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
     }
+
     return true;
   };
 
@@ -144,21 +177,19 @@ const NewReportScreen: React.FC = () => {
               icon={registrationNumberIcon}
               setRegistrationNumberIcon={setRegistrationNumberIcon}
             />
-            {registerNumber.value ? (
+            {registerNumber.value && currentScreen === SCREENS.NEW_REPORT ? ( //renders new report form if in NEW_REPORT screen
               <View style={styles.container}>
-                {Object.keys(otherData).map(item => {
-                  return (
-                    <NewReportTextInput
-                      key={item}
-                      label={item}
-                      value={otherData[item]}
-                      setOnChange={(value: string) => {
-                        setOtherData({...otherData, [item]: value});
-                      }}
-                      icon={'keyboard'}
-                    />
-                  );
-                })}
+                {Object.keys(otherData).map(item => (
+                  <NewReportTextInput
+                    key={item}
+                    label={item}
+                    value={otherData[item]}
+                    setOnChange={(value: string) => {
+                      setOtherData({...otherData, [item]: value});
+                    }}
+                    icon={'keyboard'}
+                  />
+                ))}
                 <View style={styles.footerContainer}>
                   <Button
                     disabled={!readyToProceed}
@@ -176,12 +207,24 @@ const NewReportScreen: React.FC = () => {
                   </Button>
                 </View>
               </View>
-            ) : (
+            ) : currentScreen === SCREENS.NEW_REPORT ? (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            )}
+            ) : null}
+
+            {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
+              <View style={styles.container}>
+                <>{console.log('CarInspections starting')}</>
+                <CarInspections />
+              </View>
+            ) : currentScreen === SCREENS.DEALERSHIP ? (
+              <FrameProcessorCamera
+                registerNumber={registerNumber}
+                setRegisterNumber={setRegisterNumber}
+              />
+            ) : null}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

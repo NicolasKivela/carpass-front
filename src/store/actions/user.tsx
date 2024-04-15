@@ -33,7 +33,7 @@ export const loginUser = (username: string, password: string) => {
   return async (dispatch: any) => {
     try {
       // const response = await ApiManager.post(PATHS.LOGIN, {username, password})
-      const response = await fetch('http://carpass.fi/api/v1/user/login', {
+      const response = await fetch('https://carpass.fi/api/v1/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
