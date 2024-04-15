@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Navigation} from 'react-native-navigation';
 
+import {useAppDispatch} from '../../store/configureStore';
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
 import {SCREENS} from '../../common/constants';
+import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
 
@@ -16,10 +18,16 @@ interface Props {
 
 const InspectorScreen: React.FC<Props> = ({userType}) => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+
   //TODO: get usertype from backend when user logs in
   userType = 'carDealer';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
+
+  useEffect(() => {
+    dispatch(setReportInitialState());
+  }, []);
 
   const startInspectionHandler = () => {
     Navigation.setRoot({
@@ -55,7 +63,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
     <SafeAreaProvider>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/trustcarlogo.png')}
+          source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
         />
         <StatisticModal

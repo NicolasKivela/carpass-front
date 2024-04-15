@@ -1,24 +1,74 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Navigation} from 'react-native-navigation';
 
-import {ReviewNavigation, Gradient} from '../../components/index';
-import Logo from '../../assets/images/trustcarlogo.png';
+import Logo from '../../assets/images/carpasslogo.png';
+import {
+  ReviewNavigation,
+  Gradient,
+  DropdownNotification,
+} from '../../components/index';
+import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {saveReport} from '../../store/actions/report';
 import {styles} from './styles';
 
 const SummaryScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const reportRows = useAppSelector(state => state.report.report_rows);
+  const reportStructure = useAppSelector(
+    state => state.report.report_structure,
+  );
+
   const [showCarParts, setShowCarParts] = useState(true);
   const [showWarnings, setShowWarnings] = useState(true);
-  const [pageNumber, setPageNumber] = useState<number>(10);
+
+  const summaryValueHandler = id => {
+    return reportStructure.map(item =>
+      item.questions.map(innerItem =>
+        innerItem.id === id ? Object.values(innerItem.name) : null,
+      ),
+    );
+  };
+
+  const goBackHandler = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.REVIEWER,
+                passProps: {
+                  defaultPageNumber: reportStructure.length,
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
 
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
-        <ReviewNavigation pageNumber={pageNumber} />
-
-        <View>
+        <ReviewNavigation
+          pageNumber={reportStructure.length}
+          totalPages={reportStructure.length}
+        />
+        <ScrollView>
           <Text style={styles.header}>{t('summary')}</Text>
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowCarParts(!showCarParts)}>
@@ -30,12 +80,18 @@ const SummaryScreen: React.FC = () => {
             </TouchableOpacity>
             {showCarParts && (
               <View style={styles.carParts}>
-                <Text style={styles.error}>hallintalaitteet</Text>
-                <Text style={styles.error}>hallintalaitteet</Text>
-                <Text style={styles.error}>hallintalaitteet</Text>
+                {reportRows.map(row => {
+                  return row.inspection_status ===
+                    REPORT_QUESTION_STATUS.RED ? (
+                    <Text key={row.id} style={styles.error}>
+                      {summaryValueHandler(row.question_id)}
+                    </Text>
+                  ) : null;
+                })}
               </View>
             )}
           </View>
+
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowWarnings(!showWarnings)}>
               <View style={styles.textContainer}>
@@ -44,9 +100,14 @@ const SummaryScreen: React.FC = () => {
             </TouchableOpacity>
             {showWarnings && (
               <View style={styles.carParts}>
-                <Text style={styles.warning}>sisätilat</Text>
-                <Text style={styles.warning}>sisätilat</Text>
-                <Text style={styles.warning}>sisätilat</Text>
+                {reportRows.map(row => {
+                  return row.inspection_status ===
+                    REPORT_QUESTION_STATUS.YELLOW ? (
+                    <Text style={styles.warning}>
+                      {summaryValueHandler(row.question_id)}
+                    </Text>
+                  ) : null;
+                })}
               </View>
             )}
           </View>
@@ -68,12 +129,19 @@ const SummaryScreen: React.FC = () => {
           <View style={styles.centered}>
             <TouchableOpacity
               onPress={() => {
-                console.log('TODO: summary ready');
+                dispatch(saveReport());
               }}>
               <Text style={styles.sendReportText}>{t('reviewReady')}</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={goBackHandler}>
+              <Text style={styles.sendReportText}>
+                {t('goBack').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
+        <DropdownNotification />
       </SafeAreaView>
     </Gradient>
   );

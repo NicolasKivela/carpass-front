@@ -16,7 +16,7 @@ prepare_react_native_project!
 
 setup_permissions(['Camera'])
 
-target 'Trustcar' do
+target 'CarPass' do
   config = use_native_modules!
 
   use_react_native!(
@@ -30,7 +30,7 @@ target 'Trustcar' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'TrustcarTests' do
+  target 'CarPassTests' do
     inherit! :complete
     # Pods for testing
   end

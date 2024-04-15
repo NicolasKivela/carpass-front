@@ -11,6 +11,7 @@ import SecondaryButton from './SecondaryButton/index';
 import TextField from './TextField/index';
 import TrafficLight from './TrafficLight';
 import ImageFull from './ImageFull';
+import Spinner from './Spinner';
 
 export {
   CarInspections,
@@ -27,4 +28,5 @@ export {
   TextField,
   TrafficLight,
   ImageFull,
+  Spinner,
 };

@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
+import {Navigation} from 'react-native-navigation';
 
 import {colors} from '../../common/styles.tsx';
-import {REPORT_TYPE} from '../../common/constants.tsx';
+import {REPORT_TYPE, SCREENS} from '../../common/constants.tsx';
 import styles from './styles';
 interface ProgressProps {
   progress: number;
@@ -23,15 +24,17 @@ const ReviewProgressBar = ({progress}: ProgressProps) => {
 };
 
 interface NavigationProps {
-  warningNum: number;
-  errorNum: number;
+  warningNum?: number;
+  errorNum?: number;
   pageNumber: number;
+  totalPages: number;
 }
 
 const ReviewNavigation = ({
   warningNum = 0,
   errorNum = 0,
   pageNumber = 0,
+  totalPages = 0,
 }: NavigationProps) => {
   const {t} = useTranslation();
 
@@ -50,7 +53,7 @@ const ReviewNavigation = ({
       <View style={styles.container}>
         <View style={styles.leftView}>
           <Image
-            source={require('../../assets/images/trustcarlogo.png')}
+            source={require('../../assets/images/carpasslogo.png')}
             style={styles.imageStyles}
           />
         </View>
@@ -77,8 +80,10 @@ const ReviewNavigation = ({
               </View>
             )}
           </View>
-          <ReviewProgressBar progress={pageNumber / 10} />
-          <Text style={styles.pageNumber}>{pageNumber}/10</Text>
+          <ReviewProgressBar progress={pageNumber / totalPages} />
+          <Text style={styles.pageNumber}>
+            {pageNumber}/{totalPages}
+          </Text>
         </View>
       </View>
 
