@@ -1,4 +1,6 @@
 {
+  "carInspection": "Auton kuntotarkastukset",
+  "carInspectionHistory": "Auton kuntotarkastushistoria",
   "brandAndModel": "Merkki ja malli",
   "description": "Selitys",
   "disqualifications": "Hylkäykset",
@@ -25,7 +27,10 @@
   "loginToApp": "Kirjaudu sovellukseen",
   "modelYear": "Vuosimalli",
   "next": "Seuraava",
+  "noReviews": "Ei kuntotarkastuksia",
   "odometerReading": "Matkamittarin lukema",
+  "open": "Avaa",
+  "order": "Tilaa",
   "orders": "Tilaukset",
   "part": "OSA",
   "password": "Salasana",
