@@ -12,6 +12,7 @@ import TextField from './TextField/index';
 import TrafficLight from './TrafficLight';
 import ImageFull from './ImageFull';
 import Spinner from './Spinner';
+import Switch from './Switch';
 
 export {
   CarInspections,
@@ -29,4 +30,5 @@ export {
   TrafficLight,
   ImageFull,
   Spinner,
+  Switch,
 };

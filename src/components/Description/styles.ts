@@ -4,8 +4,8 @@ import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 5,
+    paddingBottom: 5,
     width: '95%',
     maxHeight: '80%',
     alignSelf: 'center',

@@ -44,6 +44,8 @@
   "statistics": "Statistics",
   "summary": "SUMMARY",
   "summaryInfo": "You will get to the summary when all the sections have been filled",
+  "switchReviewerNo": "Select all in green",
+  "switchReviewerYes": "Deselect all in green",
   "tos": "Terms of use",
   "username": "Username",
   "vehicleIdentificationNumber": "Vehicle Identification Number",

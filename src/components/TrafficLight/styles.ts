@@ -6,47 +6,30 @@ const styles = StyleSheet.create({
   textStyle: {
     flex: 1,
   },
-  chip: {
-    borderColor: colors.betweenGrey,
-    borderWidth: 0,
+  chipDefault: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.betweenGrey,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 27,
+    backgroundColor: colors.lightGrey,
   },
-  activeChip1: {
-    borderColor: colors.black,
-    borderWidth: 0,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  chipDefaultPad: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.lightGrey,
+  },
+  chipRed: {
     backgroundColor: colors.red,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 27,
   },
-  activeChip2: {
-    borderWidth: 0,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  chipYellow: {
     backgroundColor: colors.yellow,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 27,
   },
-  activeChip3: {
-    borderWidth: 0,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  chipGreen: {
     backgroundColor: colors.green,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 27,
   },
   icon: {
     alignSelf: 'center',
@@ -56,22 +39,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 5,
-    marginHorizontal: 16,
-    marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.darkerGrey,
+    paddingVertical: 20,
   },
   chipView: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 16,
-    marginVertical: 10,
+  },
+  carPartTextPad: {
+    fontSize: 18,
+    color: colors.white,
   },
   carPartText: {
-    fontSize: 15,
-    color: colors.midGrey,
+    fontSize: 16,
+    color: colors.white,
+  },
+  touchablePadding: {
+    paddingHorizontal: 6,
+    paddingVertical: 5,
   },
 });
 export default styles;

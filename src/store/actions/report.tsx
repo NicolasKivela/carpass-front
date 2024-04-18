@@ -1,7 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 import i18next from 'i18next';
 
-import {REPORT_TYPE, SCREENS} from '../../common/constants';
+import {BASE_PATH, PATHS, REPORT_TYPE, SCREENS} from '../../common/constants';
 import {Attachment, Report} from '../types/report';
 import {
   SET_CAR_DATA,
@@ -35,35 +35,35 @@ export const setCarData = (carData: {
   };
 };
 
-export const setReportRowAnswer = (id: string, answer: string | null) => {
+export const setReportRowAnswer = (id: number, answer: string | null) => {
   return {
     type: SET_REPORT_ROW_ANSWER,
     payload: {id, answer},
   };
 };
 
-export const setReportRowComment = (id: string, comment: string | null) => {
+export const setReportRowComment = (id: number, comment: string | null) => {
   return {
     type: SET_REPORT_ROW_COMMENT,
     payload: {id, comment},
   };
 };
 
-export const setReportRowImage = (id: string, attachment: Attachment) => {
+export const setReportRowImage = (id: number, attachment: Attachment) => {
   return {
     type: SET_REPORT_ROW_IMAGE,
     payload: {id, attachment},
   };
 };
 
-export const changeReportRowImage = (id: string, attachment: Attachment) => {
+export const changeReportRowImage = (id: number, attachment: Attachment) => {
   return {
     type: CHANGE_REPORT_ROW_IMAGE,
     payload: {id, attachment},
   };
 };
 
-export const removeReportRowImage = (id: string, idImage: string) => {
+export const removeReportRowImage = (id: number, idImage: string) => {
   return {
     type: REMOVE_REPORT_ROW_IMAGE,
     payload: {id, idImage},
@@ -89,7 +89,7 @@ export const fetchReportQuestions = () => {
     try {
       // const response = await ApiManager.post(PATHS.REPORT_STRUCTURE)
       const response = await fetch(
-        `http://carpass.fi/api/v1/report/structure?language=${
+        `${BASE_PATH}${PATHS.REPORT_STRUCTURE}?language=${
           i18next.language
         }&engine_type=${
           getState().report.engine_type
@@ -138,7 +138,7 @@ export const saveReport = () => {
   return async (dispatch: any, getState: any) => {
     try {
       // const response = await ApiManager.post(PATHS.SAVE_REPORT)
-      const response = await fetch('http://carpass.fi/api/v1/report', {
+      const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getState().user.token}`,

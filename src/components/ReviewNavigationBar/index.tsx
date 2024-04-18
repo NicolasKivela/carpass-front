@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
-import {Navigation} from 'react-native-navigation';
 
 import {colors} from '../../common/styles.tsx';
-import {REPORT_TYPE, SCREENS} from '../../common/constants.tsx';
+import {REPORT_TYPE} from '../../common/constants.tsx';
 import styles from './styles';
 interface ProgressProps {
   progress: number;
