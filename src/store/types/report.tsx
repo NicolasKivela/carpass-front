@@ -34,10 +34,8 @@ export type ReportStructureItem = {
   id: number;
   name: string;
   questions: {
-    question: {
-      id: number;
-      name: string;
-    };
+    id: number;
+    name: string;
   }[];
 };
 
