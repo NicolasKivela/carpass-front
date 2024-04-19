@@ -1,8 +1,11 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 import {colors} from '../../common/styles';
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   header: {
     fontSize: 25,
     color: colors.white,
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
     justifyContent: 'space-between',
     gap: 10,
+    paddingHorizontal: 15,
   },
   button: {
     backgroundColor: colors.darkGrey,
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 30,
+    gap: 20,
     paddingVertical: 20,
     paddingHorizontal: 10,
   },
@@ -127,6 +131,27 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 15,
     color: colors.orange,
+  },
+  switchContainerStyle: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingRight: 10,
+    paddingVertical: 5,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  swipeContainer: {
+    position: 'absolute',
+    top: Dimensions.get('window').height / 2,
+    zIndex: 15,
+    justifyContent: 'center',
+    backgroundColor: colors.transparent,
+  },
+  swipeContainerRight: {
+    right: 5,
+  },
+  swipeContainerLeft: {
+    left: 5,
   },
 });
 export default styles;

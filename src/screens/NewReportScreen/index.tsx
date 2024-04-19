@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, RefObject} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Platform,
   BackHandler,
+  TextInput as TextInputProp,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
@@ -17,6 +18,7 @@ import {
   Gradient,
   FrameProcessorCamera,
   DropdownNotification,
+  CarInspections,
 } from '../../components/index';
 import {colors} from '../../common/styles';
 import {SCREENS} from '../../common/constants';
@@ -28,6 +30,13 @@ import {styles} from './styles';
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  // refs for automatic focus
+  const registrationNumberRef = useRef<any>(null);
+  const vehicleIdentificationNumberRef = useRef<any>(null);
+  const brandAndModelRef = useRef<any>(null);
+  const modelYearRef = useRef<any>(null);
+  const odometerReadingRef = useRef<any>(null);
 
   const [readyToProceed, setReadyToProceed] = useState(false);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
@@ -45,6 +54,19 @@ const NewReportScreen: React.FC = () => {
     modelYear: null,
     odometerReading: null,
   });
+  const [currentScreen, setCurrentScreen] = useState('');
+
+  useEffect(() => {
+    const listener = Navigation.events().registerComponentDidAppearListener(
+      ({componentId, componentName}) => {
+        console.log(componentName);
+        setCurrentScreen(componentName);
+      },
+    );
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
@@ -67,6 +89,38 @@ const NewReportScreen: React.FC = () => {
     }
   }, [otherData, registerNumber]);
 
+  const getRightRef = (item: string) => {
+    switch (item) {
+      case 'registrationNumber':
+        return registrationNumberRef;
+      case 'vehicleIdentificationNumber':
+        return vehicleIdentificationNumberRef;
+      case 'brandAndModel':
+        return brandAndModelRef;
+      case 'modelYear':
+        return modelYearRef;
+      case 'odometerReading':
+        return odometerReadingRef;
+      default:
+        return registrationNumberRef;
+    }
+  };
+
+  const getRightRefToFocus = (item: string) => {
+    switch (item) {
+      case 'registrationNumber':
+        return vehicleIdentificationNumberRef;
+      case 'vehicleIdentificationNumber':
+        return brandAndModelRef;
+      case 'brandAndModel':
+        return modelYearRef;
+      case 'modelYear':
+        return odometerReadingRef;
+      case 'odometerReading':
+        return;
+    }
+  };
+
   const backButtonHandler = () => {
     if (registerNumber.value) {
       setRegisterNumber({value: '', tempValues: []});
@@ -77,20 +131,40 @@ const NewReportScreen: React.FC = () => {
         odometerReading: null,
       });
     } else {
-      Navigation.setRoot({
-        root: {
-          stack: {
-            children: [
-              {
-                component: {
-                  name: SCREENS.INSPECTOR,
+      if (currentScreen === SCREENS.NEW_REPORT) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: SCREENS.INSPECTOR,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
-      });
+        });
+      }
+
+      if (currentScreen === SCREENS.DEALERSHIP) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    //TODO: needs navigation screen to Car dealer home screen
+                    name: SCREENS.INSPECTOR,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
     }
+
     return true;
   };
 
@@ -119,6 +193,13 @@ const NewReportScreen: React.FC = () => {
     });
   };
 
+  const inputOnSubmitHandler = (item: string) => {
+    if (item !== 'odometerReading') {
+      const ref = getRightRefToFocus(item);
+      ref?.current && ref.current.focus();
+    }
+  };
+
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -136,29 +217,31 @@ const NewReportScreen: React.FC = () => {
           <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('identificationInfo')}</Text>
             <NewReportTextInput
+              innerRef={getRightRef('registrationNumber')}
               label={'registrationNumber'}
               value={registerNumber.value}
               setOnChange={(value: string) => {
                 setRegisterNumber({...registerNumber, value});
               }}
+              onSubmitEditing={() => inputOnSubmitHandler('registrationNumber')}
               icon={registrationNumberIcon}
               setRegistrationNumberIcon={setRegistrationNumberIcon}
             />
-            {registerNumber.value ? (
+            {registerNumber.value && currentScreen === SCREENS.NEW_REPORT ? ( //renders new report form if in NEW_REPORT screen
               <View style={styles.container}>
-                {Object.keys(otherData).map(item => {
-                  return (
-                    <NewReportTextInput
-                      key={item}
-                      label={item}
-                      value={otherData[item]}
-                      setOnChange={(value: string) => {
-                        setOtherData({...otherData, [item]: value});
-                      }}
-                      icon={'keyboard'}
-                    />
-                  );
-                })}
+                {Object.keys(otherData).map(item => (
+                  <NewReportTextInput
+                    innerRef={getRightRef(item)}
+                    key={item}
+                    label={item}
+                    value={otherData[item]}
+                    setOnChange={(value: string) => {
+                      setOtherData({...otherData, [item]: value});
+                    }}
+                    onSubmitEditing={() => inputOnSubmitHandler(item)}
+                    icon={'keyboard'}
+                  />
+                ))}
                 <View style={styles.footerContainer}>
                   <Button
                     disabled={!readyToProceed}
@@ -176,12 +259,24 @@ const NewReportScreen: React.FC = () => {
                   </Button>
                 </View>
               </View>
-            ) : (
+            ) : currentScreen === SCREENS.NEW_REPORT ? (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            )}
+            ) : null}
+
+            {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
+              <View style={styles.container}>
+                <>{console.log('CarInspections starting')}</>
+                <CarInspections />
+              </View>
+            ) : currentScreen === SCREENS.DEALERSHIP ? (
+              <FrameProcessorCamera
+                registerNumber={registerNumber}
+                setRegisterNumber={setRegisterNumber}
+              />
+            ) : null}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -191,17 +286,21 @@ const NewReportScreen: React.FC = () => {
 };
 
 interface NewReportTextInputProps {
+  innerRef: RefObject<TextInputProp>;
   label: string;
   value: string;
   setOnChange: (value: string) => void;
+  onSubmitEditing: () => void;
   icon: string;
   setRegistrationNumberIcon?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
+  innerRef,
   label,
   value,
   setOnChange,
+  onSubmitEditing,
   icon,
   setRegistrationNumberIcon,
 }) => {
@@ -239,10 +338,13 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
 
   return (
     <TextInput
+      ref={innerRef}
+      returnKeyType={label === 'odometerReading' ? 'done' : 'next'}
       label={t(label)}
       value={value}
       textColor={isActive ? colors.orange : colors.lightGrey}
       onChangeText={setOnChange}
+      onSubmitEditing={onSubmitEditing}
       mode="outlined"
       keyboardType={keyboardTypeHandler()}
       right={

@@ -1,5 +1,7 @@
 {
   "brandAndModel": "Brand and model",
+  "carInspection": "Car Inspections",
+  "carInspectionHistory": "Car Inspection History",
   "description": "Description",
   "disqualifications": "Disqualifications",
   "errors": {
@@ -25,7 +27,10 @@
   "loginToApp": "Log in to the application",
   "modelYear": "Model year",
   "next": "Next",
+  "noReviews": "No Reviews",
   "odometerReading": "Odometer reading",
+  "open": "Open",
+  "order": "Order",
   "orders": "Orders",
   "part": "PART",
   "password": "Password",
@@ -40,6 +45,8 @@
   "statistics": "Statistics",
   "summary": "SUMMARY",
   "summaryInfo": "You will get to the summary when all the sections have been filled",
+  "switchReviewerNo": "Select all in green",
+  "switchReviewerYes": "Deselect all in green",
   "tos": "Terms of use",
   "username": "Username",
   "vehicleIdentificationNumber": "Vehicle Identification Number",

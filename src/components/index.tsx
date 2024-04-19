@@ -1,3 +1,4 @@
+import CarInspections from './CarInspections/index';
 import Description from './Description';
 import DropdownNotification from './DropdownNotification/index';
 import FrameProcessorCamera from './FrameProcessorCamera/index';
@@ -11,8 +12,10 @@ import TextField from './TextField/index';
 import TrafficLight from './TrafficLight';
 import ImageFull from './ImageFull';
 import Spinner from './Spinner';
+import Switch from './Switch';
 
 export {
+  CarInspections,
   Description,
   DropdownNotification,
   FrameProcessorCamera,
@@ -27,4 +30,5 @@ export {
   TrafficLight,
   ImageFull,
   Spinner,
+  Switch,
 };

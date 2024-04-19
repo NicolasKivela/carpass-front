@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text} from 'react-native';
-import {Chip} from 'react-native-paper';
+import React from 'react';
+import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 
+import {TABLET_WIDTH} from '../../common/constants';
 import styles from './styles';
 
 enum TrafficLightColor {
@@ -11,9 +11,9 @@ enum TrafficLightColor {
 }
 
 const chipData = [
-  {color: TrafficLightColor.RED, activeStyle: styles.activeChip1},
-  {color: TrafficLightColor.YELLOW, activeStyle: styles.activeChip2},
-  {color: TrafficLightColor.GREEN, activeStyle: styles.activeChip3},
+  {color: TrafficLightColor.RED, activeStyle: styles.chipRed},
+  {color: TrafficLightColor.YELLOW, activeStyle: styles.chipYellow},
+  {color: TrafficLightColor.GREEN, activeStyle: styles.chipGreen},
 ];
 
 interface TrafficLightProps {
@@ -58,22 +58,34 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
   return (
     <View style={styles.trafficLightView}>
       <View style={styles.textStyle}>
-        <Text style={styles.carPartText}>{section}</Text>
+        <Text
+          style={
+            Dimensions.get('window').width > TABLET_WIDTH
+              ? styles.carPartTextPad
+              : styles.carPartText
+          }>
+          {section}
+        </Text>
       </View>
       <View style={styles.chipView}>
         {chipData.map(item => {
           return (
-            <Chip
+            <TouchableOpacity
               key={item.color}
-              style={[
-                styles.chip,
-                activeColor && activeColor === item.color
-                  ? item.activeStyle
-                  : null,
-              ]}
-              onPress={() => toggleColor(item.color)}
-              children={undefined}
-            />
+              onPress={() => toggleColor(item.color)}>
+              <View style={styles.touchablePadding}>
+                <View
+                  style={[
+                    Dimensions.get('window').width > TABLET_WIDTH
+                      ? styles.chipDefaultPad
+                      : styles.chipDefault,
+                    activeColor && activeColor === item.color
+                      ? item.activeStyle
+                      : null,
+                  ]}
+                />
+              </View>
+            </TouchableOpacity>
           );
         })}
       </View>

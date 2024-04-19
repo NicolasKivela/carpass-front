@@ -1,9 +1,24 @@
-import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
-import {FlatList, View, Text} from 'react-native';
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useRef,
+} from 'react';
+import {
+  FlatList,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Button} from 'react-native-paper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 import {Navigation} from 'react-native-navigation';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {
   TrafficLight,
@@ -11,6 +26,7 @@ import {
   Description,
   Spinner,
   DropdownNotification,
+  Switch,
 } from '../../components/index';
 import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
@@ -20,6 +36,8 @@ import {
 } from '../../store/actions/report';
 import {colors} from '../../common/styles';
 import styles from './styles';
+import {ReportRow, ReportStructureItem} from '../../store/types/report';
+import * as ReviewNavigationStyle from '../../components/ReviewNavigationBar/styles';
 
 interface Props {
   defaultPageNumber?: number;
@@ -27,6 +45,9 @@ interface Props {
 
 const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
+  const flatListRef = useRef<any>(null);
+  const swipeRef = useRef<any>(null);
 
   const reportStructure = useAppSelector(
     state => state.report.report_structure,
@@ -36,10 +57,19 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   const [pageNumber, setPageNumber] = useState(defaultPageNumber || 1);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
+  const [toggleAll, setToggleAll] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
 
   useEffect(() => {
     !defaultPageNumber && dispatch(fetchReportQuestions());
   }, []);
+
+  useEffect(() => {
+    flatListRef.current &&
+      flatListRef.current.scrollToOffset({animated: false, offset: 0});
+    setToggleAll(false);
+  }, [pageNumber]);
 
   const modifyWarningNum = (value: number) => {
     if (warningNum === 0 && value < 0) {
@@ -55,13 +85,28 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
     setErrorNum(errorNum + value);
   };
 
-  const setQuestionInspectionStatus = (id: string, color: string | null) => {
+  const toggleAllHandler = () => {
+    reportStructure[pageNumber - 1]?.questions.map(({id}: {id: number}) =>
+      dispatch(
+        setReportRowAnswer(
+          id,
+          !toggleAll ? REPORT_QUESTION_STATUS.GREEN.toLowerCase() : null,
+        ),
+      ),
+    );
+    setToggleAll(prevState => !prevState);
+  };
+
+  const setQuestionInspectionStatus = (id: number, color: string | null) => {
+    color !== null &&
+      color !== REPORT_QUESTION_STATUS.GREEN &&
+      setToggleAll(false);
     dispatch(setReportRowAnswer(id, color ? color.toLowerCase() : null));
   };
 
   const descriptionVisibleHandler = (id: number) => {
     const status = reportRows.find(
-      i => i.question_id === id,
+      (i: ReportRow) => i.question_id === id,
     )?.inspection_status;
     return (
       status === REPORT_QUESTION_STATUS.RED ||
@@ -71,67 +116,168 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
 
   const summaryAllowedHandler = () => {
     return reportRows.some(
-      item => item.question_id && item.inspection_status === null,
+      (item: ReportRow) => item.question_id && item.inspection_status === null,
+    );
+  };
+
+  const swipeCloseHandler = (direction: string) => {
+    if (direction === 'right') {
+      setShowRightArrow(true);
+      if (pageNumber !== reportStructure.length) {
+        setPageNumber(prevState => prevState + 1);
+      } else if (
+        pageNumber === reportStructure.length &&
+        !summaryAllowedHandler()
+      ) {
+        Navigation.setRoot({
+          root: {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: SCREENS.SUMMARY,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
+      setTimeout(() => {
+        setShowRightArrow(false);
+      }, 3000);
+    } else if (direction === 'left') {
+      setShowLeftArrow(true);
+      pageNumber > 1 && setPageNumber(prevState => prevState - 1);
+      setTimeout(() => {
+        setShowLeftArrow(false);
+      }, 3000);
+    }
+  };
+
+  const swipeHandler = () => {
+    swipeRef.current.close();
+  };
+
+  const leftArrow = () => {
+    return pageNumber > 1 ? (
+      <View style={[styles.swipeContainer, styles.swipeContainerLeft]}>
+        <MaterialIcons name="arrow-back" size={40} color={colors.orange} />
+      </View>
+    ) : null;
+  };
+
+  const rightArrow = () => {
+    return (
+      <View style={[styles.swipeContainer, styles.swipeContainerRight]}>
+        <MaterialIcons name="arrow-forward" size={40} color={colors.orange} />
+      </View>
     );
   };
 
   return (
-    <SafeAreaProvider>
-      <ReviewNavigation
-        pageNumber={pageNumber}
-        totalPages={reportStructure.length || 1}
-        warningNum={warningNum}
-        errorNum={errorNum}
-      />
+    <GestureHandlerRootView style={styles.flex}>
+      <SafeAreaProvider>
+        {showRightArrow && rightArrow()}
+        {showLeftArrow && leftArrow()}
+        <ReviewNavigation
+          pageNumber={pageNumber}
+          totalPages={reportStructure.length || 1}
+          warningNum={warningNum}
+          errorNum={errorNum}
+        />
 
-      {reportStructure.length ? (
-        <View style={styles.section3}>
-          <Text style={styles.header}>
-            {`${reportStructure[pageNumber - 1].id}. ${
-              reportStructure[pageNumber - 1].name
-            }`}
-          </Text>
+        {reportStructure.length ? (
+          <View style={styles.section3}>
+            <Text style={styles.header}>
+              {`${reportStructure[pageNumber - 1].id}. ${
+                reportStructure[pageNumber - 1].name
+              }`}
+            </Text>
 
-          <FlatList
-            data={reportStructure[pageNumber - 1]?.questions.sort(
-              (a, b) => a.id - b.id,
-            )}
-            extraData={[reportRows, reportStructure]}
-            renderItem={({item}) => (
-              <View>
-                <TrafficLight
-                  section={item.name}
-                  activeColor={reportRows
-                    .find(i => i.question_id === item.id)
-                    ?.inspection_status?.toUpperCase()}
-                  modifyError={modifyErrorNum}
-                  modifyWarning={modifyWarningNum}
-                  onStateChange={color =>
-                    setQuestionInspectionStatus(item.id, color)
+            <KeyboardAvoidingView
+              style={styles.flex}
+              keyboardVerticalOffset={
+                ReviewNavigationStyle.default.container.height +
+                ReviewNavigationStyle.default.gap.height +
+                10
+              }
+              behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+              <Swipeable
+                ref={swipeRef}
+                onSwipeableOpen={swipeHandler}
+                onSwipeableClose={swipeCloseHandler}>
+                <FlatList
+                  removeClippedSubviews={false}
+                  ref={flatListRef}
+                  showsVerticalScrollIndicator={false}
+                  data={reportStructure[pageNumber - 1]?.questions.sort(
+                    (a: ReportStructureItem, b: ReportStructureItem) =>
+                      a.id - b.id,
+                  )}
+                  extraData={[reportRows, reportStructure, pageNumber]}
+                  renderItem={({item}) => (
+                    <View>
+                      <TrafficLight
+                        section={item.name}
+                        activeColor={reportRows
+                          .find((i: ReportRow) => i.question_id === item.id)
+                          ?.inspection_status?.toUpperCase()}
+                        modifyError={modifyErrorNum}
+                        modifyWarning={modifyWarningNum}
+                        onStateChange={color =>
+                          setQuestionInspectionStatus(item.id, color)
+                        }
+                      />
+
+                      <Description
+                        visible={descriptionVisibleHandler(item.id)}
+                        id={item.id}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={item => item.id}
+                  ListHeaderComponent={
+                    <Switch
+                      switchText={
+                        !toggleAll
+                          ? t('switchReviewerNo')
+                          : t('switchReviewerYes')
+                      }
+                      switchValue={toggleAll}
+                      setSwitchValue={toggleAllHandler}
+                      switchDisabled={reportStructure[
+                        pageNumber - 1
+                      ]?.questions.some(({id}: {id: number}) =>
+                        reportRows.some(
+                          (item: ReportRow) =>
+                            item.question_id === id &&
+                            item.inspection_status !== null &&
+                            item.inspection_status !==
+                              REPORT_QUESTION_STATUS.GREEN.toLowerCase(),
+                        ),
+                      )}
+                      containerStyle={styles.switchContainerStyle}
+                    />
+                  }
+                  ListFooterComponent={
+                    <FooterButtons
+                      pageNumber={pageNumber}
+                      setPageNumber={setPageNumber}
+                      totalPages={reportStructure.length}
+                      summaryNotAllowed={summaryAllowedHandler()}
+                    />
                   }
                 />
-                <Description
-                  visible={descriptionVisibleHandler(item.id)}
-                  id={item.id}
-                />
-              </View>
-            )}
-            keyExtractor={item => item.id}
-            ListFooterComponent={
-              <FooterButtons
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                totalPages={reportStructure.length}
-                summaryNotAllowed={summaryAllowedHandler()}
-              />
-            }
-          />
-        </View>
-      ) : (
-        <Spinner text={'loadingQuestions'} />
-      )}
-      <DropdownNotification />
-    </SafeAreaProvider>
+              </Swipeable>
+            </KeyboardAvoidingView>
+          </View>
+        ) : (
+          <Spinner text={'loadingQuestions'} />
+        )}
+        <DropdownNotification />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 

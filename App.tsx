@@ -44,6 +44,9 @@ const componentHOC = (Component, ...props) => {
 Navigation.registerComponent(SCREENS.INSPECTOR, () =>
   componentHOC(InspectorScreen),
 );
+Navigation.registerComponent(SCREENS.DEALERSHIP, () =>
+  componentHOC(NewReportScreen),
+);
 Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
 Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
   componentHOC(NewReportScreen),
