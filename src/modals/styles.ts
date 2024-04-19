@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
   btnStyle: {
     marginTop: 10,
   },
+  checkbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });
 
 export default styles;

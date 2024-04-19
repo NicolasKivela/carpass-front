@@ -2,6 +2,7 @@
   "carInspection": "Auton kuntotarkastukset",
   "carInspectionHistory": "Auton kuntotarkastushistoria",
   "brandAndModel": "Merkki ja malli",
+  "continue": "Jatka",
   "description": "Selitys",
   "disqualifications": "Hylkäykset",
   "errors": {
@@ -36,6 +37,7 @@
   "password": "Salasana",
   "pictures": "Kuvat",
   "previous": "Edellinen",
+  "readAndAccept": "Olen lukenut ja hyväksyn käyttöehdot",
   "registrationNumber": "Rekisterinumero",
   "report": "Raportti",
   "reviewReady": "TARKASTUS VALMIS",

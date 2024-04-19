@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Text} from 'react-native-paper';
-import {Portal, Modal, Checkbox} from 'react-native-paper';
+import {View} from 'react-native';
+import {Portal, Modal, Checkbox, Text, Button} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 
 import {colors} from '../../common/styles';
-import SecondaryButton from '../../components/SecondaryButton';
+import {SecondaryButton} from '../../components';
 import styles from '../styles';
+import {TOSWebViewModal} from '../index';
 
 interface ModalContentProps {
   visible: boolean;
@@ -15,6 +16,7 @@ interface ModalContentProps {
 
 const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
   const [checked, setChecked] = useState(false);
+  const [TOSVisible, setTOS] = useState(false);
   const {t} = useTranslation();
 
   if (!visible) {
@@ -33,22 +35,27 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           color={colors.orange}
           style={styles.iconStyle}
         />
-        <Text style={styles.textStyle}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          consequat odio ornare luctus feugiat. Curabitur ut metus interdum,
-          laoreet dui.
-        </Text>
-
-        <Checkbox.Android
-          status={checked ? 'checked' : 'unchecked'}
-          onPress={() => setChecked(!checked)}
-          color={colors.white}
-        />
+        <Text style={styles.textStyle}>Please read Terms of Service</Text>
+        <Button onPress={() => setTOS(true)}>{t('tos')}</Button>
+        <TOSWebViewModal onDismiss={() => setTOS(false)} visible={TOSVisible} />
+        <View style={styles.checkbox}>
+          <Checkbox.Item
+            label={t('readAndAccept')}
+            status={checked ? 'checked' : 'unchecked'}
+            onPress={() => setChecked(!checked)}
+            color={colors.white}
+          />
+        </View>
 
         <SecondaryButton
           style={styles.btnStyle}
-          onPress={() => console.log('checked: ', checked)}
-          title={t('login')}
+          onPress={() => {
+            if (checked) {
+              console.log(checked);
+              onDismiss();
+            } else console.log('What happens if TOS not accepted');
+          }}
+          title={t('continue')}
           fontSize={16}
         />
       </Modal>

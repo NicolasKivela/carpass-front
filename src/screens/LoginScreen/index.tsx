@@ -8,7 +8,12 @@ import {
   SecondaryButton,
   DropdownNotification,
 } from '../../components/index';
-import {LoginModal, SearchModal, TOSModal} from '../../modals/index';
+import {
+  LoginModal,
+  SearchModal,
+  TOSModal,
+  TOSWebViewModal,
+} from '../../modals/index';
 
 import styles from './styles';
 
@@ -18,6 +23,7 @@ const LoginScreen: React.FC = () => {
   const [loginVisible, setLogin] = useState(false);
   const [searchVisible, setSearch] = useState(false);
   const [TOSVisible, setTOS] = useState(false);
+  const [WebViewVisible, setWebView] = useState(false);
 
   return (
     <SafeAreaProvider>
@@ -50,6 +56,10 @@ const LoginScreen: React.FC = () => {
             icon="gpp-maybe"
           />
         </View>
+        <TOSWebViewModal
+          onDismiss={() => setWebView(false)}
+          visible={WebViewVisible}
+        />
       </View>
       <DropdownNotification />
     </SafeAreaProvider>
