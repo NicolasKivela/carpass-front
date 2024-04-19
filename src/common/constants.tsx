@@ -23,3 +23,7 @@ export const REPORT_QUESTION_STATUS = {
   YELLOW: 'yellow',
   RED: 'red',
 };
+
+export const LINKS = {
+  TOS: 'http://carpass.fi/terms_of_use.pdf',
+};

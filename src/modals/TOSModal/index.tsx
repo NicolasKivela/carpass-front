@@ -36,11 +36,11 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           style={styles.iconStyle}
         />
         <Text style={styles.textStyle}>Please read Terms of Service</Text>
-        <Button onPress={() => setTOS(true)}>{t('TOS')}</Button>
+        <Button onPress={() => setTOS(true)}>{t('tos')}</Button>
         <TOSWebViewModal onDismiss={() => setTOS(false)} visible={TOSVisible} />
         <View style={styles.checkbox}>
           <Checkbox.Item
-            label={t('I have read and accept')}
+            label={t('readAndAccept')}
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => setChecked(!checked)}
             color={colors.white}

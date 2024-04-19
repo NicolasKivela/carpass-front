@@ -3,6 +3,7 @@ import {Portal, Modal, IconButton} from 'react-native-paper';
 import Pdf from 'react-native-pdf';
 
 import styles from './styles';
+import {LINKS} from '../../common/constants';
 
 interface ModalContentProps {
   visible: boolean;
@@ -21,7 +22,7 @@ const TOSWebViewModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
         onDismiss={onDismiss}
         contentContainerStyle={styles.modal}>
         <Pdf
-          source={{uri: 'http://carpass.fi/terms_of_use.pdf'}}
+          source={{uri: LINKS.TOS}}
           style={styles.webView}
           trustAllCerts={false} // This should be removed when server has ssl certificate
           onError={error => {
