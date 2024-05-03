@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {MutableRefObject, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
@@ -32,7 +32,7 @@ interface NavigationProps {
 const ReviewNavigation = ({
   warningNum = 0,
   errorNum = 0,
-  pageNumber = 0,
+  pageNumber,
   totalPages = 0,
 }: NavigationProps) => {
   const {t} = useTranslation();
@@ -79,7 +79,7 @@ const ReviewNavigation = ({
               </View>
             )}
           </View>
-          <ReviewProgressBar progress={pageNumber / totalPages} />
+          <ReviewProgressBar progress={pageNumber + 1 / totalPages} />
           <Text style={styles.pageNumber}>
             {pageNumber}/{totalPages}
           </Text>
