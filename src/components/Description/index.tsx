@@ -3,7 +3,11 @@ import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import {TextField, PictureAddition} from '../index';
-import {setReportRowComment} from '../../store/actions/report';
+import {
+  setReportRowComment,
+  setReportRowAdditionalInput,
+  setReportRowLeftRightInput,
+} from '../../store/actions/report';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import styles from './styles';
 import {ReportRow} from '../../store/types/report';

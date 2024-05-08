@@ -9,7 +9,9 @@ import {
   SET_REPORT_STRUCTURE,
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
+  SET_REPORT_ROW_ADDITIONAL_INPUT,
   SET_REPORT_ROW_COMMENT,
+  SET_REPORT_ROW_LEFTRIGHT_INPUT,
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
@@ -42,10 +44,31 @@ export const setReportRowAnswer = (id: number, answer: string | null) => {
   };
 };
 
+export const setReportRowAdditionalInput = (
+  id: number,
+  additional_input: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_ADDITIONAL_INPUT,
+    payload: {id, additional_input},
+  };
+};
+
 export const setReportRowComment = (id: number, comment: string | null) => {
   return {
     type: SET_REPORT_ROW_COMMENT,
     payload: {id, comment},
+  };
+};
+
+export const setReportRowLeftRightInput = (
+  id: number,
+  input_left: number | null,
+  input_right: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_LEFTRIGHT_INPUT,
+    payload: {id, input_left, input_right},
   };
 };
 
@@ -109,12 +132,44 @@ export const fetchReportQuestions = () => {
         const reportRows = reportStructure
           .map((item: any) => {
             return item.questions.map((innerItem: any) => {
-              return {
-                question_id: innerItem.id,
-                inspection_status: null,
-                comment: '',
-                attachments: [],
-              };
+              let row;
+              // Depending on the question type, set additional properties
+              switch (innerItem.type) {
+                case 'description':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    comment: '',
+                  };
+                  break;
+                case 'leftrightnumeric':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    input_left: null,
+                    input_left_measurement: '',
+                    input_right: null,
+                    input_right_measurement: '',
+                  };
+                  break;
+                case 'singlenumeric':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    additional_input: null,
+                    additional_input_measurement: '',
+                  };
+                  break;
+                default:
+                  break;
+              }
+              return row;
             });
           })
           .flat();

@@ -37,6 +37,7 @@ export type ReportStructureItem = {
     question: {
       id: number;
       name: string;
+      type: string;
     };
   }[];
 };
@@ -46,4 +47,10 @@ export type ReportRow = {
   inspection_status: InspectionStatus | null;
   comment: string;
   attachments: Attachment[];
+  input_left: number;
+  input_left_measurement: String;
+  input_right: number;
+  input_right_measurement: String;
+  additional_input: number;
+  additional_input_measurement: String;
 };
