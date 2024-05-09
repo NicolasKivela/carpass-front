@@ -11,6 +11,7 @@ export const PATHS = {
 export const SCREENS = {
   LOGIN: 'loginScreen',
   NEW_REPORT: 'newReportScreen',
+  NEW_ORDER: 'newOrderrScreen',
   REVIEWER: 'reviewerScreen',
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
@@ -33,10 +34,8 @@ export const REPORT_QUESTION_STATUS = {
   RED: 'red',
 };
 
-
 export const LINKS = {
   TOS: 'http://carpass.fi/terms_of_use.pdf',
 };
 
 export const TABLET_WIDTH = 600;
-

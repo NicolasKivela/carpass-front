@@ -15,7 +15,13 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
+    marginBottom: 20,
+  },
+  text: {
+    color: colors.white,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 25,
   },
   innerCircle: {
     height: 12,
