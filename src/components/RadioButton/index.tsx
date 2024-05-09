@@ -23,7 +23,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({options}) => {
             <View style={styles.radioButton}>
               {selectedOption === option && <View style={styles.innerCircle} />}
             </View>
-            <Text>{option}</Text>
+            <Text style={styles.text}>{option}</Text>
           </View>
         </TouchableOpacity>
       ))}

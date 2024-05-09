@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 25,
+    marginLeft: 20,
   },
   innerCircle: {
     height: 12,
