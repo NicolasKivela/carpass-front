@@ -48,13 +48,11 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
       input_left && setLeftInput(input_left);
       input_right && setRightInput(input_right);
     }
-    //console.log(reportRow);
   }, []);
 
   if (!visible) {
     return null;
   }
-  console.log(leftInput);
   return (
     <View style={styles.view}>
       {questionType === 'description' && (
