@@ -37,7 +37,6 @@ const NewOrderScreen: React.FC = () => {
   const brandAndModelRef = useRef<any>(null);
   const modelYearRef = useRef<any>(null);
   const odometerReadingRef = useRef<any>(null);
-  const petrolTypeRef = useRef<any>(null);
 
   //TODO: change these to come from database
   const options1 = [t('fullInsp'), t('liteInsp'), t('partInsp')];
@@ -57,12 +56,12 @@ const NewOrderScreen: React.FC = () => {
     value: '',
     tempValues: [],
   });
+
   const [otherData, setOtherData] = useState({
     vehicleIdentificationNumber: '',
     brandAndModel: '',
     modelYear: null,
     odometerReading: null,
-    petrolType: '',
   });
   const [currentScreen, setCurrentScreen] = useState('');
 
@@ -90,8 +89,6 @@ const NewOrderScreen: React.FC = () => {
         return modelYearRef;
       case 'odometerReading':
         return odometerReadingRef;
-      case 'petrolType':
-        return petrolTypeRef;
       default:
         return registrationNumberRef;
     }
@@ -107,8 +104,6 @@ const NewOrderScreen: React.FC = () => {
         return modelYearRef;
       case 'modelYear':
         return odometerReadingRef;
-      case 'petrolType':
-        return petrolTypeRef;
       case 'odometerReading':
         return;
     }
@@ -122,7 +117,6 @@ const NewOrderScreen: React.FC = () => {
         brandAndModel: '',
         modelYear: null,
         odometerReading: null,
-        petrolType: '',
       });
     } else {
       if (currentScreen === SCREENS.NEW_ORDER) {
@@ -168,7 +162,7 @@ const NewOrderScreen: React.FC = () => {
         odometer_reading: otherData.odometerReading,
         production_number: otherData.vehicleIdentificationNumber,
         registration_number: registerNumber.value,
-        engine_type: otherData.petrolType,
+        engine_type: 'petrol', //TODO: need to add option that Radiobutton answers can be used for data
       }),
     );
     Navigation.setRoot({
@@ -230,63 +224,20 @@ const NewOrderScreen: React.FC = () => {
             <View style={styles.container}>
               <RadioButton options={options3} />
             </View>
-            {/*TODO: Need to fix inputs, changing other will change others too */}
-            <Text style={styles.text}>{t('brandAndModel')}</Text>
-            <NewOrderTextInput
-              innerRef={getRightRef(otherData.brandAndModel)}
-              key={otherData.brandAndModel}
-              label={otherData.brandAndModel}
-              value={otherData[otherData.brandAndModel]}
-              setOnChange={(value: string) => {
-                setOtherData({...otherData, [otherData.brandAndModel]: value});
-              }}
-              onSubmitEditing={() => inputOnSubmitHandler('brandAndModel')}
-              icon={'keyboard'}
-            />
-            <Text style={styles.text}>{t('modelYear')}</Text>
-            <NewOrderTextInput
-              innerRef={getRightRef(otherData.modelYear)}
-              key={otherData.modelYear}
-              label={otherData.modelYear}
-              value={otherData[otherData.modelYear]}
-              setOnChange={(value: string) => {
-                setOtherData({...otherData, [otherData.modelYear]: value});
-              }}
-              onSubmitEditing={() => inputOnSubmitHandler('modelYear')}
-              icon={'keyboard'}
-            />
-            <Text style={styles.text}>{t('vehicleIdentificationNumber')}</Text>
-            <NewOrderTextInput
-              innerRef={getRightRef(otherData.vehicleIdentificationNumber)}
-              key={otherData.vehicleIdentificationNumber}
-              label={otherData.vehicleIdentificationNumberl}
-              value={otherData[otherData.vehicleIdentificationNumber]}
-              setOnChange={(value: string) => {
-                setOtherData({
-                  ...otherData,
-                  [otherData.vehicleIdentificationNumber]: value,
-                });
-              }}
-              onSubmitEditing={() =>
-                inputOnSubmitHandler('vehicleIdentificationNumber')
-              }
-              icon={'keyboard'}
-            />
-            <Text style={styles.text}>{t('odometerReading')}</Text>
-            <NewOrderTextInput
-              innerRef={getRightRef(otherData.odometerReading)}
-              key={otherData.odometerReading}
-              label={otherData.odometerReading}
-              value={otherData[otherData.odometerReading]}
-              setOnChange={(value: string) => {
-                setOtherData({
-                  ...otherData,
-                  [otherData.odometerReading]: value,
-                });
-              }}
-              onSubmitEditing={() => inputOnSubmitHandler('odometerReading')}
-              icon={'keyboard'}
-            />
+            {Object.keys(otherData).map(item => (
+              <NewOrderTextInput
+                innerRef={getRightRef(item)}
+                key={item}
+                label={item}
+                value={otherData[item]}
+                setOnChange={(value: string) => {
+                  setOtherData({...otherData, [item]: value});
+                }}
+                onSubmitEditing={() => inputOnSubmitHandler(item)}
+                icon={'keyboard'}
+              />
+            ))}
+
             <View style={styles.footerContainer}>
               <Button
                 onPress={createNewOrder}
