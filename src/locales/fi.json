@@ -22,7 +22,8 @@
   "goBack": "Palaa tekemään muutoksia",
   "guidance": "Ohjeet",
   "identificationInfo": "Tunnistetiedot",
-  "inspectionsWide":  "Kuntotarkastuksen laajuus",
+  "inspectionsWide": "Kuntotarkastuksen laajuus",
+  "information": "Lisätietoja",
   "images": "Kuvat",
   "lite": "KEVYT",
   "liteInsp": "Kevyt kuntotarkastus",
@@ -41,6 +42,7 @@
   "partInsp": "Osatarkastus",
   "password": "Salasana",
   "pictures": "Kuvat",
+  "placeOrder": "Tee uusi tilaus",
   "previous": "Edellinen",
   "readAndAccept": "Olen lukenut ja hyväksyn käyttöehdot",
   "registrationNumber": "Rekisterinumero",
@@ -56,5 +58,10 @@
   "tos": "käyttöehdot",
   "username": "Käyttäjätunnus",
   "vehicleIdentificationNumber": "Valmistenumero",
-  "warnings": "Huomautukset"
+  "warnings": "Huomautukset",
+  "petrol": "Bensiini",
+  "diesel": "Diesel",
+  "hybrid_diesel": "Hybrid diesel",
+  "hybrid_petrol": "Hybrid bensiini",
+  "electric": "Sähkö"
 }

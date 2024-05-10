@@ -36,7 +36,7 @@ const NewOrderScreen: React.FC = () => {
   const vehicleIdentificationNumberRef = useRef<any>(null);
   const brandAndModelRef = useRef<any>(null);
   const modelYearRef = useRef<any>(null);
-  const odometerReadingRef = useRef<any>(null);
+  const informationRef = useRef<any>(null);
 
   //TODO: change these to come from database
   const options1 = [t('fullInsp'), t('liteInsp'), t('partInsp')];
@@ -45,7 +45,13 @@ const NewOrderScreen: React.FC = () => {
     'Katsastuskonttori Ky',
     'Autotarkastus Oy',
   ];
-  const options3 = ['petrol', 'gasoline', 'electric', 'hybrid'];
+  const options3 = [
+    t('petrol'),
+    t('diesel'),
+    t('hybrid_diesel'),
+    t('hybrid_petrol'),
+    t('electric'),
+  ];
 
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
@@ -61,7 +67,7 @@ const NewOrderScreen: React.FC = () => {
     vehicleIdentificationNumber: '',
     brandAndModel: '',
     modelYear: null,
-    odometerReading: null,
+    information: null,
   });
   const [currentScreen, setCurrentScreen] = useState('');
 
@@ -87,8 +93,8 @@ const NewOrderScreen: React.FC = () => {
         return brandAndModelRef;
       case 'modelYear':
         return modelYearRef;
-      case 'odometerReading':
-        return odometerReadingRef;
+      case 'information':
+        return informationRef;
       default:
         return registrationNumberRef;
     }
@@ -103,8 +109,8 @@ const NewOrderScreen: React.FC = () => {
       case 'brandAndModel':
         return modelYearRef;
       case 'modelYear':
-        return odometerReadingRef;
-      case 'odometerReading':
+        return informationRef;
+      case 'information':
         return;
     }
   };
@@ -116,7 +122,7 @@ const NewOrderScreen: React.FC = () => {
         vehicleIdentificationNumber: '',
         brandAndModel: '',
         modelYear: null,
-        odometerReading: null,
+        information: null,
       });
     } else {
       if (currentScreen === SCREENS.NEW_ORDER) {
@@ -159,7 +165,7 @@ const NewOrderScreen: React.FC = () => {
     dispatch(
       setCarData({
         brand_and_model: otherData.brandAndModel,
-        odometer_reading: otherData.odometerReading,
+        odometer_reading: otherData.information,
         production_number: otherData.vehicleIdentificationNumber,
         registration_number: registerNumber.value,
         engine_type: 'petrol', //TODO: need to add option that Radiobutton answers can be used for data
@@ -181,7 +187,7 @@ const NewOrderScreen: React.FC = () => {
   };
 
   const inputOnSubmitHandler = (item: string) => {
-    if (item !== 'odometerReading') {
+    if (item !== 'information') {
       const ref = getRightRefToFocus(item);
       ref?.current && ref.current.focus();
     }
@@ -243,7 +249,7 @@ const NewOrderScreen: React.FC = () => {
                 onPress={createNewOrder}
                 textColor={colors.orange}
                 style={styles.footerButton}>
-                <Text>{'Proceed'}</Text>
+                <Text>{t('placeOrder')}</Text>
               </Button>
             </View>
           </ScrollView>
@@ -298,7 +304,7 @@ const NewOrderTextInput: React.FC<NewOrderTextInputProps> = ({
     switch (label) {
       case 'modelYear':
         return 'numeric';
-      case 'odometerReading':
+      case 'information':
         return 'numeric';
       default:
         return 'default';
@@ -308,7 +314,7 @@ const NewOrderTextInput: React.FC<NewOrderTextInputProps> = ({
   return (
     <TextInput
       ref={innerRef}
-      returnKeyType={label === 'odometerReading' ? 'done' : 'next'}
+      returnKeyType={label === 'information' ? 'done' : 'next'}
       label={t(label)}
       value={value}
       textColor={isActive ? colors.orange : colors.lightGrey}

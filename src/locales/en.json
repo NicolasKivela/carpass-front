@@ -22,6 +22,7 @@
   "guidance": "Guidance",
   "identificationInfo": "Identification information",
   "inspectionsWide": "Inspection type",
+  "information": "Extra information",
   "images": "Images",
   "lite": "LITE",
   "liteInsp": "Lite inspection",
@@ -40,6 +41,7 @@
   "partInsp": "Partial inspection",
   "password": "Password",
   "pictures": "Pictures",
+  "placeOrder": "Place an order",
   "previous": "Previous",
   "readAndAccept": "I have read and accepted the terms of service",
   "registrationNumber": "Registration number",
@@ -55,5 +57,10 @@
   "tos": "Terms of use",
   "username": "Username",
   "vehicleIdentificationNumber": "Vehicle Identification Number",
-  "warnings": "Warnings"
+  "warnings": "Warnings",
+  "petrol": "Petrol",
+  "diesel": "Diesel",
+  "hybrid_diesel": "Hybrid diesel",
+  "hybrid_petrol": "Hybrid petrol",
+  "electric": "Electric"
 }
