@@ -6,7 +6,10 @@ import {
   SET_INITIAL_STATE,
   SET_REPORT_STRUCTURE,
   SET_REPORT_ROW_IMAGE,
+  SET_REPORT_ROW_ADDITIONAL_INPUT,
   SET_REPORT_ROW_COMMENT,
+  SET_REPORT_ROW_LEFT_INPUT,
+  SET_REPORT_ROW_RIGHT_INPUT,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
 } from '../actions/actionTypes';
@@ -93,6 +96,50 @@ const reportReducer = (state = initialState, action: any) => {
         ),
       };
 
+    case SET_REPORT_ROW_LEFT_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                input_left: action.payload.input_left,
+                comment: null,
+                additional_input: null,
+              }
+            : row,
+        ),
+      };
+    case SET_REPORT_ROW_RIGHT_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                input_right: action.payload.input_right,
+                comment: null,
+                additional_input: null,
+              }
+            : row,
+        ),
+      };
+    case SET_REPORT_ROW_ADDITIONAL_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                additional_input: action.payload.additional_input,
+                comment: null,
+                input_left: null,
+                input_right:null,
+              }
+            : row,
+        ),
+      };
+
     case SET_REPORT_ROW_COMMENT:
       return {
         ...state,
@@ -101,6 +148,9 @@ const reportReducer = (state = initialState, action: any) => {
             ? {
                 ...row,
                 comment: action.payload.comment,
+                input_left: null,
+                input_right: null,
+                additional_input: null,
               }
             : row,
         ),

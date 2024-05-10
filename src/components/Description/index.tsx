@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
-import {TextInput} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 
 import {TextField, PictureAddition} from '../index';
 import {
   setReportRowComment,
   setReportRowAdditionalInput,
-  setReportRowLeftRightInput,
+  setReportRowLeftInput,
+  setReportRowRightInput,
 } from '../../store/actions/report';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import styles from './styles';
@@ -24,9 +24,9 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
 
   const [text, setText] = useState('');
   const [questionType, setQuestionType] = useState('');
-  const [singleNumeric, setSingleNumeric] = useState(null);
-  const [leftInput, setLeftInput] = useState(null);
-  const [rightInput, setRightInput] = useState(null);
+  const [singleNumeric, setSingleNumeric] = useState('');
+  const [leftInput, setLeftInput] = useState('');
+  const [rightInput, setRightInput] = useState('');
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
     if (reportRow) {
       const {type, additional_input, comment, input_left, input_right} =
         reportRow;
-      setQuestionType(type);
+      type && setQuestionType(type);
       // Set single numeric value if additional input exists
       additional_input && setSingleNumeric(additional_input);
 
@@ -44,15 +44,17 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
       comment && setText(comment);
 
       // Set left and right inputs
+
       input_left && setLeftInput(input_left);
       input_right && setRightInput(input_right);
     }
+    //console.log(reportRow);
   }, []);
 
   if (!visible) {
     return null;
   }
-
+  console.log(leftInput);
   return (
     <View style={styles.view}>
       {questionType === 'description' && (
@@ -69,15 +71,44 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
         />
       )}
       {questionType === 'leftrightnumeric' && (
-        <View>
-          <TextInput />
-          <TextInput />
+        <View style={styles.leftRight}>
+          <TextField
+            label="Left value"
+            style={styles.numericInput}
+            onChangeText={value => {
+              const leftValue = parseFloat(value);
+              setLeftInput(value);
+              dispatch(setReportRowLeftInput(id, leftValue));
+            }}
+            value={leftInput.toString()}
+          />
+          <TextField
+            label="Right value"
+            style={styles.numericInput}
+            onChangeText={value => {
+              const rightValue = parseFloat(value);
+              setRightInput(value);
+
+              dispatch(setReportRowRightInput(id, rightValue));
+            }}
+            value={rightInput.toString()}
+          />
         </View>
       )}
-      {questionType === 'singlenumeric' && <TextInput />}
+      {questionType === 'singlenumeric' && (
+        <TextField
+          label="Value"
+          style={styles.numericInput}
+          onChangeText={value => {
+            const numericValue = parseFloat(value);
+            setSingleNumeric(value);
+            dispatch(setReportRowAdditionalInput(id, numericValue));
+          }}
+          value={singleNumeric.toString()}
+        />
+      )}
       <PictureAddition id={id} />
     </View>
   );
 };
-
 export default Description;

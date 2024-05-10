@@ -25,12 +25,25 @@ const TextField = ({
   secureTextEntry,
   style,
 }: TextFieldProps) => {
+  const keyboardTypeHandler = () => {
+    switch (label) {
+      case 'Left value':
+      case 'Right value':
+      case 'Value':
+        return 'decimal-pad';
+      default:
+        return 'default';
+    }
+  };
+  const inputType = keyboardTypeHandler();
+
   return (
     <TextInput
       style={[styles.textInput, style]}
       mode="outlined"
       textColor={colors.white}
       value={value}
+      keyboardType={inputType}
       right={
         rightIcon ? (
           <TextInput.Icon icon={rightIcon} onPress={onIconPress} />

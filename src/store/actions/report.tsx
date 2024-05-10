@@ -11,7 +11,8 @@ import {
   SET_REPORT_ROW_ANSWER,
   SET_REPORT_ROW_ADDITIONAL_INPUT,
   SET_REPORT_ROW_COMMENT,
-  SET_REPORT_ROW_LEFTRIGHT_INPUT,
+  SET_REPORT_ROW_LEFT_INPUT,
+  SET_REPORT_ROW_RIGHT_INPUT,
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
@@ -61,14 +62,23 @@ export const setReportRowComment = (id: number, comment: string | null) => {
   };
 };
 
-export const setReportRowLeftRightInput = (
+export const setReportRowLeftInput = (
   id: number,
   input_left: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_LEFT_INPUT,
+    payload: {id, input_left},
+  };
+};
+
+export const setReportRowRightInput = (
+  id: number,
   input_right: number | null,
 ) => {
   return {
-    type: SET_REPORT_ROW_LEFTRIGHT_INPUT,
-    payload: {id, input_left, input_right},
+    type: SET_REPORT_ROW_RIGHT_INPUT,
+    payload: {id, input_right},
   };
 };
 
