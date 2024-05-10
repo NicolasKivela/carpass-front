@@ -63,6 +63,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
 
   useEffect(() => {
     !defaultPageNumber && dispatch(fetchReportQuestions());
+    console.log(defaultPageNumber)
   }, []);
 
   useEffect(() => {
@@ -187,7 +188,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
           errorNum={errorNum}
         />
 
-        {reportStructure.length ? (
+        {reportStructure.length && reportRows.length ? (
           <View style={styles.section3}>
             <Text style={styles.header}>
               {`${reportStructure[pageNumber - 1].id}. ${
