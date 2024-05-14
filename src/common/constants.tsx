@@ -6,6 +6,7 @@ export const PATHS = {
   REPORT_STRUCTURE: '/report/structure',
   SAVE_REPORT: '/report',
   LOGIN: '/user/login',
+  GET_REPORT_HTML: 'report/send',
 };
 
 export const SCREENS = {
@@ -15,6 +16,7 @@ export const SCREENS = {
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
+  VIEW_REPORT: 'viewReportScreen',
 };
 
 export const REPORT_TYPE = {
@@ -33,10 +35,8 @@ export const REPORT_QUESTION_STATUS = {
   RED: 'red',
 };
 
-
 export const LINKS = {
   TOS: 'http://carpass.fi/terms_of_use.pdf',
 };
 
 export const TABLET_WIDTH = 600;
-

@@ -3,6 +3,7 @@ import LoginScreen from './LoginScreen';
 import NewReportScreen from './NewReportScreen';
 import ReviewerScreen from './ReviewerScreen';
 import SummaryScreen from './SummaryScreen';
+import ViewReportScreen from './ViewReportScreen';
 
 export {
   InspectorScreen,
@@ -10,4 +11,5 @@ export {
   NewReportScreen,
   ReviewerScreen,
   SummaryScreen,
+  ViewReportScreen,
 };
