@@ -12,8 +12,8 @@ Software Engineering Project course, Spring 2024
 ## How to run the application:
 
 ```bash
-git clone https://github.com/horridparlor/trustcar-front.git
-cd trustcar-front
+git clone https://github.com/horridparlor/carpass-front.git
+cd carpass-front
 npm install
 ```
 

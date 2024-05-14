@@ -3,7 +3,7 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 const defaultConfig = getDefaultConfig(__dirname);
 
 const {
-  resolver: { sourceExts, assetExts },
+  resolver: {sourceExts, assetExts},
 } = getDefaultConfig(__dirname);
 
 const config = {
@@ -23,4 +23,3 @@ const config = {
 };
 
 module.exports = mergeConfig(defaultConfig, config);
-

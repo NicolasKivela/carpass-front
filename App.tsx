@@ -1,13 +1,21 @@
 import React from 'react';
 import BootSplash from 'react-native-bootsplash';
+import MUIIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
+import {Provider} from 'react-redux';
 import {PaperProvider} from 'react-native-paper';
 import 'react-native-reanimated';
 
-import LoginScreen from './src/screens/loginScreen';
 import {SCREENS} from './src/common/constants';
-import RegistrationNumberScreen from './src/screens/RegistrationNumberScreen';
 import {colors} from './src/common/styles';
+import {
+  LoginScreen,
+  NewReportScreen,
+  ReviewerScreen,
+  SummaryScreen,
+  InspectorScreen,
+} from './src/screens/index';
+import store from './src/store/configureStore';
 import './src/locales/index';
 
 // Higher order component for injecting paper provider, and later redux
@@ -15,22 +23,39 @@ const componentHOC = (Component, ...props) => {
   return class App extends React.Component {
     render() {
       return (
-        <PaperProvider>
-          <Component
-            {...{
-              ...this.props,
-              ...props,
-            }}
-          />
-        </PaperProvider>
+        <Provider store={store}>
+          <PaperProvider
+            settings={{
+              icon: props => <MUIIcons {...props} />,
+            }}>
+            <Component
+              {...{
+                ...this.props,
+                ...props,
+              }}
+            />
+          </PaperProvider>
+        </Provider>
       );
     }
   };
 };
 
+Navigation.registerComponent(SCREENS.INSPECTOR, () =>
+  componentHOC(InspectorScreen),
+);
+Navigation.registerComponent(SCREENS.DEALERSHIP, () =>
+  componentHOC(NewReportScreen),
+);
 Navigation.registerComponent(SCREENS.LOGIN, () => componentHOC(LoginScreen));
-Navigation.registerComponent(SCREENS.REGISTRATION_NUMBER, () =>
-  componentHOC(RegistrationNumberScreen),
+Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
+  componentHOC(NewReportScreen),
+);
+Navigation.registerComponent(SCREENS.REVIEWER, () =>
+  componentHOC(ReviewerScreen),
+);
+Navigation.registerComponent(SCREENS.SUMMARY, () =>
+  componentHOC(SummaryScreen),
 );
 
 const App = () => {
@@ -54,7 +79,7 @@ const App = () => {
           children: [
             {
               component: {
-                name: SCREENS.REGISTRATION_NUMBER,
+                name: SCREENS.LOGIN,
               },
             },
           ],
