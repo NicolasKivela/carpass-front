@@ -24,6 +24,8 @@
   "guidance": "Ohjeet",
   "identificationInfo": "Tunnistetiedot",
   "images": "Kuvat",
+  "inputLeft": "Vasen arvo",
+  "inputRight": "Oikea arvo",
   "lite": "KEVYT",
   "loadingQuestions": "Ladataan kysymyksiä...",
   "login": "Kirjaudu",
@@ -52,6 +54,7 @@
   "switchReviewerYes": "Poista kaikki hyväksytyt valinnat",
   "tos": "käyttöehdot",
   "username": "Käyttäjätunnus",
+  "value": "Mittauksen arvo",
   "vehicleIdentificationNumber": "Valmistenumero",
   "warnings": "Huomautukset"
 }

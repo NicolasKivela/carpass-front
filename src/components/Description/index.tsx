@@ -71,7 +71,7 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
       {questionType === 'leftrightnumeric' && (
         <View style={styles.leftRight}>
           <TextField
-            label="Left value"
+            label={t('inputLeft')}
             style={styles.numericInput}
             onChangeText={value => {
               const leftValue = parseFloat(value);
@@ -81,7 +81,7 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
             value={leftInput.toString()}
           />
           <TextField
-            label="Right value"
+            label={t('inputRight')}
             style={styles.numericInput}
             onChangeText={value => {
               const rightValue = parseFloat(value);
@@ -95,7 +95,7 @@ const Description: React.FC<ModalContentProps> = ({visible, id}) => {
       )}
       {questionType === 'singlenumeric' && (
         <TextField
-          label="Value"
+          label={t('value')}
           style={styles.numericInput}
           onChangeText={value => {
             const numericValue = parseFloat(value);
