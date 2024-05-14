@@ -202,40 +202,63 @@ export const fetchReportQuestions = () => {
 export const saveReport = () => {
   return async (dispatch: any, getState: any) => {
     try {
-      // const response = await ApiManager.post(PATHS.SAVE_REPORT)
+      const reportRows = getState().report.report_rows;
+
+      // Check if inputleft, inputright or singlenumeric report_row inputs are empty
+      const isEmpty = reportRows.some((row: any) => {
+        return Object.keys(row).some((key: any) => {
+          if (
+            key === 'additional_input' ||
+            key === 'input_right' ||
+            key === 'input_left'
+          ) {
+            if (row[key] === '' || row[key] === null) {
+              return true;
+            }
+          }
+        });
+      });
+
+      if (isEmpty) {
+        dispatch(
+          setError({
+            type: 'Error',
+            title: 'errors.emptyRowInputsTitle',
+            message: 'errors.emptyRowInputsMessage',
+          }),
+        );
+        return; // Exit the function if any input is empty
+      }
+      const requestBody = {
+        brand_and_model: getState().report.brand_and_model,
+        odometer_reading: getState().report.odometer_reading,
+        production_number: getState().report.production_number,
+        registration_number: getState().report.registration_number,
+        engine_type: getState().report.engine_type,
+        report_rows: getState().report.report_rows.map((item: any) => {
+          return {
+            ...item,
+            attachments: item.attachments.map((attachment: any) => ({
+              attachment_type: attachment.attachment_type,
+              data: attachment.data,
+            })),
+          };
+        }), //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
+      };
+
+      console.log('Report Body:', JSON.stringify(requestBody, null, 2)); // Logging the request body
+
       const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getState().user.token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          brand_and_model: getState().report.brand_and_model,
-          odometer_reading: getState().report.odometer_reading,
-          production_number: getState().report.production_number,
-          registration_number: getState().report.registration_number,
-          engine_type: getState().report.engine_type,
-          report_rows: getState()
-            .report.report_rows.map((item: any) => {
-              return {
-                ...item,
-                attachments: item.attachments.map((attachment: any) => ({
-                  attachment_type: attachment.attachment_type,
-                  data: attachment.data,
-                })),
-              };
-            }) //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
-            .reduce((accumulator: any, current: any) => {
-              let exists = accumulator.find((item: any) => {
-                return item.id === current.id;
-              });
-              if (!exists) {
-                accumulator = accumulator.concat(current);
-              }
-              return accumulator;
-            }, []),
-        }),
-      }); // TODO: remove later and use this from apimanager
+        body: JSON.stringify(requestBody),
+      });
+
+      const responseBody = await response.json();
+      console.log('Saved report rows:', responseBody.report_rows); // TODO: remove later and use this from apimanager
       if (response.ok) {
         Navigation.setRoot({
           root: {

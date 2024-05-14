@@ -104,8 +104,6 @@ const reportReducer = (state = initialState, action: any) => {
             ? {
                 ...row,
                 input_left: action.payload.input_left,
-                comment: null,
-                additional_input: null,
               }
             : row,
         ),
@@ -118,8 +116,6 @@ const reportReducer = (state = initialState, action: any) => {
             ? {
                 ...row,
                 input_right: action.payload.input_right,
-                comment: null,
-                additional_input: null,
               }
             : row,
         ),
@@ -132,9 +128,6 @@ const reportReducer = (state = initialState, action: any) => {
             ? {
                 ...row,
                 additional_input: action.payload.additional_input,
-                comment: null,
-                input_left: null,
-                input_right:null,
               }
             : row,
         ),
@@ -148,9 +141,6 @@ const reportReducer = (state = initialState, action: any) => {
             ? {
                 ...row,
                 comment: action.payload.comment,
-                input_left: null,
-                input_right: null,
-                additional_input: null,
               }
             : row,
         ),

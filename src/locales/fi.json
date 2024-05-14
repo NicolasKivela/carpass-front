@@ -10,6 +10,8 @@
     "authLoginMessage": "Jotain meni vikaan sisäänkirjautumisen aikana. Tarkista käyttäjätunnus ja salasana ja kokeile sen jälkeen uudelleen.",
     "cameraTitle": "Ongelma kameran käytössä",
     "cameraMessage": "Olet hylännyt oikeuden käyttää puhelimen kameraa. Tarkista oikeudet sovelluksen asetuksista.",
+    "emptyRowInputsTitle": "Tyhjiä kenttiä raportissa",
+    "emptyRowInputsMessage": "Raporttia ei voida tallentaa. Tarkista, että olet täyttänyt kaikki numerokentät",
     "fetchReportQuestinsTitle": "Ongelma tietojen latauksessa",
     "fetchReportQuestinsMessage": "Jotain meni vikaan ladatessa tietoja. Yritä uudelleen tai tarkista internet yhteytesi.",
     "loginTitle": "Ongelma sisäänkirjautumisen aikana",
