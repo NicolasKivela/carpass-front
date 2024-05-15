@@ -66,7 +66,7 @@ export const loginUser = (username: string, password: string) => {
               children: [
                 {
                   component: {
-                    name: SCREENS.INSPECTOR,
+                    name: SCREENS.VIEW_REPORT,
                   },
                 },
               ],

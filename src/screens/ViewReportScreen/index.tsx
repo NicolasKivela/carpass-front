@@ -20,16 +20,26 @@ import {
   DropdownNotification,
 } from '../../components/index';
 import {REPORT_QUESTION_STATUS, SCREENS} from '../../common/constants';
-import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from '../../store/configureStore';
 import {getReportHtml, saveReport} from '../../store/actions/report';
 import {styles} from './styles';
 import {Modal} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {RootState} from '@reduxjs/toolkit/query';
 
 const ViewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+  const reportHtml = useSelector(
+    (state: RootState) => state.report.report_HTML,
+  );
+
+  useEffect(() => {
+    dispatch(getReportHtml('abc-123')); //change
+  });
 
   const reportRows = [
     {attachments: [], comment: '', inspection_status: 'green', question_id: 1},
@@ -309,12 +319,6 @@ const ViewReportScreen: React.FC = () => {
 
   const formattedDate = dateFormatter(dateString);
 
-  const html = useSelector((state: RootState) => state.report.html);
-
-  const reportHTMLHandler = () => {
-    dispatch(getReportHtml('abc-123'));
-  };
-
   const summaryValueHandler = id => {
     return reportStructure.map(item =>
       item.questions.map(innerItem =>
@@ -423,10 +427,7 @@ const ViewReportScreen: React.FC = () => {
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowFullWebView(true)}>
               <View style={styles.webViewContainer}>
-                <WebView
-                  source={{uri: 'https://reactnative.dev/'}}
-                  style={styles.webView}
-                />
+                <WebView source={{html: reportHtml}} style={styles.webView} />
               </View>
             </TouchableOpacity>
 
@@ -448,7 +449,7 @@ const ViewReportScreen: React.FC = () => {
           onDismiss={() => setShowFullWebView(false)}
           contentContainerStyle={styles.modal}>
           <View style={styles.webViewContainer}>
-            <WebView source={{html: reportHTMLHandler}} />
+            <WebView source={{html: reportHtml}} />
           </View>
         </Modal>
         <DropdownNotification />
