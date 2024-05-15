@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
-  BackHandler,
   TextInput as TextInputProp,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -16,16 +15,20 @@ import {Navigation} from 'react-native-navigation';
 import {
   LogoTopBar,
   Gradient,
-  FrameProcessorCamera,
   DropdownNotification,
   RadioButton,
 } from '../../components/index';
 import {colors} from '../../common/styles';
-import {SCREENS} from '../../common/constants';
-import {useAppDispatch} from '../../store/configureStore';
-import {setCarData} from '../../store/actions/report';
+import {BASE_PATH, PATHS, SCREENS} from '../../common/constants';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {fetchReportQuestions, setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
+import {changePage} from "../../store/actions/routing.tsx";
+import {RadioButtonRef} from "../../components/RadioButton";
+import {EngineType, ReportType} from "../../store/types/report.tsx";
+import {insertWebAnimation} from "react-native-reanimated/lib/typescript/reanimated2/layoutReanimation/web/domUtils";
+import {fetchOrganizations} from "../../store/actions/organizations.tsx";
 
 const NewOrderScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -39,13 +42,16 @@ const NewOrderScreen: React.FC = () => {
   const informationRef = useRef<any>(null);
 
   //TODO: change these to come from database
-  const options1 = [t('fullInsp'), t('liteInsp'), t('partInsp')];
-  const options2 = [
+  const [reportType, setReportType] = useState<string|null>(null);
+  const [inspectorOrg, setInspectorOrg] = useState<string|null>(null);
+  const [engineType, setEngineType] = useState<string|null>(null);
+  const optionsReportType = [t('fullInsp'), t('liteInsp'), t('partInsp')];
+  const optionsInspectorOrgs = [
     'Kuntotarkastajat Oy',
     'Katsastuskonttori Ky',
     'Autotarkastus Oy',
   ];
-  const options3 = [
+  const optionsEngineType = [
     t('petrol'),
     t('diesel'),
     t('hybrid_diesel'),
@@ -82,6 +88,25 @@ const NewOrderScreen: React.FC = () => {
       listener.remove();
     };
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchOrganizations());
+  }, []);
+  const organizations = useAppSelector(state => state);
+
+
+  console.log(555, organizations);
+  console.log(443, {
+    "registration_number": registerNumber.value,
+    "car_production_number": otherData.vehicleIdentificationNumber,
+    "engine_type": engineType,
+    "brand_and_model": otherData.brandAndModel,
+    "report_type": reportType,
+    "additional_information": otherData.information,
+    "additional_information2": '',
+    "inspection_organization_id": inspectorOrg,
+    "sections": ["?"]
+  });
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -161,7 +186,7 @@ const NewOrderScreen: React.FC = () => {
     return true;
   };
 
-  const createNewOrder = () => {
+  const createNewOrder = async() => {
     dispatch(
       setCarData({
         brand_and_model: otherData.brandAndModel,
@@ -171,18 +196,23 @@ const NewOrderScreen: React.FC = () => {
         engine_type: 'petrol', //TODO: need to add option that Radiobutton answers can be used for data
       }),
     );
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.DEALERSHIP,
-              },
-            },
-          ],
-        },
+    await changePage(SCREENS.DEALERSHIP);
+    const response = await fetch(BASE_PATH + PATHS.CREATE_ORDER, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        "registration_number": registerNumber.value,
+        "car_production_number": otherData.vehicleIdentificationNumber,
+        "engine_type": engineType,
+        "brand_and_model": otherData.brandAndModel,
+        "report_type": reportType,
+        "additional_information": otherData.information,
+        "additional_information2": '',
+        "inspection_organization_id": inspectorOrg,
+        "sections": ["?"]
+      }),
     });
   };
 
@@ -222,13 +252,13 @@ const NewOrderScreen: React.FC = () => {
             />
             <Text style={styles.text}>{t('orderInspection')}</Text>
             <View style={styles.container}>
-              <RadioButton options={options1} />
+              <RadioButton options={optionsReportType} selectedOption={reportType} setSelectedOption={setReportType} />
             </View>
             <View style={styles.container}>
-              <RadioButton options={options2} />
+              <RadioButton options={optionsInspectorOrgs} selectedOption={inspectorOrg} setSelectedOption={setInspectorOrg} />
             </View>
             <View style={styles.container}>
-              <RadioButton options={options3} />
+              <RadioButton options={optionsEngineType} selectedOption={engineType} setSelectedOption={setEngineType} />
             </View>
             {Object.keys(otherData).map(item => (
               <NewOrderTextInput

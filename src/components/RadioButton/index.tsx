@@ -4,10 +4,11 @@ import styles from './styles';
 
 interface RadioButtonProps {
   options: string[];
+  selectedOption: string|null;
+  setSelectedOption: (option: string) => void;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({options}) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+const RadioButton: React.FC<RadioButtonProps> = ({options, selectedOption, setSelectedOption}) => {
 
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);

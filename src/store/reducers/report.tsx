@@ -8,7 +8,7 @@ import {
   SET_REPORT_ROW_IMAGE,
   SET_REPORT_ROW_COMMENT,
   CHANGE_REPORT_ROW_IMAGE,
-  REMOVE_REPORT_ROW_IMAGE,
+  REMOVE_REPORT_ROW_IMAGE, SET_ORGANIZATIONS,
 } from '../actions/actionTypes';
 
 export const initialState: Report = {

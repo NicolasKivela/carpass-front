@@ -15,7 +15,9 @@
     "loginTitle": "Error during login",
     "loginMessage": "Something went wrong during logging in. Try again or check your internet connection.",
     "saveReportTitle": "Error during saving report",
-    "saveReportMessage": "Something went wrong when saving report. Try again or check your internet connection."
+    "saveReportMessage": "Something went wrong when saving report. Try again or check your internet connection.",
+    "fetchOrganizations": "Error fetching organizations",
+    "fetchOrganizationsMessage": "Something went wrong fetching organizations. Check your internet connection."
   },
   "full": "FULL",
   "fullInsp": "Full inspection",

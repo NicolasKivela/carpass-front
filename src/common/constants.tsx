@@ -10,12 +10,14 @@ export const PATHS = {
   SAVE_REPORT: '/report',
   LOGIN: '/user/login',
   LOGOUT: '/user/logout',
+  CREATE_ORDER: '/order/create',
+  ORGANIZATION: '/organization',
 };
 
 export const SCREENS = {
   LOGIN: 'loginScreen',
   NEW_REPORT: 'newReportScreen',
-  NEW_ORDER: 'newOrderrScreen',
+  NEW_ORDER: 'newOrderScreen',
   REVIEWER: 'reviewerScreen',
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',

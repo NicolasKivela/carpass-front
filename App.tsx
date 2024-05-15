@@ -14,11 +14,10 @@ import {
   ReviewerScreen,
   SummaryScreen,
   InspectorScreen,
-  NewOrderScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
-import NewOrderScreen from "./src/screens/NewOrderScreen";
+import {NewOrderScreen} from "./src/screens";
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
@@ -54,7 +53,7 @@ Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
   componentHOC(NewReportScreen),
 );
 Navigation.registerComponent(SCREENS.NEW_ORDER, () =>
-    componentHOC(NewReportScreen),
+    componentHOC(NewOrderScreen),
 );
 Navigation.registerComponent(SCREENS.REVIEWER, () =>
   componentHOC(ReviewerScreen),
