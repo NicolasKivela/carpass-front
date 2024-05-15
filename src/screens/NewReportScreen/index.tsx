@@ -132,12 +132,12 @@ const NewReportScreen: React.FC = () => {
         odometerReading: null,
       });
     } else {
-      if (currentScreen === SCREENS.NEW_REPORT) {
-        changePage(SCREENS.INSPECTOR);
-      }
-
-      if (currentScreen === SCREENS.DEALERSHIP) {
-        changePage(SCREENS.INSPECTOR);
+      switch (currentScreen) {
+        case SCREENS.NEW_REPORT:
+        case SCREENS.DEALERSHIP:
+        case SCREENS.NEW_ORDER:
+          changePage(SCREENS.INSPECTOR);
+          break;
       }
     }
 
