@@ -5,6 +5,7 @@ import FrameProcessorCamera from './FrameProcessorCamera/index';
 import Gradient from './Gradient/index';
 import LogoTopBar from './LogoTopBar/index';
 import MainButton from './MainButton/index';
+import RadioButton from './RadioButton/index';
 import PictureAddition from './PictureAddition/index';
 import {ReviewProgressBar, ReviewNavigation} from './ReviewNavigationBar/index';
 import SecondaryButton from './SecondaryButton/index';
@@ -22,6 +23,7 @@ export {
   Gradient,
   LogoTopBar,
   MainButton,
+  RadioButton,
   PictureAddition,
   ReviewProgressBar,
   ReviewNavigation,

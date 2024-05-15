@@ -14,6 +14,7 @@ import {
   ReviewerScreen,
   SummaryScreen,
   InspectorScreen,
+  NewOrderScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
