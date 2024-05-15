@@ -5,13 +5,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Keyboard} from 'react-native';
 
 import {BASE_PATH, LOCAL_STORAGE, PATHS, SCREENS} from '../../common/constants';
-import {User} from '../types/user';
 import {LOG_IN, LOG_OUT, SET_STATE} from './actionTypes';
 import {setError} from './error';
+import {User} from "../types/user.tsx";
 
 global.atob = decode;
 
-export const setUserData = (user: User) => {
+export const setUserData = (user: {
+  user_name: string;
+  last_name: string;
+  avatar_uri: string;
+  first_name: string;
+  token: any
+}) => {
   return {
     type: LOG_IN,
     payload: user,
@@ -48,6 +54,7 @@ export const loginUser = (username: string, password: string) => {
           username: string;
           firstname: string;
           lastname: string;
+          avatarUri: string;
           iat: string;
           exp: string;
         };
@@ -57,6 +64,7 @@ export const loginUser = (username: string, password: string) => {
             user_name: credentials.username,
             first_name: credentials.firstname,
             last_name: credentials.lastname,
+            avatar_uri: credentials.avatarUri,
             token: token,
           }),
         );
@@ -96,10 +104,30 @@ export const loginUser = (username: string, password: string) => {
   };
 };
 
-export const logoutUser = () => {
-  // fectch logout user endpoint
-  AsyncStorage.multiRemove(Object.values(LOCAL_STORAGE));
+export const logoutUser = async (user: User) => {
+  await fetch(BASE_PATH + PATHS.LOGOUT, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  });
+  await AsyncStorage.multiRemove(Object.values(LOCAL_STORAGE));
   removeUserData();
+  await Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.LOGIN,
+              }
+            }
+          ]
+        }
+      }
+  });
 };
 
 export const fetchUserState = () => {

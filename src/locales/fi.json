@@ -1,4 +1,5 @@
 {
+  "aboutMe": "Omat tiedot",
   "carInspection": "Auton kuntotarkastukset",
   "carInspectionHistory": "Auton kuntotarkastushistoria",
   "brandAndModel": "Merkki ja malli",
@@ -26,6 +27,7 @@
   "loadingQuestions": "Ladataan kysymyksiä...",
   "login": "Kirjaudu",
   "loginToApp": "Kirjaudu sovellukseen",
+  "logout":"Kirjaudu ulos",
   "modelYear": "Vuosimalli",
   "next": "Seuraava",
   "noReviews": "Ei kuntotarkastuksia",
@@ -42,6 +44,7 @@
   "report": "Raportti",
   "reviewReady": "TARKASTUS VALMIS",
   "search": "Hae tarkastuskoodilla",
+  "settings": "Asetukset",
   "startInspection": "Aloita tarkastus",
   "statistics": "Tilastoja",
   "summary": "YHTEENVETO",

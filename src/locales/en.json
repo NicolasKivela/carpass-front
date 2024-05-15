@@ -1,4 +1,5 @@
 {
+  "aboutMe": "About me",
   "brandAndModel": "Brand and model",
   "carInspection": "Car Inspections",
   "carInspectionHistory": "Car Inspection History",
@@ -25,6 +26,7 @@
   "loadingQuestions": "Loading questions...",
   "login": "Login",
   "loginToApp": "Log in to the application",
+  "logout":"Logout",
   "modelYear": "Model year",
   "next": "Next",
   "noReviews": "No Reviews",
@@ -41,6 +43,7 @@
   "report": "Reports",
   "reviewReady": "CHECK COMPLETE",
   "search": "Search with a code",
+  "settings": "Settings",
   "startInspection": "Start inspection",
   "statistics": "Statistics",
   "summary": "SUMMARY",

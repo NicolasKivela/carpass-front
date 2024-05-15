@@ -11,6 +11,9 @@ import {SCREENS} from '../../common/constants';
 import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
+import ProfileHanger from "../../components/ProfileHanger";
+import {User} from "../../store/types/user.tsx";
+import {useSelector} from "react-redux";
 
 interface Props {
   userType: string; // Assuming userType is a string
@@ -19,6 +22,7 @@ interface Props {
 const InspectorScreen: React.FC<Props> = ({userType}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+  const user = useSelector((state: { user: User }) => state.user);
 
   //TODO: get usertype from backend when user logs in
   userType = 'inspector';
@@ -62,6 +66,9 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <ProfileHanger
+            user={user}
+        />
         <Image
           source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
@@ -93,7 +100,6 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
         <MainButton
           title={t('orders')}
           icon="mail"
-          //Just a placeholder for getting into the next screen
           onPress={() => showOrders()}
           style={styles.button}
         />
