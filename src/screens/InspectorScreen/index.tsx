@@ -90,12 +90,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
-        <MainButton
-          title={t('carInspection')}
-          icon="mail"
-          onPress={() => console.log('PREsSED')}
-          style={styles.button}
-        />
+
         {userType === 'inspector' && (
           <MainButton
             title={t('startInspection')}
@@ -112,7 +107,12 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
             style={styles.button}
           />
         )}
-
+        <MainButton
+          title={t('carInspection')}
+          icon="mail"
+          onPress={showOrders}
+          style={styles.button}
+        />
         <SecondaryButton
           title={t('statistics')}
           onPress={() => setStatistic(true)}
