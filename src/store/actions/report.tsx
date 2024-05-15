@@ -150,25 +150,15 @@ export const saveReport = () => {
           production_number: getState().report.production_number,
           registration_number: getState().report.registration_number,
           engine_type: getState().report.engine_type,
-          report_rows: getState()
-            .report.report_rows.map((item: any) => {
-              return {
-                ...item,
-                attachments: item.attachments.map((attachment: any) => ({
-                  attachment_type: attachment.attachment_type,
-                  data: attachment.data,
-                })),
-              };
-            }) //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
-            .reduce((accumulator: any, current: any) => {
-              let exists = accumulator.find((item: any) => {
-                return item.id === current.id;
-              });
-              if (!exists) {
-                accumulator = accumulator.concat(current);
-              }
-              return accumulator;
-            }, []),
+          report_rows: getState().report.report_rows.map((item: any) => {
+            return {
+              ...item,
+              attachments: item.attachments.map((attachment: any) => ({
+                attachment_type: attachment.attachment_type,
+                data: attachment.data,
+              })),
+            };
+          }),
         }),
       }); // TODO: remove later and use this from apimanager
       if (response.ok) {
