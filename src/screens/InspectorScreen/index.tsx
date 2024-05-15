@@ -59,6 +59,22 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
       },
     });
   };
+  const showOrders = () => {
+    console.log('TOIMII');
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.ALLORDERS,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
@@ -73,6 +89,12 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
         <GuidanceModal
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
+        />
+        <MainButton
+          title={t('carInspection')}
+          icon="mail"
+          onPress={() => console.log('PREsSED')}
+          style={styles.button}
         />
         {userType === 'inspector' && (
           <MainButton
@@ -90,13 +112,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
             style={styles.button}
           />
         )}
-        <MainButton
-          title={t('orders')}
-          icon="mail"
-          //Just a placeholder for getting into the next screen
-          onPress={() => showOrders()}
-          style={styles.button}
-        />
+
         <SecondaryButton
           title={t('statistics')}
           onPress={() => setStatistic(true)}

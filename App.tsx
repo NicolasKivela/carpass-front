@@ -58,6 +58,9 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
 );
+Navigation.registerComponent(SCREENS.ALLORDERS, () =>
+  componentHOC(AllReportsScreen),
+);
 
 const App = () => {
   Navigation.events().registerAppLaunchedListener(() => {

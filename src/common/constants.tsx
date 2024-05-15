@@ -16,6 +16,7 @@ export const SCREENS = {
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
+  ALLORDERS: 'allOrdersScreen',
 };
 
 export const REPORT_TYPE = {
