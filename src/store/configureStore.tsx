@@ -6,9 +6,11 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import reportReducer from './reducers/report';
 import errorReducer from './reducers/error';
 import userReducer from './reducers/user';
+import orderReducer from './reducers/order';
 
 const appReducer = combineReducers({
   report: reportReducer,
+  order: orderReducer,
   error: errorReducer,
   user: userReducer,
 });
