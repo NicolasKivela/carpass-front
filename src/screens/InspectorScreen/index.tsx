@@ -14,6 +14,7 @@ import styles from './styles';
 import ProfileHanger from "../../components/ProfileHanger";
 import {User} from "../../store/types/user.tsx";
 import {useSelector} from "react-redux";
+import {changePage} from "../../store/actions/routing.tsx";
 
 interface Props {
 }
@@ -28,41 +29,19 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
 
-  console.log(221, user);
   useEffect(() => {
     dispatch(setReportInitialState());
   }, []);
 
   const startInspectionHandler = () => {
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.NEW_REPORT,
-              },
-            },
-          ],
-        },
-      },
-    });
+    changePage(SCREENS.NEW_REPORT);
   };
   const startCarDealerHandler = () => {
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.DEALERSHIP,
-              },
-            },
-          ],
-        },
-      },
-    });
+    changePage(SCREENS.DEALERSHIP);
   };
+  const startNewOrderHandler = () => {
+    changePage(SCREENS.NEW_ORDER)
+  }
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
@@ -94,7 +73,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           <MainButton
               title={t('newOrder')}
               icon="search"
-              onPress={startCarDealerHandler}
+              onPress={startNewOrderHandler}
               style={styles.button}
           />
           <MainButton

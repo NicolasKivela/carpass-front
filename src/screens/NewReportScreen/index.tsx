@@ -26,6 +26,7 @@ import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
+import {changePage} from "../../store/actions/routing.tsx";
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -132,36 +133,11 @@ const NewReportScreen: React.FC = () => {
       });
     } else {
       if (currentScreen === SCREENS.NEW_REPORT) {
-        Navigation.setRoot({
-          root: {
-            stack: {
-              children: [
-                {
-                  component: {
-                    name: SCREENS.INSPECTOR,
-                  },
-                },
-              ],
-            },
-          },
-        });
+        changePage(SCREENS.INSPECTOR);
       }
 
       if (currentScreen === SCREENS.DEALERSHIP) {
-        Navigation.setRoot({
-          root: {
-            stack: {
-              children: [
-                {
-                  component: {
-                    //TODO: needs navigation screen to Car dealer home screen
-                    name: SCREENS.INSPECTOR,
-                  },
-                },
-              ],
-            },
-          },
-        });
+        changePage(SCREENS.INSPECTOR);
       }
     }
 

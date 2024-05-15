@@ -15,6 +15,7 @@ export const PATHS = {
 export const SCREENS = {
   LOGIN: 'loginScreen',
   NEW_REPORT: 'newReportScreen',
+  NEW_ORDER: 'newOrderScreen',
   REVIEWER: 'reviewerScreen',
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
