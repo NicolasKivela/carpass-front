@@ -13,9 +13,10 @@ global.atob = decode;
 
 export const setUserData = (user: {
   user_name: string;
-  last_name: string;
-  avatar_uri: string;
   first_name: string;
+  last_name: string;
+  organization_type: string;
+  avatar_uri: string;
   token: any
 }) => {
   return {
@@ -54,6 +55,7 @@ export const loginUser = (username: string, password: string) => {
           username: string;
           firstname: string;
           lastname: string;
+          organizationType: string;
           avatarUri: string;
           iat: string;
           exp: string;
@@ -64,6 +66,7 @@ export const loginUser = (username: string, password: string) => {
             user_name: credentials.username,
             first_name: credentials.firstname,
             last_name: credentials.lastname,
+            organization_type: credentials.organizationType,
             avatar_uri: credentials.avatarUri,
             token: token,
           }),

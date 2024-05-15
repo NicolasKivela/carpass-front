@@ -7,7 +7,7 @@ import {Navigation} from 'react-native-navigation';
 import {useAppDispatch} from '../../store/configureStore';
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
-import {SCREENS} from '../../common/constants';
+import {SCREENS, USER_TYPE} from '../../common/constants';
 import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
@@ -16,19 +16,19 @@ import {User} from "../../store/types/user.tsx";
 import {useSelector} from "react-redux";
 
 interface Props {
-  userType: string; // Assuming userType is a string
 }
 
-const InspectorScreen: React.FC<Props> = ({userType}) => {
+const InspectorScreen: React.FC<Props> = ({}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const user = useSelector((state: { user: User }) => state.user);
+  const userType = user.organization_type;
 
   //TODO: get usertype from backend when user logs in
-  userType = 'inspector';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
 
+  console.log(221, user);
   useEffect(() => {
     dispatch(setReportInitialState());
   }, []);
@@ -81,7 +81,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
-        {userType === 'inspector' && (
+        {userType === USER_TYPE.INSPECTION && (
           <MainButton
             title={t('startInspection')}
             icon="checklist"
@@ -89,13 +89,21 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
             style={styles.button}
           />
         )}
-        {userType === 'carDealer' && (
+        {userType === USER_TYPE.SELLER && (
+            <>
+          <MainButton
+              title={t('newOrder')}
+              icon="search"
+              onPress={startCarDealerHandler}
+              style={styles.button}
+          />
           <MainButton
             title={t('carInspection')}
             icon="search"
             onPress={startCarDealerHandler}
             style={styles.button}
           />
+            </>
         )}
         <MainButton
           title={t('orders')}

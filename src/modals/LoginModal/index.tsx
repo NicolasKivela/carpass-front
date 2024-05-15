@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text} from 'react-native-paper';
 import {Portal, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,6 +10,8 @@ import {useAppDispatch} from '../../store/configureStore';
 import {loginUser} from '../../store/actions/user';
 
 import styles from '../styles';
+import {TextFieldRef} from "../../components/TextField";
+import {ButtonRef} from "../../components/SecondaryButton";
 
 interface ModalContentProps {
   visible: boolean;
@@ -22,6 +24,9 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const passwordFieldRef = useRef<TextFieldRef|null>(null);
+  const submitRef = useRef<ButtonRef|null>(null);
+
 
   if (!visible) {
     return null;
@@ -55,6 +60,7 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           onChangeText={text => setUsername(text)}
           value={username}
           rightIcon="keyboard"
+          onSubmit={() => passwordFieldRef?.current?.focus()}
         />
         <TextField
           style={styles.inputStyle}
@@ -63,12 +69,15 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           value={password}
           rightIcon="password"
           secureTextEntry
+          ref={passwordFieldRef}
+          onSubmit={() => submitRef?.current?.click()}
         />
         <SecondaryButton
           title={t('login')}
           onPress={loginHandler}
           fontSize={16}
           style={styles.btnStyle}
+          ref={submitRef}
         />
       </Modal>
     </Portal>

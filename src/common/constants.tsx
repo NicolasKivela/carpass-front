@@ -37,7 +37,12 @@ export const REPORT_QUESTION_STATUS = {
   RED: 'red',
 };
 
-
+export const USER_TYPE = {
+  MAINTENANCE: 'maintenance',
+  SELLER: 'seller',
+  INSPECTION: 'inspection',
+  REPAIR: 'repair'
+}
 export const LINKS = {
   TOS: 'http://carpass.fi/terms_of_use.pdf',
 };
