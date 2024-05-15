@@ -34,12 +34,14 @@ const ViewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const reportHtml = useSelector(
-    (state: RootState) => state.report.report_HTML,
+    (state: RootState) => state.report.html,
   );
 
   useEffect(() => {
-    dispatch(getReportHtml('abc-123')); //change
+    dispatch(getReportHtml('ABC-123')); //change
   });
+  console.log("hello this is from the report screens");
+  console.log(reportHtml);
 
   const reportRows = [
     {attachments: [], comment: '', inspection_status: 'green', question_id: 1},

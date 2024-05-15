@@ -46,3 +46,7 @@ export type ReportRow = {
   comment: string;
   attachments: Attachment[];
 };
+
+export type ReportHTML = {
+  html: string
+};

@@ -6,7 +6,7 @@ export const PATHS = {
   REPORT_STRUCTURE: '/report/structure',
   SAVE_REPORT: '/report',
   LOGIN: '/user/login',
-  GET_REPORT_HTML: 'report/send',
+  GET_REPORT_HTML: '/report/send',
 };
 
 export const SCREENS = {

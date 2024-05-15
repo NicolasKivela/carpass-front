@@ -215,7 +215,7 @@ export const getReportHtml = (registration_number: string) => {
       const response = await fetch(
         `${BASE_PATH}${PATHS.GET_REPORT_HTML}?language=${
           i18next.language
-        }&registration_number=${registration_number}&report_id=${1}`, // TODO: replace report_id with logic to choose the correct one
+        }&registration_number=${registration_number}&report_id=${2}`, // TODO: replace report_id with logic to choose the correct one
         {
           method: 'GET',
           headers: {
@@ -223,6 +223,7 @@ export const getReportHtml = (registration_number: string) => {
           },
         },
       ); // TODO: remove later and use this from apimanager
+      console.log(response);
       if (response.ok) {
         const html = await response.text();
 

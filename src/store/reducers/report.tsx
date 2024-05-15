@@ -1,4 +1,4 @@
-import {Report} from '../types/report';
+import {Report, ReportHTML} from '../types/report';
 import {
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
@@ -9,6 +9,7 @@ import {
   SET_REPORT_ROW_COMMENT,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
+  SET_REPORT_HTML,
 } from '../actions/actionTypes';
 
 export const initialState: Report = {
@@ -125,3 +126,22 @@ const reportReducer = (state = initialState, action: any) => {
 };
 
 export default reportReducer;
+
+export const initialHTML: ReportHTML = {
+    html: ''
+}
+
+const reportHTMLReducer = (state = initialHTML, action: any) => {
+  switch (action.type) {
+    case SET_REPORT_HTML:
+      return {
+        ...state,
+        html: action.payload,
+      };
+
+      default:
+        return state;
+    }
+  };
+
+export default reportHTMLReducer;
