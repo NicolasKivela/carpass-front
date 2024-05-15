@@ -14,6 +14,7 @@ import {
   ReviewerScreen,
   SummaryScreen,
   InspectorScreen,
+  ViewReportScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
@@ -56,6 +57,9 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 );
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
+);
+Navigation.registerComponent(SCREENS.VIEW_REPORT, () =>
+  componentHOC(ViewReportScreen),
 );
 
 const App = () => {

@@ -13,6 +13,7 @@ import {
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
+  SET_REPORT_HTML,
 } from './actionTypes';
 import {setError} from './error';
 
@@ -81,6 +82,13 @@ export const setReportStructure = (structure: Report['report_structure']) => {
   return {
     type: SET_REPORT_STRUCTURE,
     payload: structure,
+  };
+};
+
+export const setReportHTML = (html: string) => {
+  return {
+    type: SET_REPORT_HTML,
+    payload: html,
   };
 };
 
@@ -195,6 +203,39 @@ export const saveReport = () => {
           type: 'Error',
           title: 'errors.saveReportTitle',
           message: 'errors.saveReportMessage',
+        }),
+      );
+    }
+  };
+};
+
+export const getReportHtml = (registration_number: string) => {
+  return async (dispatch: any, getState: any) => {
+    try {
+      const response = await fetch(
+        `${BASE_PATH}${PATHS.GET_REPORT_HTML}?language=${
+          i18next.language
+        }&registration_number=${registration_number}&report_id=${1}`, // TODO: replace report_id with logic to choose the correct one
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+          },
+        },
+      ); // TODO: remove later and use this from apimanager
+      if (response.ok) {
+        const html = await response.text();
+
+        dispatch(setReportHTML(html));
+      } else {
+        throw Error;
+      }
+    } catch (err) {
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.fetchReportQuestinsTitle',
+          message: 'errors.fetchReportQuestinsMessage',
         }),
       );
     }
