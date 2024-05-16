@@ -1,3 +1,4 @@
+export const SET_REPORTS_BY_REG = 'SET_REPORTS_BY_REG';
 export const SET_REPORT_ROWS = 'SET_REPORT_ROWS';
 export const SET_CAR_DATA = 'SET_CAR_DATA';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';

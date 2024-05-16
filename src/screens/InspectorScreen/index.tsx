@@ -21,7 +21,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
   const dispatch = useAppDispatch();
 
   //TODO: get usertype from backend when user logs in
-  userType = 'inspector';
+  userType = 'carDealer';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
 

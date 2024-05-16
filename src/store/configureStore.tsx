@@ -6,11 +6,13 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import reportReducer from './reducers/report';
 import errorReducer from './reducers/error';
 import userReducer from './reducers/user';
+import reportsByRegReducer from './reducers/reportsbyreg';
 
 const appReducer = combineReducers({
   report: reportReducer,
   error: errorReducer,
   user: userReducer,
+  reportbyreg: reportsByRegReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

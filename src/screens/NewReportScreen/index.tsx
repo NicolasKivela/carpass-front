@@ -269,7 +269,7 @@ const NewReportScreen: React.FC = () => {
             {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
               <View style={styles.container}>
                 <>{console.log('CarInspections starting')}</>
-                <CarInspections />
+                <CarInspections registration_number={'ABC-123'} />
               </View>
             ) : currentScreen === SCREENS.DEALERSHIP ? (
               <FrameProcessorCamera

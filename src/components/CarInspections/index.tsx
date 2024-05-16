@@ -1,12 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {ReportsArray} from '../../store/types/report';
+import {fetchReportByReg} from '../../store/actions/report';
 import styles from './styles';
 
-const CarInspections: React.FC = ({}) => {
+interface carInspectionProp {
+  registration_number: string;
+}
+
+const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
   const {t} = useTranslation();
-  console.log('called carInspections');
+  const dispatch = useAppDispatch();
+  const reportsData = useAppSelector(state => state.reportbyreg.reports);
+
+  console.log('called carInspections', registration_number);
+  useEffect(() => {
+    dispatch(fetchReportByReg(registration_number));
+  });
+  console.log('REPORTS FOR CAR', reportsData);
   const reports = {
     report1: {
       date: '12.2.2022',
