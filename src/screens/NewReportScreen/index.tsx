@@ -12,6 +12,7 @@ import {
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
 import {Navigation} from 'react-native-navigation';
+import {debounce} from 'lodash';
 
 import {
   LogoTopBar,
@@ -199,7 +200,10 @@ const NewReportScreen: React.FC = () => {
       ref?.current && ref.current.focus();
     }
   };
-
+  const updateRegisterNumber = (value: string) => {
+    const tempValues = value.split('');
+    setRegisterNumber({value, tempValues});
+  };
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -220,9 +224,7 @@ const NewReportScreen: React.FC = () => {
               innerRef={getRightRef('registrationNumber')}
               label={'registrationNumber'}
               value={registerNumber.value}
-              setOnChange={(value: string) => {
-                setRegisterNumber({...registerNumber, value});
-              }}
+              setOnChange={updateRegisterNumber}
               onSubmitEditing={() => inputOnSubmitHandler('registrationNumber')}
               icon={registrationNumberIcon}
               setRegistrationNumberIcon={setRegistrationNumberIcon}
@@ -266,10 +268,11 @@ const NewReportScreen: React.FC = () => {
               />
             ) : null}
 
-            {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
+            {registerNumber.value &&
+            registerNumber.value.length > 3 &&
+            currentScreen === SCREENS.DEALERSHIP ? (
               <View style={styles.container}>
-                <>{console.log('CarInspections starting')}</>
-                <CarInspections registration_number={'ABC-123'} />
+                <CarInspections registration_number={registerNumber.value} />
               </View>
             ) : currentScreen === SCREENS.DEALERSHIP ? (
               <FrameProcessorCamera

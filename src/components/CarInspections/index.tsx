@@ -16,7 +16,7 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
   const dispatch = useAppDispatch();
   const reportsData = useAppSelector(state => state.reportbyreg.reports);
 
-  console.log('called carInspections', registration_number);
+  //console.log('called carInspections', registration_number);
   useEffect(() => {
     dispatch(fetchReportByReg(registration_number));
   });
