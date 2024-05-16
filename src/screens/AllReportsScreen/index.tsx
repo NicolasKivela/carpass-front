@@ -47,7 +47,7 @@ const AllReportsScreen: React.FC = () => {
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
-
+  console.log('ORDERS IN THE COMPONENT', ordersData);
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -63,7 +63,8 @@ const AllReportsScreen: React.FC = () => {
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('inspectionOrders')}</Text>
-            {ordersData &&
+            {ordersData.orders &&
+              ordersData.orders.length > 0 &&
               ordersData.orders.map(item => {
                 return (
                   <InformationBox
@@ -71,6 +72,7 @@ const AllReportsScreen: React.FC = () => {
                     state={item.order_status}
                     inspectionType={item.report_type}
                     orderDate={item.created_at}
+                    key={item.id}
                   />
                 );
               })}
