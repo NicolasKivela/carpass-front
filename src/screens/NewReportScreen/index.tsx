@@ -26,6 +26,7 @@ import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
+import {current} from '@reduxjs/toolkit';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -55,8 +56,9 @@ const NewReportScreen: React.FC = () => {
     odometerReading: null,
   });
   const [currentScreen, setCurrentScreen] = useState('');
-
+  const [showReports, setShowReports] = useState(false);
   useEffect(() => {
+    setShowReports(false);
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName}) => {
         console.log(componentName);
@@ -88,6 +90,10 @@ const NewReportScreen: React.FC = () => {
       setReadyToProceed(false);
     }
   }, [otherData, registerNumber]);
+
+  useEffect(() => {
+    setShowReports(false);
+  }, [registerNumber]);
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -191,15 +197,21 @@ const NewReportScreen: React.FC = () => {
         },
       },
     });
+    return null;
   };
-
+  const startReviewingReports = () => {
+    setShowReports(true);
+  };
   const inputOnSubmitHandler = (item: string) => {
     if (item !== 'odometerReading') {
       const ref = getRightRefToFocus(item);
       ref?.current && ref.current.focus();
     }
   };
-
+  const updateRegisterNumber = (value: string) => {
+    const tempValues = value.split('');
+    setRegisterNumber({value, tempValues});
+  };
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -220,9 +232,7 @@ const NewReportScreen: React.FC = () => {
               innerRef={getRightRef('registrationNumber')}
               label={'registrationNumber'}
               value={registerNumber.value}
-              setOnChange={(value: string) => {
-                setRegisterNumber({...registerNumber, value});
-              }}
+              setOnChange={updateRegisterNumber}
               onSubmitEditing={() => inputOnSubmitHandler('registrationNumber')}
               icon={registrationNumberIcon}
               setRegistrationNumberIcon={setRegistrationNumberIcon}
@@ -265,18 +275,35 @@ const NewReportScreen: React.FC = () => {
                 setRegisterNumber={setRegisterNumber}
               />
             ) : null}
-
-            {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
-              <View style={styles.container}>
-                <>{console.log('CarInspections starting')}</>
-                <CarInspections />
+            {currentScreen === SCREENS.DEALERSHIP && (
+              <View style={styles.footerContainer}>
+                <Button
+                  disabled={false}
+                  onPress={startReviewingReports}
+                  textColor={colors.orange}
+                  style={styles.footerButton}>
+                  <Text
+                    style={true ? styles.footerTextDone : styles.footerText}>
+                    {t('reviewReports')}
+                  </Text>
+                </Button>
               </View>
-            ) : currentScreen === SCREENS.DEALERSHIP ? (
+            )}
+
+            {currentScreen === SCREENS.DEALERSHIP &&
+              showReports &&
+              registerNumber.value.length > 3 && (
+                <View style={styles.container}>
+                  <CarInspections registration_number={registerNumber.value} />
+                </View>
+              )}
+
+            {/*currentScreen === SCREENS.DEALERSHIP && !showReports && (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            ) : null}
+            )*/}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

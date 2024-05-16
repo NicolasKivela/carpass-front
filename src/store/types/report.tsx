@@ -15,6 +15,21 @@ export interface Attachment {
   data: string;
 }
 
+export interface ReportsByReg {
+  id: number;
+  registration_number: string;
+  production_number: string;
+  brand_and_model: string;
+  odometer_reading: number;
+  created_at: string;
+  updated_at: string;
+  modified_by_user: number;
+  organization_id: number;
+  engine_type: string;
+}
+
+export type ReportsArray = ReportsByReg[];
+
 export type EngineType =
   | 'petrol'
   | 'diesel'
