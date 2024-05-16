@@ -15,11 +15,13 @@ import {
   SummaryScreen,
   InspectorScreen,
   AllReportsScreen,
+  CustomerScreen,
+  MyNewOrderScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
-import {NewOrderScreen} from "./src/screens";
-import Toast from "react-native-toast-message";
+import {NewOrderScreen} from './src/screens';
+import Toast from 'react-native-toast-message';
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
@@ -37,7 +39,7 @@ const componentHOC = (Component, ...props) => {
                 ...props,
               }}
             />
-            <Toast ref={(ref) => Toast.setRef(ref)} />
+            <Toast />
           </PaperProvider>
         </Provider>
       );
@@ -56,7 +58,7 @@ Navigation.registerComponent(SCREENS.NEW_REPORT, () =>
   componentHOC(NewReportScreen),
 );
 Navigation.registerComponent(SCREENS.NEW_ORDER, () =>
-    componentHOC(NewOrderScreen),
+  componentHOC(NewOrderScreen),
 );
 Navigation.registerComponent(SCREENS.REVIEWER, () =>
   componentHOC(ReviewerScreen),
@@ -66,6 +68,13 @@ Navigation.registerComponent(SCREENS.SUMMARY, () =>
 );
 Navigation.registerComponent(SCREENS.ALLORDERS, () =>
   componentHOC(AllReportsScreen),
+);
+Navigation.registerComponent(SCREENS.CUSTOMER_SCREEN, () =>
+  componentHOC(CustomerScreen),
+);
+
+Navigation.registerComponent(SCREENS.MY_NEW_ORDER, () =>
+  componentHOC(MyNewOrderScreen),
 );
 
 const App = () => {

@@ -7,8 +7,8 @@ import reportReducer from './reducers/report';
 import errorReducer from './reducers/error';
 import userReducer from './reducers/user';
 import orderReducer from './reducers/order';
-import organizationReducer from "./reducers/organizations";
-import reportSectionsReducer from "./reducers/reportSections.tsx";
+import organizationReducer from './reducers/organizations';
+import reportSectionsReducer from './reducers/reportSections.tsx';
 
 const appReducer = combineReducers({
   report: reportReducer,

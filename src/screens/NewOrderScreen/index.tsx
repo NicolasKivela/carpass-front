@@ -19,14 +19,21 @@ import {
   RadioButton,
 } from '../../components/index';
 import {colors} from '../../common/styles';
-import {BASE_PATH, ENGINE_TYPE_API, PATHS, REPORT_TYPE_API, SCREENS, USER_TYPE} from '../../common/constants';
+import {
+  BASE_PATH,
+  ENGINE_TYPE_API,
+  PATHS,
+  REPORT_TYPE_API,
+  SCREENS,
+  USER_TYPE,
+} from '../../common/constants';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {fetchReportQuestions, setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
-import {changePage} from "../../store/actions/routing.tsx";
-import {fetchOrganizations} from "../../store/actions/organizations.tsx";
-import {fetchReportSections} from "../../store/actions/reportSections.tsx";
+import {changePage} from '../../store/actions/routing.tsx';
+import {fetchOrganizations} from '../../store/actions/organizations.tsx';
+import {fetchReportSections} from '../../store/actions/reportSections.tsx';
 import {
   DelayTime,
   ErrorMessage,
@@ -34,10 +41,10 @@ import {
   toastError,
   toastSuccess,
   toastWaiting,
-  WaitMessage
-} from "../../store/actions/toast.tsx";
-import {MainButton, SecondaryButton} from "../../components";
-import {ButtonRef} from "../../components/SecondaryButton";
+  WaitMessage,
+} from '../../store/actions/toast.tsx';
+import {MainButton, SecondaryButton} from '../../components';
+import {ButtonRef} from '../../components/SecondaryButton';
 
 const NewOrderScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -51,18 +58,27 @@ const NewOrderScreen: React.FC = () => {
   const informationRef = useRef<any>(null);
 
   //TODO: change these to come from database
-  const [reportType, setReportType] = useState<number|null>(null);
-  const [inspectorOrg, setInspectorOrg] = useState<number|null>(null);
-  const [engineType, setEngineType] = useState<number|null>(null);
+  const [reportType, setReportType] = useState<number | null>(null);
+  const [inspectorOrg, setInspectorOrg] = useState<number | null>(null);
+  const [engineType, setEngineType] = useState<number | null>(null);
   const optionsReportType = [
     {id: 0, name: t('fullInsp')},
     {id: 1, name: t('liteInsp')},
-    {id: 2, name: t('partInsp')}
   ];
-  const reportSections = useAppSelector(state => state.reportSections.reportSections);
+  const reportSections = useAppSelector(
+    state => state.reportSections.reportSections,
+  );
   const user = useAppSelector(state => state.user);
-  const organizations = useAppSelector(state => state.organizations.organizations);
-  const optionsInspectorOrgs = Array.isArray(organizations) ? organizations.filter(org => org.type === USER_TYPE.INSPECTION) : [];
+  const organizations = useAppSelector(
+    state => state.organizations.organizations,
+  );
+
+  console.log('organizations', organizations);
+  console.log('reportSections', reportSections);
+  console.log('user', user);
+  const optionsInspectorOrgs = Array.isArray(organizations)
+    ? organizations.filter(org => org.type === USER_TYPE.INSPECTION)
+    : [];
   const optionsEngineType = [
     {id: 0, name: t('petrol')},
     {id: 1, name: t('diesel')},
@@ -70,7 +86,8 @@ const NewOrderScreen: React.FC = () => {
     {id: 3, name: t('hybrid_petrol')},
     {id: 4, name: t('electric')},
   ];
-  const submitRef = useRef<ButtonRef|null>(null);
+ 
+  const submitRef = useRef<ButtonRef | null>(null);
 
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
@@ -104,7 +121,7 @@ const NewOrderScreen: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchOrganizations());
-    dispatch(fetchReportSections())
+    dispatch(fetchReportSections());
   }, []);
 
   const getRightRef = (item: string) => {
@@ -139,7 +156,7 @@ const NewOrderScreen: React.FC = () => {
     }
   };
 
-  const backButtonHandler = async() => {
+  const backButtonHandler = async () => {
     if (registerNumber.value) {
       setRegisterNumber({value: '', tempValues: []});
       setOtherData({
@@ -162,7 +179,7 @@ const NewOrderScreen: React.FC = () => {
     return true;
   };
 
-  const createNewOrder = async() => {
+  const createNewOrder = async () => {
     dispatch(
       setCarData({
         brand_and_model: otherData.brandAndModel,
@@ -173,15 +190,17 @@ const NewOrderScreen: React.FC = () => {
       }),
     );
     const body = JSON.stringify({
-      "registration_number": registerNumber.value,
-      "car_production_number": otherData.vehicleIdentificationNumber,
-      "engine_type": ENGINE_TYPE_API[engineType],
-      "brand_and_model": otherData.brandAndModel,
-      "report_type": REPORT_TYPE_API[reportType],
-      "additional_information": otherData.information ? otherData.information : '',
-      "additional_information2": '',
-      "inspection_organization_id": inspectorOrg,
-      "sections": reportSections.map(section => section.id)
+      registration_number: registerNumber.value,
+      car_production_number: otherData.vehicleIdentificationNumber,
+      engine_type: ENGINE_TYPE_API[engineType],
+      brand_and_model: otherData.brandAndModel,
+      report_type: REPORT_TYPE_API[reportType],
+      additional_information: otherData.information
+        ? otherData.information
+        : '',
+      additional_information2: '',
+      inspection_organization_id: inspectorOrg,
+      sections: reportSections.map(section => section.id),
     });
     const path = BASE_PATH + PATHS.CREATE_ORDER;
     toastWaiting(WaitMessage.SENDING_ORDER, t);
@@ -197,7 +216,7 @@ const NewOrderScreen: React.FC = () => {
       await toastSuccess(SuccessMessage.SENDING_ORDER, t, DelayTime.BRIEF);
       await changePage(SCREENS.INSPECTOR);
     } else {
-      toastError(ErrorMessage.SENDING_ORDER, t)
+      toastError(ErrorMessage.SENDING_ORDER, t);
     }
   };
   const inputOnSubmitHandler = (item: string) => {
@@ -205,7 +224,7 @@ const NewOrderScreen: React.FC = () => {
       const ref = getRightRefToFocus(item);
       ref?.current && ref.current.focus();
     } else {
-      submitRef.current?.click()
+      submitRef.current?.click();
     }
   };
 
@@ -238,13 +257,25 @@ const NewOrderScreen: React.FC = () => {
             />
             <Text style={styles.text}>{t('orderInspection')}</Text>
             <View style={styles.container}>
-              <RadioButton options={optionsReportType} selectedOption={reportType} setSelectedOption={setReportType} />
+              <RadioButton
+                options={optionsReportType}
+                selectedOption={reportType}
+                setSelectedOption={setReportType}
+              />
             </View>
             <View style={styles.container}>
-              <RadioButton options={optionsInspectorOrgs} selectedOption={inspectorOrg} setSelectedOption={setInspectorOrg} />
+              <RadioButton
+                options={optionsInspectorOrgs}
+                selectedOption={inspectorOrg}
+                setSelectedOption={setInspectorOrg}
+              />
             </View>
             <View style={styles.container}>
-              <RadioButton options={optionsEngineType} selectedOption={engineType} setSelectedOption={setEngineType} />
+              <RadioButton
+                options={optionsEngineType}
+                selectedOption={engineType}
+                setSelectedOption={setEngineType}
+              />
             </View>
             {Object.keys(otherData).map(item => (
               <NewOrderTextInput
@@ -266,8 +297,7 @@ const NewOrderScreen: React.FC = () => {
                 style={styles.footerButton}
                 title={t('placeOrder')}
                 ref={submitRef}
-              >
-              </MainButton>
+              />
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

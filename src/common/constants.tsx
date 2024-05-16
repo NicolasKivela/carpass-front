@@ -1,6 +1,6 @@
 export const APP_NAME = 'CarPass';
 
-export const DOMAIN = 'https://carpass.fi'
+export const DOMAIN = 'https://carpass.fi';
 export const BASE_PATH = DOMAIN + '/api/v1';
 //'https://carpass.fi';
 //'http://10.0.2.2:8080';
@@ -26,6 +26,8 @@ export const SCREENS = {
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
   ALLORDERS: 'allOrdersScreen',
+  CUSTOMER_SCREEN: 'customerScreen',
+  MY_NEW_ORDER: 'myNewOrderScreen',
 };
 
 export const REPORT_TYPE = {

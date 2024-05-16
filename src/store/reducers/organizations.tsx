@@ -1,21 +1,19 @@
-import {SET_ORGANIZATIONS} from "../actions/actionTypes";
-import {Organization, Organizations} from "../types/organization.tsx";
-import {Report} from "../types/report.tsx";
+import {SET_ORGANIZATIONS} from '../actions/actionTypes';
+import {Organizations} from '../types/organization.tsx';
 
 export const initialState: Organizations = {
-    organizations: []
+  organizations: [],
 };
 
 const organizationReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case SET_ORGANIZATIONS:
-            return {
-                ...state,
-                organizations: action.payload.organizations,
-            };
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case SET_ORGANIZATIONS:
+      return {
+        organizations: action.payload.organizations,
+      };
+    default:
+      return state;
+  }
+};
 
 export default organizationReducer;

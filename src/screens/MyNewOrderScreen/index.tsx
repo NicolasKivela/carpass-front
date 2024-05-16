@@ -12,6 +12,7 @@ import {
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
 import {Navigation} from 'react-native-navigation';
+import {RadioButton} from '../../components/index';
 
 import {
   LogoTopBar,
@@ -21,23 +22,30 @@ import {
   CarInspections,
 } from '../../components/index';
 import {colors} from '../../common/styles';
-import {SCREENS} from '../../common/constants';
-import {useAppDispatch} from '../../store/configureStore';
-import {setCarData} from '../../store/actions/report';
+import {SCREENS, USER_TYPE} from '../../common/constants';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {createOrder} from '../../store/actions/orders.tsx';
 
 import {styles} from './styles';
 import {changePage} from '../../store/actions/routing.tsx';
+import {fetchOrganizations} from '../../store/actions/organizations.tsx';
+import {fetchReportSections} from '../../store/actions/reportSections.tsx';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  const [reportType, setReportType] = useState<number | null>(null);
+  const [inspectorOrg, setInspectorOrg] = useState<number | null>(null);
+  const [engineType, setEngineType] = useState<number | null>(null);
 
   // refs for automatic focus
   const registrationNumberRef = useRef<any>(null);
   const vehicleIdentificationNumberRef = useRef<any>(null);
   const brandAndModelRef = useRef<any>(null);
   const modelYearRef = useRef<any>(null);
-  const odometerReadingRef = useRef<any>(null);
+  //   const odometerReadingRef = useRef<any>(null);
+  const informationRef = useRef<any>(null);
 
   const [readyToProceed, setReadyToProceed] = useState(false);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
@@ -53,9 +61,60 @@ const NewReportScreen: React.FC = () => {
     vehicleIdentificationNumber: '',
     brandAndModel: '',
     modelYear: null,
-    odometerReading: null,
+    information: null,
   });
   const [currentScreen, setCurrentScreen] = useState('');
+
+  const optionsEngineType = [
+    {id: 0, name: t('petrol')},
+    {id: 1, name: t('diesel')},
+    {id: 2, name: t('hybrid_diesel')},
+    {id: 3, name: t('hybrid_petrol')},
+    {id: 4, name: t('electric')},
+  ];
+
+  const optionsReportType = [
+    {id: 0, name: t('fullInsp')},
+    {id: 1, name: t('liteInsp')},
+  ];
+
+  const getEngineType = (id: number) => {
+    switch (id) {
+      case 0:
+        return 'petrol';
+      case 1:
+        return 'diesel';
+      case 2:
+        return 'hybrid_diesel';
+      case 3:
+        return 'hybrid_petrol';
+      case 4:
+        return 'electric';
+      default:
+        return 'petrol';
+    }
+  };
+
+  const getReportType = (id: number) => {
+    switch (id) {
+      case 0:
+        return 'full';
+      case 1:
+        return 'narrow';
+      default:
+        return 'full';
+    }
+  };
+
+  //   const reportSections = useAppSelector(state => state.reportSections);
+  //   const user = useAppSelector(state => state.user);
+  const organizations = useAppSelector(
+    state => state.organizations.organizations,
+  );
+
+  const optionsInspectorOrgs = Array.isArray(organizations)
+    ? organizations.filter(org => org.type === USER_TYPE.INSPECTION)
+    : [];
 
   useEffect(() => {
     const listener = Navigation.events().registerComponentDidAppearListener(
@@ -77,18 +136,26 @@ const NewReportScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(fetchOrganizations());
+    dispatch(fetchReportSections());
+  }, []);
+
+  useEffect(() => {
     if (
       registerNumber.value &&
       otherData.vehicleIdentificationNumber &&
       otherData.brandAndModel &&
       otherData.modelYear &&
-      otherData.odometerReading
+      otherData.information &&
+      reportType &&
+      inspectorOrg &&
+      engineType
     ) {
       setReadyToProceed(true);
     } else if (readyToProceed) {
       setReadyToProceed(false);
     }
-  }, [otherData, registerNumber]);
+  }, [otherData, registerNumber, reportType, inspectorOrg, engineType]);
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -100,8 +167,8 @@ const NewReportScreen: React.FC = () => {
         return brandAndModelRef;
       case 'modelYear':
         return modelYearRef;
-      case 'odometerReading':
-        return odometerReadingRef;
+      case 'information':
+        return informationRef;
       default:
         return registrationNumberRef;
     }
@@ -116,7 +183,7 @@ const NewReportScreen: React.FC = () => {
       case 'brandAndModel':
         return modelYearRef;
       case 'modelYear':
-        return odometerReadingRef;
+        return informationRef;
       case 'odometerReading':
         return;
     }
@@ -129,7 +196,7 @@ const NewReportScreen: React.FC = () => {
         vehicleIdentificationNumber: '',
         brandAndModel: '',
         modelYear: null,
-        odometerReading: null,
+        information: null,
       });
     } else {
       switch (currentScreen) {
@@ -138,6 +205,9 @@ const NewReportScreen: React.FC = () => {
         case SCREENS.NEW_ORDER:
           changePage(SCREENS.INSPECTOR);
           break;
+        case SCREENS.MY_NEW_ORDER:
+          changePage(SCREENS.CUSTOMER_SCREEN);
+          break;
       }
     }
 
@@ -145,28 +215,45 @@ const NewReportScreen: React.FC = () => {
   };
 
   const startInspectionHandler = () => {
+    console.log(otherData);
+    console.log(registerNumber);
+    console.log(getReportType(reportType!));
+    console.log(getEngineType(engineType!));
+    console.log(inspectorOrg);
     dispatch(
-      setCarData({
+      createOrder({
         brand_and_model: otherData.brandAndModel,
-        odometer_reading: otherData.odometerReading,
-        production_number: otherData.vehicleIdentificationNumber,
+        car_production_number: otherData.vehicleIdentificationNumber,
         registration_number: registerNumber.value,
-        engine_type: 'petrol', //TODO: fix, when type input is added?
+        engine_type: getEngineType(engineType!),
+        report_type: getReportType(reportType!),
+        additional_information:
+          otherData.information === null ? undefined : otherData.information,
+        inspection_organization_id: inspectorOrg!,
       }),
     );
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.REVIEWER,
-              },
-            },
-          ],
-        },
-      },
-    });
+    // dispatch(
+    //   setCarData({
+    //     brand_and_model: otherData.brandAndModel,
+    //     odometer_reading: otherData.information,
+    //     production_number: otherData.vehicleIdentificationNumber,
+    //     registration_number: registerNumber.value,
+    //     engine_type: 'petrol', //TODO: fix, when type input is added?
+    //   }),
+    // );
+    // Navigation.setRoot({
+    //   root: {
+    //     stack: {
+    //       children: [
+    //         {
+    //           component: {
+    //             name: SCREENS.REVIEWER,
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   },
+    // });
   };
 
   const inputOnSubmitHandler = (item: string) => {
@@ -203,8 +290,30 @@ const NewReportScreen: React.FC = () => {
               icon={registrationNumberIcon}
               setRegistrationNumberIcon={setRegistrationNumberIcon}
             />
-            {registerNumber.value && currentScreen === SCREENS.NEW_REPORT ? ( //renders new report form if in NEW_REPORT screen
+            {registerNumber.value && currentScreen === SCREENS.MY_NEW_ORDER ? ( //renders new report form if in NEW_REPORT screen
               <View style={styles.container}>
+                <Text style={styles.text}>{t('orderInspection')}</Text>
+                <View style={styles.container}>
+                  <RadioButton
+                    options={optionsReportType}
+                    selectedOption={reportType}
+                    setSelectedOption={setReportType}
+                  />
+                </View>
+                <View style={styles.container}>
+                  <RadioButton
+                    options={optionsInspectorOrgs}
+                    selectedOption={inspectorOrg}
+                    setSelectedOption={setInspectorOrg}
+                  />
+                </View>
+                <View style={styles.container}>
+                  <RadioButton
+                    options={optionsEngineType}
+                    selectedOption={engineType}
+                    setSelectedOption={setEngineType}
+                  />
+                </View>
                 {Object.keys(otherData).map(item => (
                   <NewReportTextInput
                     innerRef={getRightRef(item)}
@@ -235,7 +344,7 @@ const NewReportScreen: React.FC = () => {
                   </Button>
                 </View>
               </View>
-            ) : currentScreen === SCREENS.NEW_REPORT ? (
+            ) : currentScreen === SCREENS.MY_NEW_ORDER ? (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}

@@ -7,7 +7,7 @@ import {Keyboard} from 'react-native';
 import {BASE_PATH, LOCAL_STORAGE, PATHS, SCREENS} from '../../common/constants';
 import {LOG_IN, LOG_OUT, SET_STATE} from './actionTypes';
 import {setError} from './error';
-import {User} from "../types/user.tsx";
+import {User} from '../types/user.tsx';
 
 global.atob = decode;
 
@@ -17,7 +17,7 @@ export const setUserData = (user: {
   last_name: string;
   organization_type: string;
   avatar_uri: string;
-  token: any
+  token: any;
 }) => {
   return {
     type: LOG_IN,
@@ -59,6 +59,7 @@ export const loginUser = (username: string, password: string) => {
           avatarUri: string;
           iat: string;
           exp: string;
+          organization: any;
         };
 
         dispatch(
@@ -71,13 +72,17 @@ export const loginUser = (username: string, password: string) => {
             token: token,
           }),
         );
+
         Navigation.setRoot({
           root: {
             stack: {
               children: [
                 {
                   component: {
-                    name: SCREENS.INSPECTOR,
+                    name:
+                      credentials.organization.type === 'inspector'
+                        ? SCREENS.INSPECTOR
+                        : SCREENS.CUSTOMER_SCREEN,
                   },
                 },
               ],
@@ -119,17 +124,17 @@ export const logoutUser = async (user: User) => {
   await AsyncStorage.multiRemove(Object.values(LOCAL_STORAGE));
   removeUserData();
   await Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.LOGIN,
-              }
-            }
-          ]
-        }
-      }
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: SCREENS.LOGIN,
+            },
+          },
+        ],
+      },
+    },
   });
 };
 
