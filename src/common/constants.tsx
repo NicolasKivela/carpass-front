@@ -15,6 +15,7 @@ export const SCREENS = {
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
+  CARREPORTS: 'carReportScreen',
 };
 
 export const REPORT_TYPE = {

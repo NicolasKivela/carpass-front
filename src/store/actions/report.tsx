@@ -14,6 +14,7 @@ import {
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
+  SET_INITIAL_STATE_CAR_REPORTS,
 } from './actionTypes';
 import {setError} from './error';
 
@@ -192,6 +193,12 @@ export const saveReport = () => {
   };
 };
 
+export const setReportByRegInitialState = () => {
+  return {
+    type: SET_INITIAL_STATE_CAR_REPORTS,
+  };
+};
+
 export const setReportByReg = (reports: ReportsByReg[]) => {
   return {
     type: SET_REPORTS_BY_REG,
@@ -213,7 +220,7 @@ export const fetchReportByReg = (registration_number: string) => {
         },
       );
       if (response.ok) {
-        const reportByReg = await response.json();
+        const reportByReg: ReportsByReg[] = await response.json();
         dispatch(setReportByReg(reportByReg));
       } else {
         console.log('FETCHING NOT WORKING', response);

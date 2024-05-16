@@ -1,12 +1,29 @@
 import {ReportsByReg} from '../types/report';
-import {SET_REPORTS_BY_REG} from '../actions/actionTypes';
+import {
+  SET_REPORTS_BY_REG,
+  SET_INITIAL_STATE_CAR_REPORTS,
+} from '../actions/actionTypes';
 
-const initialState = {reports: []};
+export interface ReportsByRegState {
+  reports: ReportsByReg[];
+}
 
-const reportsByRegReducer = (state = initialState, action: any) => {
+export const initialState: ReportsByRegState = {
+  reports: [],
+};
+
+const reportsByRegReducer = (
+  state = initialState,
+  action: any,
+): ReportsByRegState => {
   switch (action.type) {
     case SET_REPORTS_BY_REG:
-      return action.payload;
+      return {
+        ...state,
+        reports: action.payload,
+      };
+    case SET_INITIAL_STATE_CAR_REPORTS:
+      return initialState;
     default:
       return state;
   }

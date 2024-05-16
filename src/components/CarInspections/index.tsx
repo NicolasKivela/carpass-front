@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {Navigation} from 'react-native-navigation';
 
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
-import {ReportsArray} from '../../store/types/report';
-import {fetchReportByReg} from '../../store/actions/report';
+import {
+  fetchReportByReg,
+  setReportByRegInitialState,
+} from '../../store/actions/report';
+import {SCREENS} from '../../common/constants';
 import styles from './styles';
 
 interface carInspectionProp {
@@ -16,41 +20,30 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
   const dispatch = useAppDispatch();
   const reportsData = useAppSelector(state => state.reportbyreg.reports);
 
-  //console.log('called carInspections', registration_number);
   useEffect(() => {
     dispatch(fetchReportByReg(registration_number));
-  });
-  console.log('REPORTS FOR CAR', reportsData);
-  const reports = {
-    report1: {
-      date: '12.2.2022',
-      warnings: 3,
-      disqualifications: 1,
-    },
-    report2: {
-      date: '13.2.2022',
-      warnings: 2,
-      disqualifications: 0,
-    },
-    report3: {
-      date: '14.2.2022',
-      warnings: 5,
-      disqualifications: 2,
-    },
-    report4: {
-      date: '14.2.2022',
-      warnings: 5,
-      disqualifications: 2,
-    },
-  };
+
+    dispatch(setReportByRegInitialState());
+  }, []);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      dispatch(fetchReportByReg(registration_number));
+    }, 1000);
+    return () => {
+      clearTimeout(delay);
+      dispatch(setReportByRegInitialState());
+    };
+  }, [registration_number]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{t('carInspectionHistory')}</Text>
-      {Object.keys(reports).length > 0 ? (
-        Object.entries(reports).map(([key, report]) => (
-          <View key={key} style={styles.innerContainer}>
+      {reportsData && reportsData.length > 0 ? (
+        reportsData.map((report: any, index: number) => (
+          <View key={index} style={styles.innerContainer}>
             <View style={styles.leftContainer}>
-              <Text style={styles.textstyle}>{report.date}</Text>
+              <Text style={styles.textstyle}>{report.created_at}</Text>
             </View>
             <View style={styles.rigthContainer}>
               <View

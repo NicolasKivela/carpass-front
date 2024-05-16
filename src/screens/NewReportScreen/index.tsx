@@ -12,7 +12,6 @@ import {
 import {useTranslation} from 'react-i18next';
 import {Button, TextInput} from 'react-native-paper';
 import {Navigation} from 'react-native-navigation';
-import {debounce} from 'lodash';
 
 import {
   LogoTopBar,
@@ -27,6 +26,7 @@ import {useAppDispatch} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
+import {current} from '@reduxjs/toolkit';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -56,8 +56,9 @@ const NewReportScreen: React.FC = () => {
     odometerReading: null,
   });
   const [currentScreen, setCurrentScreen] = useState('');
-
+  const [showReports, setShowReports] = useState(false);
   useEffect(() => {
+    setShowReports(false);
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName}) => {
         console.log(componentName);
@@ -89,6 +90,10 @@ const NewReportScreen: React.FC = () => {
       setReadyToProceed(false);
     }
   }, [otherData, registerNumber]);
+
+  useEffect(() => {
+    setShowReports(false);
+  }, [registerNumber]);
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -192,8 +197,11 @@ const NewReportScreen: React.FC = () => {
         },
       },
     });
+    return null;
   };
-
+  const startReviewingReports = () => {
+    setShowReports(true);
+  };
   const inputOnSubmitHandler = (item: string) => {
     if (item !== 'odometerReading') {
       const ref = getRightRefToFocus(item);
@@ -267,19 +275,35 @@ const NewReportScreen: React.FC = () => {
                 setRegisterNumber={setRegisterNumber}
               />
             ) : null}
-
-            {registerNumber.value &&
-            registerNumber.value.length > 3 &&
-            currentScreen === SCREENS.DEALERSHIP ? (
-              <View style={styles.container}>
-                <CarInspections registration_number={registerNumber.value} />
+            {currentScreen === SCREENS.DEALERSHIP && (
+              <View style={styles.footerContainer}>
+                <Button
+                  disabled={false}
+                  onPress={startReviewingReports}
+                  textColor={colors.orange}
+                  style={styles.footerButton}>
+                  <Text
+                    style={true ? styles.footerTextDone : styles.footerText}>
+                    {t('reviewReports')}
+                  </Text>
+                </Button>
               </View>
-            ) : currentScreen === SCREENS.DEALERSHIP ? (
+            )}
+
+            {currentScreen === SCREENS.DEALERSHIP &&
+              showReports &&
+              registerNumber.value.length > 3 && (
+                <View style={styles.container}>
+                  <CarInspections registration_number={registerNumber.value} />
+                </View>
+              )}
+
+            {/*currentScreen === SCREENS.DEALERSHIP && !showReports && (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            ) : null}
+            )*/}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
