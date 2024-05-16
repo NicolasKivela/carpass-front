@@ -257,8 +257,6 @@ export const saveReport = () => {
         body: JSON.stringify(requestBody),
       });
 
-      const responseBody = await response.json();
-      console.log('Saved report rows:', responseBody.report_rows); // TODO: remove later and use this from apimanager
       if (response.ok) {
         Navigation.setRoot({
           root: {
