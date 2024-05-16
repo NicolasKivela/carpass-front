@@ -36,8 +36,6 @@ const ViewReportScreen: React.FC = () => {
   useEffect(() => {
     dispatch(getReportHtml('ABC-123', 1)); //TODO: Change this to not be hardcoded
   });
-  console.log('hello this is from the report screens');
-  console.log(reportHtml);
 
   const reportRows = [
     {attachments: [], comment: '', inspection_status: 'green', question_id: 1},
