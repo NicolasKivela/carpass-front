@@ -3,28 +3,28 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
 interface RadioButtonProps {
-  options: string[];
-  selectedOption: string|null;
-  setSelectedOption: (option: string) => void;
+  options: Array<{id: number, name: string}>;
+  selectedOption: number|null;
+  setSelectedOption: (option: number) => void;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({options, selectedOption, setSelectedOption}) => {
 
-  const handleOptionSelect = (option: string) => {
+  const handleOptionSelect = (option: number) => {
     setSelectedOption(option);
   };
 
   return (
     <View>
-      {options.map((option, index) => (
+      {options.map(option => (
         <TouchableOpacity
-          key={index}
-          onPress={() => handleOptionSelect(option)}>
+          key={option.id}
+          onPress={() => handleOptionSelect(option.id)}>
           <View style={styles.optionContainer}>
             <View style={styles.radioButton}>
-              {selectedOption === option && <View style={styles.innerCircle} />}
+              {selectedOption === option.id && <View style={styles.innerCircle} />}
             </View>
-            <Text style={styles.text}>{option}</Text>
+            <Text style={styles.text}>{option.name}</Text>
           </View>
         </TouchableOpacity>
       ))}

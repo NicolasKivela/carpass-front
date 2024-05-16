@@ -19,16 +19,25 @@ import {
   RadioButton,
 } from '../../components/index';
 import {colors} from '../../common/styles';
-import {BASE_PATH, PATHS, SCREENS} from '../../common/constants';
+import {BASE_PATH, ENGINE_TYPE_API, PATHS, REPORT_TYPE_API, SCREENS, USER_TYPE} from '../../common/constants';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {fetchReportQuestions, setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
 import {changePage} from "../../store/actions/routing.tsx";
-import {RadioButtonRef} from "../../components/RadioButton";
-import {EngineType, ReportType} from "../../store/types/report.tsx";
-import {insertWebAnimation} from "react-native-reanimated/lib/typescript/reanimated2/layoutReanimation/web/domUtils";
 import {fetchOrganizations} from "../../store/actions/organizations.tsx";
+import {fetchReportSections} from "../../store/actions/reportSections.tsx";
+import {
+  DelayTime,
+  ErrorMessage,
+  SuccessMessage,
+  toastError,
+  toastSuccess,
+  toastWaiting,
+  WaitMessage
+} from "../../store/actions/toast.tsx";
+import {MainButton, SecondaryButton} from "../../components";
+import {ButtonRef} from "../../components/SecondaryButton";
 
 const NewOrderScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -42,22 +51,26 @@ const NewOrderScreen: React.FC = () => {
   const informationRef = useRef<any>(null);
 
   //TODO: change these to come from database
-  const [reportType, setReportType] = useState<string|null>(null);
-  const [inspectorOrg, setInspectorOrg] = useState<string|null>(null);
-  const [engineType, setEngineType] = useState<string|null>(null);
-  const optionsReportType = [t('fullInsp'), t('liteInsp'), t('partInsp')];
-  const optionsInspectorOrgs = [
-    'Kuntotarkastajat Oy',
-    'Katsastuskonttori Ky',
-    'Autotarkastus Oy',
+  const [reportType, setReportType] = useState<number|null>(null);
+  const [inspectorOrg, setInspectorOrg] = useState<number|null>(null);
+  const [engineType, setEngineType] = useState<number|null>(null);
+  const optionsReportType = [
+    {id: 0, name: t('fullInsp')},
+    {id: 1, name: t('liteInsp')},
+    {id: 2, name: t('partInsp')}
   ];
+  const reportSections = useAppSelector(state => state.reportSections.reportSections);
+  const user = useAppSelector(state => state.user);
+  const organizations = useAppSelector(state => state.organizations.organizations);
+  const optionsInspectorOrgs = Array.isArray(organizations) ? organizations.filter(org => org.type === USER_TYPE.INSPECTION) : [];
   const optionsEngineType = [
-    t('petrol'),
-    t('diesel'),
-    t('hybrid_diesel'),
-    t('hybrid_petrol'),
-    t('electric'),
+    {id: 0, name: t('petrol')},
+    {id: 1, name: t('diesel')},
+    {id: 2, name: t('hybrid_diesel')},
+    {id: 3, name: t('hybrid_petrol')},
+    {id: 4, name: t('electric')},
   ];
+  const submitRef = useRef<ButtonRef|null>(null);
 
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
@@ -91,22 +104,8 @@ const NewOrderScreen: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchOrganizations());
+    dispatch(fetchReportSections())
   }, []);
-  const organizations = useAppSelector(state => state);
-
-
-  console.log(555, organizations);
-  console.log(443, {
-    "registration_number": registerNumber.value,
-    "car_production_number": otherData.vehicleIdentificationNumber,
-    "engine_type": engineType,
-    "brand_and_model": otherData.brandAndModel,
-    "report_type": reportType,
-    "additional_information": otherData.information,
-    "additional_information2": '',
-    "inspection_organization_id": inspectorOrg,
-    "sections": ["?"]
-  });
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -140,7 +139,7 @@ const NewOrderScreen: React.FC = () => {
     }
   };
 
-  const backButtonHandler = () => {
+  const backButtonHandler = async() => {
     if (registerNumber.value) {
       setRegisterNumber({value: '', tempValues: []});
       setOtherData({
@@ -150,36 +149,13 @@ const NewOrderScreen: React.FC = () => {
         information: null,
       });
     } else {
-      if (currentScreen === SCREENS.NEW_ORDER) {
-        Navigation.setRoot({
-          root: {
-            stack: {
-              children: [
-                {
-                  component: {
-                    name: SCREENS.INSPECTOR,
-                  },
-                },
-              ],
-            },
-          },
-        });
-      }
-
-      if (currentScreen === SCREENS.DEALERSHIP) {
-        Navigation.setRoot({
-          root: {
-            stack: {
-              children: [
-                {
-                  component: {
-                    name: SCREENS.DEALERSHIP,
-                  },
-                },
-              ],
-            },
-          },
-        });
+      switch (currentScreen) {
+        case SCREENS.NEW_ORDER:
+          await changePage(SCREENS.INSPECTOR);
+          break;
+        case SCREENS.DEALERSHIP:
+          await changePage(SCREENS.DEALERSHIP);
+          break;
       }
     }
 
@@ -196,30 +172,40 @@ const NewOrderScreen: React.FC = () => {
         engine_type: 'petrol', //TODO: need to add option that Radiobutton answers can be used for data
       }),
     );
-    await changePage(SCREENS.DEALERSHIP);
-    const response = await fetch(BASE_PATH + PATHS.CREATE_ORDER, {
+    const body = JSON.stringify({
+      "registration_number": registerNumber.value,
+      "car_production_number": otherData.vehicleIdentificationNumber,
+      "engine_type": ENGINE_TYPE_API[engineType],
+      "brand_and_model": otherData.brandAndModel,
+      "report_type": REPORT_TYPE_API[reportType],
+      "additional_information": otherData.information ? otherData.information : '',
+      "additional_information2": '',
+      "inspection_organization_id": inspectorOrg,
+      "sections": reportSections.map(section => section.id)
+    });
+    const path = BASE_PATH + PATHS.CREATE_ORDER;
+    toastWaiting(WaitMessage.SENDING_ORDER, t);
+    const response = await fetch(path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify({
-        "registration_number": registerNumber.value,
-        "car_production_number": otherData.vehicleIdentificationNumber,
-        "engine_type": engineType,
-        "brand_and_model": otherData.brandAndModel,
-        "report_type": reportType,
-        "additional_information": otherData.information,
-        "additional_information2": '',
-        "inspection_organization_id": inspectorOrg,
-        "sections": ["?"]
-      }),
+      body: body,
     });
+    if (response.ok) {
+      await toastSuccess(SuccessMessage.SENDING_ORDER, t, DelayTime.BRIEF);
+      await changePage(SCREENS.INSPECTOR);
+    } else {
+      toastError(ErrorMessage.SENDING_ORDER, t)
+    }
   };
-
   const inputOnSubmitHandler = (item: string) => {
     if (item !== 'information') {
       const ref = getRightRefToFocus(item);
       ref?.current && ref.current.focus();
+    } else {
+      submitRef.current?.click()
     }
   };
 
@@ -275,12 +261,13 @@ const NewOrderScreen: React.FC = () => {
             ))}
 
             <View style={styles.footerContainer}>
-              <Button
+              <MainButton
                 onPress={createNewOrder}
-                textColor={colors.orange}
-                style={styles.footerButton}>
-                <Text>{t('placeOrder')}</Text>
-              </Button>
+                style={styles.footerButton}
+                title={t('placeOrder')}
+                ref={submitRef}
+              >
+              </MainButton>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

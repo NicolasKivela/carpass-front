@@ -7,6 +7,7 @@
   "description": "Selitys",
   "disqualifications": "Hylkäykset",
   "errors": {
+    "error": "Virhe",
     "authLoginTitle": "Ongelma sisäänkirjautumisen aikana",
     "authLoginMessage": "Jotain meni vikaan sisäänkirjautumisen aikana. Tarkista käyttäjätunnus ja salasana ja kokeile sen jälkeen uudelleen.",
     "cameraTitle": "Ongelma kameran käytössä",
@@ -16,7 +17,24 @@
     "loginTitle": "Ongelma sisäänkirjautumisen aikana",
     "loginMessage": "Jotain meni vikaan sisäänkirjautumisen aikana. Yritä uudelleen tai tarkista internet yhteytesi.",
     "saveReportTitle": "Ongelma tallentaessa tarkastusta",
-    "saveReportMessage": "Jotain meni vikaan tallentamisen aikana. Yritä uudelleen tai tarkista internet yhteytesi."
+    "saveReportMessage": "Jotain meni vikaan tallentamisen aikana. Yritä uudelleen tai tarkista internet yhteytesi.",
+    "fetchOrganizations": "Virhe noudettaessa tarkastajaorganisaatioita",
+    "fetchOrganizationsMessage": "Jotain meni pieleen tarkastajaorganisaatioita haettaessa. Tarkasta internet yhteytesi ja yritä uudelleen.",
+    "fetchReportSections": "Virhe noudettaessa raportin osioita",
+    "fetchReportSectionsMessage": "Jotain meni pieleen raportin osioita haettaessa. Tarkasta internet yhteytesi ja yritä uudelleen.",
+    "createOrder": "Virhe tilausta tehdessä",
+    "createOrderMessage": "Tarkista, että kaikki kentät on täytetty ja internetyhteys on kunnossa.",
+    "changeUserType": "Et voi muuttaa tyyppiäsi",
+    "changeUserTypeMessage": "Tämä toiminto ei ole sallittu sinulle"
+  },
+  "waiting": {
+    "sendingOrder": "Lähettää tilausta",
+    "pleaseWait": "Pyydän teitä odottamaan"
+  },
+  "success": {
+    "success": "Onnistui",
+    "createOrder": "Tilaus lähetetty",
+    "changeUserType": "Tyyppisi on muutettu"
   },
   "full": "LAAJA",
   "fullInsp": "Laaja kuntotarkastus",
@@ -25,6 +43,7 @@
   "identificationInfo": "Tunnistetiedot",
   "inspectionsWide": "Kuntotarkastuksen laajuus",
   "information": "Lisätietoja",
+  "inspectionOrders": "Kuntotarkastus tilaukset",
   "images": "Kuvat",
   "lite": "KEVYT",
   "liteInsp": "Kevyt kuntotarkastus",
@@ -67,5 +86,15 @@
   "diesel": "Diesel",
   "hybrid_diesel": "Hybrid diesel",
   "hybrid_petrol": "Hybrid bensiini",
-  "electric": "Sähkö"
+  "electric": "Sähkö",
+  "profileHanger": {
+    "youAre": "Sinä olet",
+    "changeUserType": "Muuta tyyppiä"
+  },
+  "userType": {
+    "maintenance": "järjestelmän ylläpitäjä",
+    "seller": "käytettyjen autojen myyjä",
+    "inspection": "kuntotarkastaja",
+    "repair": "autonkorjaaja"
+  }
 }

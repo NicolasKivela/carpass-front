@@ -45,3 +45,14 @@ export type ReportRow = {
   comment: string;
   attachments: Attachment[];
 };
+
+export type ReportSection = {
+  id: number,
+  created_at: string;
+  updated_at: string;
+  unit_price: number;
+  translations: Array<{value: string}>
+}
+export type ReportSections = {
+  sections: Array<ReportSection>
+}

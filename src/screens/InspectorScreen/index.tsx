@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Navigation} from 'react-native-navigation';
 
-import {useAppDispatch} from '../../store/configureStore';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
 import {SCREENS, USER_TYPE} from '../../common/constants';
@@ -38,6 +38,21 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   };
   const startCarDealerHandler = () => {
     changePage(SCREENS.DEALERSHIP);
+  };
+  const showOrders = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.ALLORDERS,
+              },
+            },
+          ],
+        },
+      },
+    });
   };
   const startNewOrderHandler = () => {
     changePage(SCREENS.NEW_ORDER)
@@ -84,6 +99,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           />
             </>
         )}
+
         <MainButton
           title={t('orders')}
           icon="mail"

@@ -2,10 +2,8 @@ import {BASE_PATH, PATHS} from "../../common/constants.tsx";
 import {setError} from "./error.tsx";
 import {Organization} from "../types/organization.tsx";
 import {SET_ORGANIZATIONS} from "./actionTypes.tsx";
-import {setReportRows} from "./report.tsx";
 
 export const setOrganizations = (organizations: Array<Organization>) => {
-    console.log(999, organizations, SET_ORGANIZATIONS);
     return {
         type: SET_ORGANIZATIONS,
         payload: {

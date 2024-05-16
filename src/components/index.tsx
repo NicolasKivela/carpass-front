@@ -3,6 +3,7 @@ import Description from './Description';
 import DropdownNotification from './DropdownNotification/index';
 import FrameProcessorCamera from './FrameProcessorCamera/index';
 import Gradient from './Gradient/index';
+import InformationBox from './InformationBox/index'
 import LogoTopBar from './LogoTopBar/index';
 import MainButton from './MainButton/index';
 import RadioButton from './RadioButton/index';
@@ -21,6 +22,7 @@ export {
   DropdownNotification,
   FrameProcessorCamera,
   Gradient,
+  InformationBox,
   LogoTopBar,
   MainButton,
   RadioButton,

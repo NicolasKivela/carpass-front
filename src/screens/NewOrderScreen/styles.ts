@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   footerButton: {
-    marginHorizontal: '15%',
+    marginHorizontal: '8%',
   },
   footerText: {
     textTransform: 'uppercase',

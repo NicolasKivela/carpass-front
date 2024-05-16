@@ -1,11 +1,11 @@
 {
-  "aboutMe": "About me",
   "brandAndModel": "Brand and model",
   "carInspection": "Car Inspections",
   "carInspectionHistory": "Car Inspection History",
   "description": "Description",
   "disqualifications": "Disqualifications",
   "errors": {
+    "error": "Error",
     "authLoginTitle": "Error during login",
     "authLoginMessage": "Something went wrong during logging in. Check your username and password and try again.",
     "cameraTitle": "Camera error",
@@ -17,7 +17,22 @@
     "saveReportTitle": "Error during saving report",
     "saveReportMessage": "Something went wrong when saving report. Try again or check your internet connection.",
     "fetchOrganizations": "Error fetching organizations",
-    "fetchOrganizationsMessage": "Something went wrong fetching organizations. Check your internet connection."
+    "fetchOrganizationsMessage": "Something went wrong fetching organizations. Check your internet connection.",
+    "fetchReportSections": "Error fetching report sections",
+    "fetchReportSectionsMessage": "Something went wrong fetching report sections. Check your internet connection.",
+    "createOrder": "Error creating the order",
+    "createOrderMessage": "Check all the fields are filled and you internet connection.",
+    "changeUserType": "Cannot change user type",
+    "changeUserTypeMessage": "Is not allowed in your organization"
+  },
+  "waiting": {
+    "sendingOrder": "Sending order",
+    "pleaseWait": "Please wait"
+  },
+  "success": {
+    "success": "Success",
+    "createOrder": "Order created",
+    "changeUserType": "User type overwritten"
   },
   "full": "FULL",
   "fullInsp": "Full inspection",
@@ -26,6 +41,7 @@
   "identificationInfo": "Identification information",
   "inspectionsWide": "Inspection type",
   "information": "Extra information",
+  "inspectionOrders": "Inspection orders",
   "images": "Images",
   "lite": "LITE",
   "liteInsp": "Lite inspection",
@@ -68,5 +84,15 @@
   "diesel": "Diesel",
   "hybrid_diesel": "Hybrid diesel",
   "hybrid_petrol": "Hybrid petrol",
-  "electric": "Electric"
+  "electric": "Electric",
+  "profileHanger": {
+    "youAre": "You are",
+    "changeUserType": "Change user type"
+  },
+  "userType": {
+    "maintenance": "system maintainer",
+    "seller": "car seller",
+    "inspection": "car inspector",
+    "repair": "car repairman"
+  }
 }

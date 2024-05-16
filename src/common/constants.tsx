@@ -9,9 +9,12 @@ export const PATHS = {
   REPORT_STRUCTURE: '/report/structure',
   SAVE_REPORT: '/report',
   LOGIN: '/user/login',
+  ORDER: '/order',
   LOGOUT: '/user/logout',
-  CREATE_ORDER: '/order/create',
+  CREATE_ORDER: '/order',
   ORGANIZATION: '/organization',
+  REPORT_SECTIONS: '/order/sections',
+  CHANGE_TYPE: 'user/change-type',
 };
 
 export const SCREENS = {
@@ -22,6 +25,7 @@ export const SCREENS = {
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
+  ALLORDERS: 'allOrdersScreen',
 };
 
 export const REPORT_TYPE = {
@@ -49,6 +53,21 @@ export const USER_TYPE = {
 export const LINKS = {
   TOS: 'http://carpass.fi/terms_of_use.pdf',
 };
+
+export const REPORT_TYPE_API = {
+  0: 'full',
+  1: 'narrow',
+  2: 'light'
+};
+
+export const ENGINE_TYPE_API = {
+  0: 'petrol',
+  1: 'diesel',
+  2: 'hybrid_diesel',
+  3: 'hybrid_gasoline',
+  4: 'electric',
+  5: 'hybrid',
+}
 
 export const TABLET_WIDTH = 600;
 

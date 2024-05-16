@@ -14,10 +14,12 @@ import {
   ReviewerScreen,
   SummaryScreen,
   InspectorScreen,
+  AllReportsScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
 import {NewOrderScreen} from "./src/screens";
+import Toast from "react-native-toast-message";
 
 // Higher order component for injecting paper provider, and later redux
 const componentHOC = (Component, ...props) => {
@@ -35,6 +37,7 @@ const componentHOC = (Component, ...props) => {
                 ...props,
               }}
             />
+            <Toast ref={(ref) => Toast.setRef(ref)} />
           </PaperProvider>
         </Provider>
       );
@@ -60,6 +63,9 @@ Navigation.registerComponent(SCREENS.REVIEWER, () =>
 );
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
+);
+Navigation.registerComponent(SCREENS.ALLORDERS, () =>
+  componentHOC(AllReportsScreen),
 );
 
 const App = () => {

@@ -62,5 +62,10 @@ export default StyleSheet.create({
     fullName: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 15,
     }
 });
