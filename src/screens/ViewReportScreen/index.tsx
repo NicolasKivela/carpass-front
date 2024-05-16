@@ -330,7 +330,7 @@ const ViewReportScreen: React.FC = () => {
           children: [
             {
               component: {
-                name: SCREENS.LOGIN, //TODO: Change to the correct screen
+                name: SCREENS.DEALERSHIP, //TODO: Change to the correct screen
                 passProps: {
                   defaultPageNumber: reportStructure.length,
                 },

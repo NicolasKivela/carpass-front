@@ -36,6 +36,21 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
     };
   }, [registration_number]);
 
+  const handleOpenPress = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.VIEW_REPORT,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{t('carInspectionHistory')}</Text>
@@ -64,7 +79,7 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
                     : null}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handleOpenPress}>
                 <Text style={styles.textbutton}>
                   {t('open').toLocaleUpperCase()}
                 </Text>
