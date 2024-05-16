@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, RefObject} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -15,6 +15,8 @@ import {
   DropdownNotification,
   InformationBox,
 } from '../../components/index';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {fetchOrders} from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
@@ -26,7 +28,7 @@ const backButtonHandler = () => {
         children: [
           {
             component: {
-              name: SCREENS.DEALERSHIP,
+              name: SCREENS.INSPECTOR,
             },
           },
         ],
@@ -39,6 +41,12 @@ const backButtonHandler = () => {
 
 const AllReportsScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+  const ordersData = useAppSelector(state => state.order.orders);
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, []);
 
   return (
     <Gradient>
@@ -54,15 +62,18 @@ const AllReportsScreen: React.FC = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
-            {
-              // TODO: Need to fetch the data from backend
-            }
             <Text style={styles.text}>{t('inspectionOrders')}</Text>
-            <InformationBox
-              title="ABC-123"
-              state="Jonossa" //Currently no state in the backend
-              inspectionType="Laaja kuntotarkastus"
-              orderDate="1.2.2022"></InformationBox>
+            {ordersData &&
+              ordersData.orders.map(item => {
+                return (
+                  <InformationBox
+                    title={item.registration_number}
+                    state={item.order_status}
+                    inspectionType={item.report_type}
+                    orderDate={item.created_at}
+                  />
+                );
+              })}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
