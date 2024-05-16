@@ -4,17 +4,15 @@ import {
   View,
   Text,
   SafeAreaView,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 import {WebView} from 'react-native-webview';
+import {Modal} from 'react-native-paper';
 
-import Logo from '../../assets/images/carpasslogo.png';
 import {
-  ReviewNavigation,
   LogoTopBar,
   Gradient,
   DropdownNotification,
@@ -25,22 +23,20 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store/configureStore';
-import {getReportHtml, saveReport} from '../../store/actions/report';
+import {getReportHtml} from '../../store/actions/report';
 import {styles} from './styles';
-import {Modal} from 'react-native-paper';
-import {useSelector} from 'react-redux';
 
 const ViewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const reportHtml = useSelector(
-    (state: RootState) => state.report.html,
+  const reportHtml = useAppSelector(
+    (state: RootState) => state.report.report_HTML,
   );
 
   useEffect(() => {
-    dispatch(getReportHtml('ABC-123')); //change
+    dispatch(getReportHtml('ABC-123', 1)); //TODO: Change this to not be hardcoded
   });
-  console.log("hello this is from the report screens");
+  console.log('hello this is from the report screens');
   console.log(reportHtml);
 
   const reportRows = [
@@ -336,7 +332,7 @@ const ViewReportScreen: React.FC = () => {
           children: [
             {
               component: {
-                name: SCREENS.LOGIN,
+                name: SCREENS.LOGIN, //TODO: Change to the correct screen
                 passProps: {
                   defaultPageNumber: reportStructure.length,
                 },
@@ -398,7 +394,7 @@ const ViewReportScreen: React.FC = () => {
                 {reportRows.map(row => {
                   return row.inspection_status ===
                     REPORT_QUESTION_STATUS.RED ? (
-                    <Text key={row.id} style={styles.error}>
+                    <Text key={row.question_id} style={styles.error}>
                       {summaryValueHandler(row.question_id)}
                     </Text>
                   ) : null;

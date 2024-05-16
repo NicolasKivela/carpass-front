@@ -1,4 +1,4 @@
-import {Report, ReportHTML} from '../types/report';
+import {Report} from '../types/report';
 import {
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
@@ -20,6 +20,7 @@ export const initialState: Report = {
   engine_type: 'petrol',
   report_structure: [],
   report_rows: [],
+  report_HTML: '',
 };
 
 // This reducer handles updating the report state in the app
@@ -116,6 +117,11 @@ const reportReducer = (state = initialState, action: any) => {
         production_number: action.payload.production_number,
         engine_type: action.payload.engine_type,
       };
+    case SET_REPORT_HTML:
+      return {
+        ...state,
+        report_HTML: action.payload,
+      };
 
     case SET_INITIAL_STATE:
       return initialState;
@@ -126,22 +132,3 @@ const reportReducer = (state = initialState, action: any) => {
 };
 
 export default reportReducer;
-
-export const initialHTML: ReportHTML = {
-    html: ''
-}
-
-const reportHTMLReducer = (state = initialHTML, action: any) => {
-  switch (action.type) {
-    case SET_REPORT_HTML:
-      return {
-        ...state,
-        html: action.payload,
-      };
-
-      default:
-        return state;
-    }
-  };
-
-export default reportHTMLReducer;
