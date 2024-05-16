@@ -9,6 +9,8 @@
     "authLoginMessage": "Something went wrong during logging in. Check your username and password and try again.",
     "cameraTitle": "Camera error",
     "cameraMessage": "You have denied camera permission. Check your permissions from App settings.",
+    "emptyRowInputsTitle": "Missing input fields",
+    "emptyRowInputsMessage": "Cannot save report. Empty inputs in report.",
     "fetchReportQuestinsTitle": "Fetch error",
     "fetchReportQuestinsMessage": "Something went wrong when fetching the data. Try again or check your internet connection",
     "loginTitle": "Error during login",
@@ -22,6 +24,8 @@
   "identificationInfo": "Identification information",
   "inspectionOrders": "Inspection orders",
   "images": "Images",
+  "inputLeft": "Left input",
+  "inputRight": "Right input",
   "lite": "LITE",
   "loadingQuestions": "Loading questions...",
   "login": "Login",
@@ -50,6 +54,7 @@
   "switchReviewerYes": "Deselect all in green",
   "tos": "Terms of use",
   "username": "Username",
+  "value": "Value",
   "vehicleIdentificationNumber": "Vehicle Identification Number",
   "warnings": "Warnings"
 }
