@@ -70,7 +70,7 @@ Navigation.registerComponent(SCREENS.ALLORDERS, () =>
   componentHOC(AllReportsScreen),
 );
 Navigation.registerComponent(SCREENS.CUSTOMER_SCREEN, () =>
-  componentHOC(CustomerScreen),
+  componentHOC(InspectorScreen),
 );
 
 Navigation.registerComponent(SCREENS.MY_NEW_ORDER, () =>

@@ -84,7 +84,7 @@ export const loginUser = (username: string, password: string) => {
                     name:
                       credentials.organizationType === 'inspection'
                         ? SCREENS.INSPECTOR
-                        : SCREENS.CUSTOMER_SCREEN,
+                        : SCREENS.INSPECTOR,
                   },
                 },
               ],

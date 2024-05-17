@@ -26,7 +26,7 @@ const backButtonHandler = () => {
         children: [
           {
             component: {
-              name: SCREENS.CUSTOMER_SCREEN,
+              name: SCREENS.INSPECTOR,
             },
           },
         ],

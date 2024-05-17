@@ -230,6 +230,7 @@ export const saveReport = () => {
         return; // Exit the function if any input is empty
       }
       const requestBody = {
+        order_id: 1,
         brand_and_model: getState().report.brand_and_model,
         odometer_reading: getState().report.odometer_reading,
         production_number: getState().report.production_number,
@@ -273,6 +274,7 @@ export const saveReport = () => {
         });
         // TODO: some kind of toast that report is saved?
       } else {
+        console.log(10, JSON.stringify(response, null, 2), getState().user);
         throw Error;
       }
     } catch (err) {

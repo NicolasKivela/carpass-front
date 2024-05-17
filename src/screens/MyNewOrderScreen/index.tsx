@@ -206,7 +206,7 @@ const NewReportScreen: React.FC = () => {
           changePage(SCREENS.INSPECTOR);
           break;
         case SCREENS.MY_NEW_ORDER:
-          changePage(SCREENS.CUSTOMER_SCREEN);
+          changePage(SCREENS.INSPECTOR);
           break;
       }
     }

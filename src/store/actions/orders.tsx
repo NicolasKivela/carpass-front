@@ -58,7 +58,7 @@ export const createOrder = (order: CreateOrder) => {
       });
       if (response.ok) {
         console.log('Order created');
-        changePage(SCREENS.CUSTOMER_SCREEN);
+        changePage(SCREENS.INSPECTOR);
       } else {
         throw Error;
       }
