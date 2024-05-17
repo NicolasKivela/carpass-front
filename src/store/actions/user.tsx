@@ -67,12 +67,12 @@ export const loginUser = (username: string, password: string) => {
             user_name: credentials.username,
             first_name: credentials.firstname,
             last_name: credentials.lastname,
-            organization_type: credentials.organizationType,
+            organization_type: credentials.organization.type,
             avatar_uri: credentials.avatarUri,
             token: token,
           }),
         );
-
+        console.log(credentials.organization.type);
         Navigation.setRoot({
           root: {
             stack: {
@@ -80,7 +80,7 @@ export const loginUser = (username: string, password: string) => {
                 {
                   component: {
                     name:
-                      credentials.organization.type === 'inspector'
+                      credentials.organization.type === 'inspection'
                         ? SCREENS.INSPECTOR
                         : SCREENS.CUSTOMER_SCREEN,
                   },

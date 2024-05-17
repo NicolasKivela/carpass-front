@@ -11,20 +11,19 @@ import {SCREENS, USER_TYPE} from '../../common/constants';
 import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
-import ProfileHanger from "../../components/ProfileHanger";
-import {User} from "../../store/types/user.tsx";
-import {useSelector} from "react-redux";
-import {changePage} from "../../store/actions/routing.tsx";
+import ProfileHanger from '../../components/ProfileHanger';
+import {User} from '../../store/types/user.tsx';
+import {useSelector} from 'react-redux';
+import {changePage} from '../../store/actions/routing.tsx';
 
-interface Props {
-}
+interface Props {}
 
 const InspectorScreen: React.FC<Props> = ({}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const user = useSelector((state: { user: User }) => state.user);
+  const user = useSelector((state: {user: User}) => state.user);
   const userType = user.organization_type;
-
+  console.log('USER TYPE', userType);
   //TODO: get usertype from backend when user logs in
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
@@ -55,14 +54,12 @@ const InspectorScreen: React.FC<Props> = ({}) => {
     });
   };
   const startNewOrderHandler = () => {
-    changePage(SCREENS.NEW_ORDER)
-  }
+    changePage(SCREENS.NEW_ORDER);
+  };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <ProfileHanger
-            user={user}
-        />
+        <ProfileHanger user={user} />
         <Image
           source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
@@ -84,20 +81,20 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           />
         )}
         {userType === USER_TYPE.SELLER && (
-            <>
-          <MainButton
+          <>
+            <MainButton
               title={t('newOrder')}
               icon="search"
               onPress={startNewOrderHandler}
               style={styles.button}
-          />
-          <MainButton
-            title={t('carInspection')}
-            icon="search"
-            onPress={startCarDealerHandler}
-            style={styles.button}
-          />
-            </>
+            />
+            <MainButton
+              title={t('carInspection')}
+              icon="search"
+              onPress={startCarDealerHandler}
+              style={styles.button}
+            />
+          </>
         )}
 
         <MainButton
