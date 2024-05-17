@@ -13,7 +13,6 @@ import {
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
   SET_REPORT_HTML,
-  REMOVE_REPORT_ROW_IMAGE, SET_ORGANIZATIONS,
 } from '../actions/actionTypes';
 
 export const initialState: Report = {

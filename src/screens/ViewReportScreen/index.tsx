@@ -34,7 +34,7 @@ const ViewReportScreen: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(getReportHtml('ABC-123', 1)); //TODO: Change this to not be hardcoded
+    dispatch(getReportHtml('12345678', 1)); //TODO: Change this to not be hardcoded
   });
 
   const reportRows = [
