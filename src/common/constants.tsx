@@ -25,6 +25,7 @@ export const SCREENS = {
   DEALERSHIP: 'dealerShipScreen',
   SUMMARY: 'summaryScreen',
   INSPECTOR: 'inspectorScreen',
+  CARREPORTS: 'carReportScreen',
   ALLORDERS: 'allOrdersScreen',
   CUSTOMER_SCREEN: 'customerScreen',
   MY_NEW_ORDER: 'myNewOrderScreen',

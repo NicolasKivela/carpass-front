@@ -63,6 +63,9 @@ Navigation.registerComponent(SCREENS.NEW_ORDER, () =>
 Navigation.registerComponent(SCREENS.REVIEWER, () =>
   componentHOC(ReviewerScreen),
 );
+Navigation.registerComponent(SCREENS.CARREPORTS, () =>
+  componentHOC(NewReportScreen),
+);
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
 );

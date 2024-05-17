@@ -2,8 +2,9 @@ import {Navigation} from 'react-native-navigation';
 import i18next from 'i18next';
 
 import {BASE_PATH, PATHS, REPORT_TYPE, SCREENS} from '../../common/constants';
-import {Attachment, Report} from '../types/report';
+import {Attachment, Report, ReportsByReg} from '../types/report';
 import {
+  SET_REPORTS_BY_REG,
   SET_CAR_DATA,
   SET_INITIAL_STATE,
   SET_REPORT_STRUCTURE,
@@ -16,6 +17,7 @@ import {
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
+  SET_INITIAL_STATE_CAR_REPORTS,
 } from './actionTypes';
 import {setError} from './error';
 
@@ -283,6 +285,51 @@ export const saveReport = () => {
           type: 'Error',
           title: 'errors.saveReportTitle',
           message: 'errors.saveReportMessage',
+        }),
+      );
+    }
+  };
+};
+
+export const setReportByRegInitialState = () => {
+  return {
+    type: SET_INITIAL_STATE_CAR_REPORTS,
+  };
+};
+
+export const setReportByReg = (reports: ReportsByReg[]) => {
+  return {
+    type: SET_REPORTS_BY_REG,
+    payload: reports,
+  };
+};
+
+export const fetchReportByReg = (registration_number: string) => {
+  return async (dispatch: any, getState: any) => {
+    console.log('THis is registration number for car', registration_number);
+    try {
+      const response = await fetch(
+        `${BASE_PATH}${PATHS.SAVE_REPORT}?registration_number=${registration_number}&language=${i18next.language}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+          },
+        },
+      );
+      if (response.ok) {
+        const reportByReg: ReportsByReg[] = await response.json();
+        dispatch(setReportByReg(reportByReg));
+      } else {
+        console.log('FETCHING NOT WORKING', response);
+        throw Error;
+      }
+    } catch (err) {
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.fetchReportQuestinsTitle',
+          message: 'errors.fetchReportQuestinsMessage',
         }),
       );
     }

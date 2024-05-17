@@ -1,42 +1,49 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {Navigation} from 'react-native-navigation';
 
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {
+  fetchReportByReg,
+  setReportByRegInitialState,
+} from '../../store/actions/report';
+import {SCREENS} from '../../common/constants';
 import styles from './styles';
 
-const CarInspections: React.FC = ({}) => {
+interface carInspectionProp {
+  registration_number: string;
+}
+
+const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
   const {t} = useTranslation();
-  console.log('called carInspections');
-  const reports = {
-    report1: {
-      date: '12.2.2022',
-      warnings: 3,
-      disqualifications: 1,
-    },
-    report2: {
-      date: '13.2.2022',
-      warnings: 2,
-      disqualifications: 0,
-    },
-    report3: {
-      date: '14.2.2022',
-      warnings: 5,
-      disqualifications: 2,
-    },
-    report4: {
-      date: '14.2.2022',
-      warnings: 5,
-      disqualifications: 2,
-    },
-  };
+  const dispatch = useAppDispatch();
+  const reportsData = useAppSelector(state => state.reportbyreg.reports);
+
+  useEffect(() => {
+    dispatch(fetchReportByReg(registration_number));
+
+    dispatch(setReportByRegInitialState());
+  }, []);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      dispatch(fetchReportByReg(registration_number));
+    }, 1000);
+    return () => {
+      clearTimeout(delay);
+      dispatch(setReportByRegInitialState());
+    };
+  }, [registration_number]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{t('carInspectionHistory')}</Text>
-      {Object.keys(reports).length > 0 ? (
-        Object.entries(reports).map(([key, report]) => (
-          <View key={key} style={styles.innerContainer}>
+      {reportsData && reportsData.length > 0 ? (
+        reportsData.map((report: any, index: number) => (
+          <View key={index} style={styles.innerContainer}>
             <View style={styles.leftContainer}>
-              <Text style={styles.textstyle}>{report.date}</Text>
+              <Text style={styles.textstyle}>{report.created_at}</Text>
             </View>
             <View style={styles.rigthContainer}>
               <View
