@@ -47,7 +47,7 @@ const NewReportScreen: React.FC = () => {
   //   const odometerReadingRef = useRef<any>(null);
   const informationRef = useRef<any>(null);
 
-  const [readyToProceed, setReadyToProceed] = useState(false);
+  const [readyToProceed, setReadyToProceed] = useState(true);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
   const [registerNumber, setRegisterNumber] = useState<{
@@ -140,22 +140,22 @@ const NewReportScreen: React.FC = () => {
     dispatch(fetchReportSections());
   }, []);
 
-  useEffect(() => {
-    if (
-      registerNumber.value &&
-      otherData.vehicleIdentificationNumber &&
-      otherData.brandAndModel &&
-      otherData.modelYear &&
-      otherData.information &&
-      reportType &&
-      inspectorOrg &&
-      engineType
-    ) {
-      setReadyToProceed(true);
-    } else if (readyToProceed) {
-      setReadyToProceed(false);
-    }
-  }, [otherData, registerNumber, reportType, inspectorOrg, engineType]);
+  // useEffect(() => {
+  //   if (
+  //     registerNumber.value &&
+  //     otherData.vehicleIdentificationNumber &&
+  //     otherData.brandAndModel &&
+  //     otherData.modelYear &&
+  //     otherData.information &&
+  //     reportType &&
+  //     inspectorOrg &&
+  //     engineType
+  //   ) {
+  //     setReadyToProceed(true);
+  //   } else if (readyToProceed) {
+  //     setReadyToProceed(false);
+  //   }
+  // }, [otherData, registerNumber, reportType, inspectorOrg, engineType,]);
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -184,7 +184,7 @@ const NewReportScreen: React.FC = () => {
         return modelYearRef;
       case 'modelYear':
         return informationRef;
-      case 'odometerReading':
+      case 'information':
         return;
     }
   };
