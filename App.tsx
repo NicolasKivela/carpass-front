@@ -14,6 +14,7 @@ import {
   ReviewerScreen,
   SummaryScreen,
   InspectorScreen,
+  ViewReportScreen,
   AllReportsScreen,
   CustomerScreen,
   MyNewOrderScreen,
@@ -68,6 +69,9 @@ Navigation.registerComponent(SCREENS.CARREPORTS, () =>
 );
 Navigation.registerComponent(SCREENS.SUMMARY, () =>
   componentHOC(SummaryScreen),
+);
+Navigation.registerComponent(SCREENS.VIEW_REPORT, () =>
+  componentHOC(ViewReportScreen),
 );
 Navigation.registerComponent(SCREENS.ALLORDERS, () =>
   componentHOC(AllReportsScreen),

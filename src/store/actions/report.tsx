@@ -18,6 +18,7 @@ import {
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
   SET_INITIAL_STATE_CAR_REPORTS,
+  SET_REPORT_HTML,
 } from './actionTypes';
 import {setError} from './error';
 
@@ -116,6 +117,13 @@ export const setReportStructure = (structure: Report['report_structure']) => {
   return {
     type: SET_REPORT_STRUCTURE,
     payload: structure,
+  };
+};
+
+export const setReportHTML = (html: string) => {
+  return {
+    type: SET_REPORT_HTML,
+    payload: html,
   };
 };
 
@@ -322,6 +330,40 @@ export const fetchReportByReg = (registration_number: string) => {
         dispatch(setReportByReg(reportByReg));
       } else {
         console.log('FETCHING NOT WORKING', response);
+        throw Error;
+      }
+    } catch (err) {
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.fetchReportQuestinsTitle',
+          message: 'errors.fetchReportQuestinsMessage',
+        }),
+      );
+    }
+  };
+};
+
+export const getReportHtml = (
+  registration_number: string,
+  report_id: number,
+) => {
+  return async (dispatch: any, getState: any) => {
+    try {
+      const response = await fetch(
+        `${BASE_PATH}${PATHS.GET_REPORT_HTML}?language=${i18next.language}&registration_number=${registration_number}&report_id=${report_id}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+          },
+        },
+      ); // TODO: remove later and use this from apimanager
+      if (response.ok) {
+        const html = await response.text();
+
+        dispatch(setReportHTML(html));
+      } else {
         throw Error;
       }
     } catch (err) {

@@ -6,6 +6,7 @@ export interface Report {
   production_number: string;
   report_structure: ReportStructureItem[];
   report_rows: ReportRow[];
+  report_HTML: string;
 }
 
 export interface Attachment {

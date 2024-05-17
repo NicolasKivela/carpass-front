@@ -11,6 +11,8 @@ import {
   SET_REPORT_ROW_LEFT_INPUT,
   SET_REPORT_ROW_RIGHT_INPUT,
   CHANGE_REPORT_ROW_IMAGE,
+  REMOVE_REPORT_ROW_IMAGE,
+  SET_REPORT_HTML,
   REMOVE_REPORT_ROW_IMAGE, SET_ORGANIZATIONS,
 } from '../actions/actionTypes';
 
@@ -22,6 +24,7 @@ export const initialState: Report = {
   engine_type: 'petrol',
   report_structure: [],
   report_rows: [],
+  report_HTML: '',
 };
 
 // This reducer handles updating the report state in the app
@@ -154,6 +157,11 @@ const reportReducer = (state = initialState, action: any) => {
         odometer_reading: action.payload.odometer_reading,
         production_number: action.payload.production_number,
         engine_type: action.payload.engine_type,
+      };
+    case SET_REPORT_HTML:
+      return {
+        ...state,
+        report_HTML: action.payload,
       };
 
     case SET_INITIAL_STATE:
