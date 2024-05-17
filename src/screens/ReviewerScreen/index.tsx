@@ -35,7 +35,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
   );
 
   const flatListRef = useRef<any>(null);
-
+  const reportRows = useAppSelector(state => state.report.report_rows);
   const [warningNum, setWarningNum] = useState(0);
   const [errorNum, setErrorNum] = useState(0);
   const [pageNumber, setPageNumber] = useState(defaultPageNumber || 1);
@@ -75,7 +75,7 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
           errorNum={errorNum}
         />
 
-        {reportStructure.length ? (
+        {reportStructure.length && reportRows.length ? (
           <View style={styles.section3}>
             <KeyboardAvoidingView
               style={styles.flex}
