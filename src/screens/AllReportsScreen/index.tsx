@@ -26,7 +26,7 @@ const backButtonHandler = () => {
         children: [
           {
             component: {
-              name: SCREENS.DEALERSHIP,
+              name: SCREENS.CUSTOMER_SCREEN,
             },
           },
         ],
