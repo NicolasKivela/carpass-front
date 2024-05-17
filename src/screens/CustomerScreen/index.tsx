@@ -15,6 +15,7 @@ import styles from './styles.ts';
 import {User} from '../../store/types/user.tsx';
 import {useSelector} from 'react-redux';
 import {changePage} from '../../store/actions/routing.tsx';
+import ProfileHanger from "../../components/ProfileHanger";
 
 interface Props {}
 
@@ -62,6 +63,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
     <SafeAreaProvider>
       <View style={styles.container}>
         {/* <ProfileHanger user={user} /> */}
+        <ProfileHanger user={user} />
         <Image
           source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}

@@ -39,6 +39,7 @@ export const setState = (token: string) => {
 export const loginUser = (username: string, password: string) => {
   return async (dispatch: any) => {
     try {
+      console.log(99, BASE_PATH + PATHS.LOGIN, username, password);
       // const response = await ApiManager.post(PATHS.LOGIN, {username, password})
       const response = await fetch(BASE_PATH + PATHS.LOGIN, {
         method: 'POST',
@@ -50,6 +51,7 @@ export const loginUser = (username: string, password: string) => {
       Keyboard.dismiss();
       if (response.ok) {
         const token = (await response.json()).authToken;
+        console.log(555, token);
         await AsyncStorage.setItem(LOCAL_STORAGE.TOKEN, token); // for autologin in the future
         const credentials = jwtDecode(token) as {
           username: string;
@@ -59,20 +61,20 @@ export const loginUser = (username: string, password: string) => {
           avatarUri: string;
           iat: string;
           exp: string;
-          organization: any;
         };
+        console.log(111, credentials);
 
         dispatch(
           setUserData({
             user_name: credentials.username,
             first_name: credentials.firstname,
             last_name: credentials.lastname,
-            organization_type: credentials.organization.type,
+            organization_type: credentials.organizationType,
             avatar_uri: credentials.avatarUri,
             token: token,
           }),
         );
-        console.log(credentials.organization.type);
+        console.log(credentials.organizationType);
         Navigation.setRoot({
           root: {
             stack: {
@@ -80,7 +82,7 @@ export const loginUser = (username: string, password: string) => {
                 {
                   component: {
                     name:
-                      credentials.organization.type === 'inspection'
+                      credentials.organizationType === 'inspection'
                         ? SCREENS.INSPECTOR
                         : SCREENS.CUSTOMER_SCREEN,
                   },
