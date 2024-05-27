@@ -36,7 +36,8 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
     };
   }, [registration_number]);
 
-  const handleOpenPress = () => {
+  const handleOpenPress = (registerNumber, id) => {
+    console.log('registernumber in searching reports', registerNumber, id);
     Navigation.setRoot({
       root: {
         stack: {
@@ -44,6 +45,10 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
             {
               component: {
                 name: SCREENS.VIEW_REPORT,
+                passProps: {
+                  registerNumber: registerNumber,
+                  id: id,
+                },
               },
             },
           ],
@@ -79,7 +84,11 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
                     : null}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.button} onPress={handleOpenPress}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  handleOpenPress('ABC123', 3);
+                }}>
                 <Text style={styles.textbutton}>
                   {t('open').toLocaleUpperCase()}
                 </Text>

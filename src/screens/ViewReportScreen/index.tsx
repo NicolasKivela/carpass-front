@@ -26,13 +26,34 @@ import {
 import {getReportHtml} from '../../store/actions/report';
 import {styles} from './styles';
 
-const ViewReportScreen: React.FC = () => {
+interface ViewReportScreenProps {
+  registerNumber: string;
+  id: number;
+}
+
+const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
+  registerNumber: regNumber,
+  id,
+}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const reportHtml = useAppSelector(
     (state: RootState) => state.report.report_HTML,
   );
+  console.log(regNumber, id);
+  useEffect(() => {
+    const screenEventListener =
+      Navigation.events().registerComponentDidAppearListener(
+        ({componentId, componentName, passProps}) => {
+          console.log(componentId, componentName, passProps);
+        },
+      );
 
+    // Cleanup function to unsubscribe
+    return () => {
+      screenEventListener.remove();
+    };
+  });
   useEffect(() => {
     dispatch(getReportHtml('ABC-123', 1)); //TODO: Change this to not be hardcoded
   });
