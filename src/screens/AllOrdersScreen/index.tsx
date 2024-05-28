@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, RefObject} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -15,6 +15,8 @@ import {
   DropdownNotification,
   InformationBox,
 } from '../../components/index';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {fetchOrders} from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
@@ -47,11 +49,14 @@ const AllReportsScreen: React.FC = () => {
   const order = useAppSelector(state => state.order.orders);
   console.log('I was here', order);
 
-
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, []);
+  console.log('ORDERS IN THE COMPONENT', ordersData);
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -66,28 +71,20 @@ const AllReportsScreen: React.FC = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
-            {
-              // TODO: Need to fetch the data from backend
-            }
-            <Text style={styles.text}>{t('createdOrders')}</Text>
-            {/* <InformationBox
-              title="ABC-123"
-              state="Jonossa" //Currently no state in the backend
-              inspectionType="Laaja kuntotarkastus"
-              orderDate="1.2.2022"
-            /> */}
-            {order.map((item: Order, index: number) => {
-              return (
-                <Card key={index} style={{marginBottom: 10}}>
-                  <Card.Content>
-                    <Text>{item.registration_number}</Text>
-                    <Text>{item.brand_and_model}</Text>
-                    <Text>{item.report_type}</Text>
-                    <Text>{item.order_status}</Text>
-                  </Card.Content>
-                </Card>
-              );
-            })}
+            <Text style={styles.text}>{t('inspectionOrders')}</Text>
+            {ordersData.orders &&
+              ordersData.orders.length > 0 &&
+              ordersData.orders.map(item => {
+                return (
+                  <InformationBox
+                    title={item.registration_number}
+                    state={item.order_status}
+                    inspectionType={item.report_type}
+                    orderDate={item.created_at}
+                    key={item.id}
+                  />
+                );
+              })}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

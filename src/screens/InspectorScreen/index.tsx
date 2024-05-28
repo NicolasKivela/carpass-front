@@ -72,35 +72,27 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
-        {/* {userType === USER_TYPE.INSPECTION && ( */}
-        <MainButton
-          title={t('startInspection')}
-          icon="checklist"
-          onPress={startInspectionHandler}
-          style={styles.button}
-        />
-        {/* )} */}
-        {/* {userType === USER_TYPE.SELLER && (
-          <>
-            <MainButton
-              title={t('newOrder')}
-              icon="search"
-              onPress={startNewOrderHandler}
-              style={styles.button}
-            />
-            <MainButton
-              title={t('carInspection')}
-              icon="search"
-              onPress={startCarDealerHandler}
-              style={styles.button}
-            />
-          </>
-        )} */}
 
+        {userType === 'inspector' && (
+          <MainButton
+            title={t('startInspection')}
+            icon="checklist"
+            onPress={startInspectionHandler}
+            style={styles.button}
+          />
+        )}
+        {userType === 'carDealer' && (
+          <MainButton
+            title={t('carInspection')}
+            icon="search"
+            onPress={startCarDealerHandler}
+            style={styles.button}
+          />
+        )}
         <MainButton
-          title={t('orders')}
+          title={t('carInspection')}
           icon="mail"
-          onPress={() => showOrders()}
+          onPress={showOrders}
           style={styles.button}
         />
         <SecondaryButton
