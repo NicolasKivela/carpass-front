@@ -1,12 +1,9 @@
-import {Navigation} from 'react-native-navigation';
-import i18next from 'i18next';
-
 import {BASE_PATH, PATHS, SCREENS} from '../../common/constants';
 import {SET_ORDERS_STATE} from './actionTypes';
 import {CreateOrder, Order} from '../types/order';
 
 import {setError} from './error';
-import { changePage } from './routing';
+import {changePage} from './routing';
 export const setOrdersState = (ordersData: Order[]) => {
   return {
     type: SET_ORDERS_STATE,
@@ -17,19 +14,15 @@ export const setOrdersState = (ordersData: Order[]) => {
 export const fetchOrders = () => {
   return async (dispatch: any, getState: any) => {
     try {
-      const response = await fetch(
-        `${BASE_PATH}${PATHS.ORDER}?language=${i18next.language}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${getState().user.token}`,
-          },
+      const response = await fetch(`${BASE_PATH}${PATHS.ORDER}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
         },
-      );
+      });
       if (response.ok) {
-        const orders: Order[] = await response.json();
-        console.log('Fetched orders', orders);
-        dispatch(setOrdersState(orders));
+        const orders: {orders: Order[]} = await response.json();
+        dispatch(setOrdersState(orders.orders));
       } else {
         throw Error;
       }
@@ -58,7 +51,7 @@ export const createOrder = (order: CreateOrder) => {
       });
       if (response.ok) {
         console.log('Order created');
-        changePage(SCREENS.INSPECTOR);
+        changePage(SCREENS.CUSTOMER_SCREEN);
       } else {
         throw Error;
       }

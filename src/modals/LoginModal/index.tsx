@@ -10,8 +10,8 @@ import {useAppDispatch} from '../../store/configureStore';
 import {loginUser} from '../../store/actions/user';
 
 import styles from '../styles';
-import {TextFieldRef} from "../../components/TextField";
-import {ButtonRef} from "../../components/SecondaryButton";
+import {TextFieldRef} from '../../components/TextField';
+import {ButtonRef} from '../../components/SecondaryButton';
 
 interface ModalContentProps {
   visible: boolean;
@@ -24,9 +24,8 @@ const LoginModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const passwordFieldRef = useRef<TextFieldRef|null>(null);
-  const submitRef = useRef<ButtonRef|null>(null);
-
+  const passwordFieldRef = useRef<TextFieldRef | null>(null);
+  const submitRef = useRef<ButtonRef | null>(null);
 
   if (!visible) {
     return null;

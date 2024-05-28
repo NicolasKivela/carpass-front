@@ -18,6 +18,10 @@ import {
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {fetchOrders} from '../../store/actions/orders';
+import {Card} from 'react-native-paper';
+import {Order} from '../../store/types/order';
 
 const backButtonHandler = () => {
   Navigation.setRoot({
@@ -26,7 +30,7 @@ const backButtonHandler = () => {
         children: [
           {
             component: {
-              name: SCREENS.INSPECTOR,
+              name: SCREENS.CUSTOMER_SCREEN,
             },
           },
         ],
@@ -39,6 +43,14 @@ const backButtonHandler = () => {
 
 const AllReportsScreen: React.FC = () => {
   const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+  const order = useAppSelector(state => state.order.orders);
+  console.log('I was here', order);
+
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, []);
 
   return (
     <Gradient>
@@ -57,12 +69,25 @@ const AllReportsScreen: React.FC = () => {
             {
               // TODO: Need to fetch the data from backend
             }
-            <Text style={styles.text}>{t('inspectionOrders')}</Text>
-            <InformationBox
+            <Text style={styles.text}>{t('createdOrders')}</Text>
+            {/* <InformationBox
               title="ABC-123"
               state="Jonossa" //Currently no state in the backend
               inspectionType="Laaja kuntotarkastus"
-              orderDate="1.2.2022"></InformationBox>
+              orderDate="1.2.2022"
+            /> */}
+            {order.map((item: Order, index: number) => {
+              return (
+                <Card key={index} style={{marginBottom: 10}}>
+                  <Card.Content>
+                    <Text>{item.registration_number}</Text>
+                    <Text>{item.brand_and_model}</Text>
+                    <Text>{item.report_type}</Text>
+                    <Text>{item.order_status}</Text>
+                  </Card.Content>
+                </Card>
+              );
+            })}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

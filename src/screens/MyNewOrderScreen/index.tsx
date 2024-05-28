@@ -19,7 +19,7 @@ import {
   Gradient,
   FrameProcessorCamera,
   DropdownNotification,
-  CarInspections,
+  // CarInspections,
 } from '../../components/index';
 import {colors} from '../../common/styles';
 import {SCREENS, USER_TYPE} from '../../common/constants';
@@ -47,7 +47,7 @@ const NewReportScreen: React.FC = () => {
   //   const odometerReadingRef = useRef<any>(null);
   const informationRef = useRef<any>(null);
 
-  const [readyToProceed, setReadyToProceed] = useState(true);
+  const [readyToProceed, setReadyToProceed] = useState(false);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
   const [registerNumber, setRegisterNumber] = useState<{
@@ -119,7 +119,7 @@ const NewReportScreen: React.FC = () => {
   useEffect(() => {
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName}) => {
-        console.log(componentName);
+        console.log('cmp name', componentName);
         setCurrentScreen(componentName);
       },
     );
@@ -141,21 +141,33 @@ const NewReportScreen: React.FC = () => {
   }, []);
 
   // useEffect(() => {
-  //   if (
-  //     registerNumber.value &&
-  //     otherData.vehicleIdentificationNumber &&
-  //     otherData.brandAndModel &&
-  //     otherData.modelYear &&
-  //     otherData.information &&
-  //     reportType &&
-  //     inspectorOrg &&
-  //     engineType
-  //   ) {
-  //     setReadyToProceed(true);
-  //   } else if (readyToProceed) {
-  //     setReadyToProceed(false);
+  //   if (organizations.length > 0) {
+  //     setInspectorOrg(
+  //       organizations.filter(org => org.type === USER_TYPE.INSPECTION)[0].id,
+  //     );
+  //     setEngineType(0);
+  //     setReportType(0);
   //   }
-  // }, [otherData, registerNumber, reportType, inspectorOrg, engineType,]);
+  // }, [organizations]);
+
+  useEffect(() => {
+    console.log(reportType);
+    if (
+      registerNumber.value &&
+      otherData.vehicleIdentificationNumber &&
+      otherData.brandAndModel &&
+      otherData.modelYear &&
+      otherData.information &&
+      reportType !== null &&
+      inspectorOrg !== null &&
+      engineType !== null
+    ) {
+      console.log('ready');
+      setReadyToProceed(true);
+    } else if (readyToProceed) {
+      setReadyToProceed(false);
+    }
+  }, [otherData, registerNumber, reportType, inspectorOrg, engineType]);
 
   const getRightRef = (item: string) => {
     switch (item) {
@@ -206,7 +218,7 @@ const NewReportScreen: React.FC = () => {
           changePage(SCREENS.INSPECTOR);
           break;
         case SCREENS.MY_NEW_ORDER:
-          changePage(SCREENS.INSPECTOR);
+          changePage(SCREENS.CUSTOMER_SCREEN);
           break;
       }
     }
@@ -284,7 +296,11 @@ const NewReportScreen: React.FC = () => {
               label={'registrationNumber'}
               value={registerNumber.value}
               setOnChange={(value: string) => {
-                setRegisterNumber({...registerNumber, value});
+                if (value.length === 0) {
+                  setRegisterNumber({...registerNumber, tempValues: [], value});
+                } else {
+                  setRegisterNumber({...registerNumber, value});
+                }
               }}
               onSubmitEditing={() => inputOnSubmitHandler('registrationNumber')}
               icon={registrationNumberIcon}
@@ -339,19 +355,19 @@ const NewReportScreen: React.FC = () => {
                           ? styles.footerTextDone
                           : styles.footerText
                       }>
-                      {t('startInspection')}
+                      {t('createOrder')}
                     </Text>
                   </Button>
                 </View>
               </View>
-            ) : currentScreen === SCREENS.MY_NEW_ORDER ? (
+            ) : (
               <FrameProcessorCamera
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            ) : null}
+            )}
 
-            {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
+            {/* {registerNumber.value && currentScreen === SCREENS.DEALERSHIP ? (
               <View style={styles.container}>
                 <>{console.log('CarInspections starting')}</>
                 <CarInspections />
@@ -361,7 +377,7 @@ const NewReportScreen: React.FC = () => {
                 registerNumber={registerNumber}
                 setRegisterNumber={setRegisterNumber}
               />
-            ) : null}
+            ) : null} */}
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>

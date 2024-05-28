@@ -61,6 +61,7 @@ export const loginUser = (username: string, password: string) => {
           avatarUri: string;
           iat: string;
           exp: string;
+          organization: any;
         };
         console.log(111, credentials);
 
@@ -69,12 +70,13 @@ export const loginUser = (username: string, password: string) => {
             user_name: credentials.username,
             first_name: credentials.firstname,
             last_name: credentials.lastname,
-            organization_type: credentials.organizationType,
+            organization_type: credentials.organization.type,
             avatar_uri: credentials.avatarUri,
             token: token,
           }),
         );
-        console.log(credentials.organizationType);
+
+        console.log(222, credentials.organization.type);
         Navigation.setRoot({
           root: {
             stack: {
@@ -82,9 +84,9 @@ export const loginUser = (username: string, password: string) => {
                 {
                   component: {
                     name:
-                      credentials.organizationType === 'inspection'
+                      credentials.organization.type === 'inspection'
                         ? SCREENS.INSPECTOR
-                        : SCREENS.INSPECTOR,
+                        : SCREENS.CUSTOMER_SCREEN,
                   },
                 },
               ],

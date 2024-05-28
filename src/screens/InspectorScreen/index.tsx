@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Navigation} from 'react-native-navigation';
 
-import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {useAppDispatch} from '../../store/configureStore';
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
 import {SCREENS, USER_TYPE} from '../../common/constants';
@@ -54,12 +54,12 @@ const InspectorScreen: React.FC<Props> = ({}) => {
     });
   };
   const startNewOrderHandler = () => {
-    changePage(SCREENS.NEW_ORDER);
+    changePage(SCREENS.MY_NEW_ORDER);
   };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <ProfileHanger user={user} />
+        {/* <ProfileHanger user={user} /> */}
         <Image
           source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
@@ -72,15 +72,15 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
-        {userType === USER_TYPE.INSPECTION && (
-          <MainButton
-            title={t('startInspection')}
-            icon="checklist"
-            onPress={startInspectionHandler}
-            style={styles.button}
-          />
-        )}
-        {userType === USER_TYPE.SELLER && (
+        {/* {userType === USER_TYPE.INSPECTION && ( */}
+        <MainButton
+          title={t('startInspection')}
+          icon="checklist"
+          onPress={startInspectionHandler}
+          style={styles.button}
+        />
+        {/* )} */}
+        {/* {userType === USER_TYPE.SELLER && (
           <>
             <MainButton
               title={t('newOrder')}
@@ -95,7 +95,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
               style={styles.button}
             />
           </>
-        )}
+        )} */}
 
         <MainButton
           title={t('orders')}

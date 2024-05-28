@@ -53,8 +53,8 @@ export const USER_TYPE = {
   MAINTENANCE: 'maintenance',
   SELLER: 'seller',
   INSPECTION: 'inspection',
-  REPAIR: 'repair'
-}
+  REPAIR: 'repair',
+};
 export const LINKS = {
   TOS: 'http://carpass.fi/terms_of_use.pdf',
 };
@@ -62,7 +62,7 @@ export const LINKS = {
 export const REPORT_TYPE_API = {
   0: 'full',
   1: 'narrow',
-  2: 'light'
+  2: 'light',
 };
 
 export const ENGINE_TYPE_API = {
@@ -72,7 +72,6 @@ export const ENGINE_TYPE_API = {
   3: 'hybrid_gasoline',
   4: 'electric',
   5: 'hybrid',
-}
+};
 
 export const TABLET_WIDTH = 600;
-

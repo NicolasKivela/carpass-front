@@ -36,6 +36,8 @@
     "createOrder": "Order created",
     "changeUserType": "User type overwritten"
   },
+  "createOrder": "Create Order",
+  "createdOrders": "Orders created",
   "full": "FULL",
   "fullInsp": "Full inspection",
   "goBack": "Go back to make changes",

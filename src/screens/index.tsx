@@ -1,4 +1,4 @@
-import AllReportsScreen from './AllReportsScreen';
+import AllOrdersScreen from './AllOrdersScreen';
 import InspectorScreen from './InspectorScreen';
 import LoginScreen from './LoginScreen';
 import NewReportScreen from './NewReportScreen';
@@ -10,7 +10,7 @@ import CustomerScreen from './CustomerScreen';
 import MyNewOrderScreen from './MyNewOrderScreen';
 
 export {
-  AllReportsScreen,
+  AllOrdersScreen,
   InspectorScreen,
   LoginScreen,
   NewReportScreen,

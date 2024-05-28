@@ -38,6 +38,8 @@
     "createOrder": "Tilaus lähetetty",
     "changeUserType": "Tyyppisi on muutettu"
   },
+  "createOrder": "luoda järjestystä",
+  "createdOrders": "Order created",
   "full": "LAAJA",
   "fullInsp": "Laaja kuntotarkastus",
   "goBack": "Palaa tekemään muutoksia",

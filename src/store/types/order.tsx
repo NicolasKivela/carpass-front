@@ -14,6 +14,7 @@ export interface Order {
   additional_information?: string;
   additional_information2?: string;
   order_total_amount: number;
+  order_status: string;
 }
 
 export type CreateOrder = Omit<
@@ -25,4 +26,5 @@ export type CreateOrder = Omit<
   | 'inspector_id'
   | 'customer_organization_id'
   | 'order_total_amount'
+  | 'order_status'
 >;
