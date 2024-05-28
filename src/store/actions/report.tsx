@@ -216,7 +216,6 @@ export const setReportByReg = (reports: ReportsByReg[]) => {
 
 export const fetchReportByReg = (registration_number: string) => {
   return async (dispatch: any, getState: any) => {
-    console.log('THis is registration number for car', registration_number);
     try {
       const response = await fetch(
         `${BASE_PATH}${PATHS.SAVE_REPORT}?registration_number=${registration_number}&language=${i18next.language}`,

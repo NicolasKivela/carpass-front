@@ -37,7 +37,6 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
   }, [registration_number]);
 
   const handleOpenPress = (registerNumber: string, id: number) => {
-    console.log('registernumber in searching reports', registerNumber, id);
     Navigation.setRoot({
       root: {
         stack: {
@@ -56,6 +55,13 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
       },
     });
   };
+  const dateFormatter = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString();
+    const month = (date.getMonth() + 1).toString();
+    const year = date.getFullYear().toString();
+    return day + '.' + month + '.' + year;
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{t('carInspectionHistory')}</Text>
@@ -63,7 +69,9 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
         reportsData.map((report: any, index: number) => (
           <View key={index} style={styles.innerContainer}>
             <View style={styles.leftContainer}>
-              <Text style={styles.textstyle}>{report.created_at}</Text>
+              <Text style={styles.textstyle}>
+                {dateFormatter(report.updated_at)}
+              </Text>
             </View>
             <View style={styles.rigthContainer}>
               <View
