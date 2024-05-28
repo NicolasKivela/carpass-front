@@ -30,11 +30,6 @@ interface ViewReportScreenProps {
   registerNumber: string;
   id: number;
 }
-interface PassProps {
-  registerNumber: string;
-  id: number;
-}
-
 const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   registerNumber: regNumber,
   id,
@@ -44,33 +39,11 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   const reportHtml = useAppSelector(
     (state: RootState) => state.report.report_HTML,
   );
-  console.log(regNumber, id);
   useEffect(() => {
-    const screenEventListener =
-      Navigation.events().registerComponentDidAppearListener(
-        ({componentId, componentName, passProps}) => {
-          console.log('NAVIGATION INFO', componentId, componentName, passProps);
-          if (
-            (passProps as PassProps)?.registerNumber &&
-            (passProps as PassProps)?.id
-          ) {
-            dispatch(
-              getReportHtml(
-                (passProps as PassProps).registerNumber,
-                (passProps as PassProps).id,
-              ),
-            );
-          }
-        },
-      );
-    return () => {
-      screenEventListener.remove();
-    };
-  }, []);
-  useEffect(() => {
-    //dispatch(getReportHtml('ABC-123', 2)); //TODO: Change this to not be hardcoded
+    dispatch(getReportHtml(regNumber, id));
   });
 
+  //TODO: GET reportrows from backend
   const reportRows = [
     {attachments: [], comment: '', inspection_status: 'green', question_id: 1},
     {attachments: [], comment: '', inspection_status: 'green', question_id: 2},

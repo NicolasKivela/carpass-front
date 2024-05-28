@@ -36,7 +36,7 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
     };
   }, [registration_number]);
 
-  const handleOpenPress = (registerNumber, id) => {
+  const handleOpenPress = (registerNumber: string, id: number) => {
     console.log('registernumber in searching reports', registerNumber, id);
     Navigation.setRoot({
       root: {
