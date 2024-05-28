@@ -87,7 +87,7 @@ const CarInspections: React.FC<carInspectionProp> = ({registration_number}) => {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  handleOpenPress('ABC123', 3);
+                  handleOpenPress(report.registration_number, report.id);
                 }}>
                 <Text style={styles.textbutton}>
                   {t('open').toLocaleUpperCase()}

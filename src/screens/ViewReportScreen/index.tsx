@@ -30,6 +30,10 @@ interface ViewReportScreenProps {
   registerNumber: string;
   id: number;
 }
+interface PassProps {
+  registerNumber: string;
+  id: number;
+}
 
 const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   registerNumber: regNumber,
@@ -45,17 +49,26 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
     const screenEventListener =
       Navigation.events().registerComponentDidAppearListener(
         ({componentId, componentName, passProps}) => {
-          console.log(componentId, componentName, passProps);
+          console.log('NAVIGATION INFO', componentId, componentName, passProps);
+          if (
+            (passProps as PassProps)?.registerNumber &&
+            (passProps as PassProps)?.id
+          ) {
+            dispatch(
+              getReportHtml(
+                (passProps as PassProps).registerNumber,
+                (passProps as PassProps).id,
+              ),
+            );
+          }
         },
       );
-
-    // Cleanup function to unsubscribe
     return () => {
       screenEventListener.remove();
     };
-  });
+  }, []);
   useEffect(() => {
-    dispatch(getReportHtml('ABC-123', 1)); //TODO: Change this to not be hardcoded
+    //dispatch(getReportHtml('ABC-123', 2)); //TODO: Change this to not be hardcoded
   });
 
   const reportRows = [
