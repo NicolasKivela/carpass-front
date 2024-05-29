@@ -41,6 +41,26 @@ const backButtonHandler = () => {
   return true;
 };
 
+const viewOrderHandler = (report_id: number, register_number: string) => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: SCREENS.VIEW_REPORT,
+              passProps: {
+                report_id: report_id,
+                register_number: register_number,
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
+};
+
 const InspectionOrdersScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
@@ -81,8 +101,16 @@ const InspectionOrdersScreen: React.FC = () => {
                         : 'start inspection'
                     }
                     onPress={() => {
-                      dispatch(setCurrentOrder(item));
-                      changePage(SCREENS.NEW_REPORT);
+                      if (item.order_status === 'ready') {
+                        viewOrderHandler(
+                          item.report_id,
+                          item.registration_number,
+                        );
+                        return;
+                      } else {
+                        dispatch(setCurrentOrder(item));
+                        changePage(SCREENS.NEW_REPORT);
+                      }
                     }}
                   />
                 );
