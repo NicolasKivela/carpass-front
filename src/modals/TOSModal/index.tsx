@@ -51,7 +51,6 @@ const TOSModal: React.FC<ModalContentProps> = ({visible, onDismiss}) => {
           style={styles.btnStyle}
           onPress={() => {
             if (checked) {
-              console.log(checked);
               onDismiss();
             } else console.log('What happens if TOS not accepted');
           }}

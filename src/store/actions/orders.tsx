@@ -1,5 +1,5 @@
 import {BASE_PATH, PATHS, SCREENS} from '../../common/constants';
-import {SET_ORDERS_STATE} from './actionTypes';
+import {SET_CURRENT_ORDER, SET_ORDERS_STATE} from './actionTypes';
 import {CreateOrder, Order} from '../types/order';
 
 import {setError} from './error';
@@ -50,7 +50,6 @@ export const createOrder = (order: CreateOrder) => {
         body: JSON.stringify(order),
       });
       if (response.ok) {
-        console.log('Order created');
         changePage(SCREENS.CUSTOMER_SCREEN);
       } else {
         throw Error;
@@ -64,5 +63,12 @@ export const createOrder = (order: CreateOrder) => {
         }),
       );
     }
+  };
+};
+
+export const setCurrentOrder = (order: Order) => {
+  return {
+    type: SET_CURRENT_ORDER,
+    payload: order,
   };
 };

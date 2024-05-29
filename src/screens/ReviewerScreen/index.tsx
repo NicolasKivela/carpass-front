@@ -34,6 +34,11 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
     state => state.report.report_structure,
   );
 
+  console.log('reportStructure', reportStructure);
+
+  const currentOrder = useAppSelector(state => state.order.currentOrder);
+  console.log('currentOrder', currentOrder);
+
   const flatListRef = useRef<any>(null);
   const reportRows = useAppSelector(state => state.report.report_rows);
   const [warningNum, setWarningNum] = useState(0);
@@ -89,12 +94,13 @@ const ReviewerScreen: React.FC<Props> = ({defaultPageNumber}) => {
                 ref={flatListRef}
                 data={reportStructure}
                 keyExtractor={(item: ReportStructureItem) => item.id.toString()}
-                renderItem={({item}) => (
+                renderItem={({item, index}) => (
                   <Section
                     mainListRef={flatListRef}
                     structureItem={item}
                     modifyWarningNum={modifyWarningNum}
                     modifyErrorNum={modifyErrorNum}
+                    index={index}
                   />
                 )}
                 horizontal

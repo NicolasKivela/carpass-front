@@ -135,8 +135,8 @@ export const fetchReportQuestions = () => {
         `${BASE_PATH}${PATHS.REPORT_STRUCTURE}?language=${
           i18next.language
         }&engine_type=${
-          getState().report.engine_type
-        }&report_type=${REPORT_TYPE.FULL.toLowerCase()}`,
+          getState().order.currentOrder.engine_type
+        }&report_type=${getState().order.currentOrder.report_type}`,
         {
           method: 'GET',
           headers: {
@@ -239,8 +239,9 @@ export const saveReport = () => {
         );
         return; // Exit the function if any input is empty
       }
+      console.log('getState().order.currentOrder', getState().report);
       const requestBody = {
-        order_id: 1,
+        order_id: getState().order.currentOrder.id,
         brand_and_model: getState().report.brand_and_model,
         odometer_reading: getState().report.odometer_reading,
         production_number: getState().report.production_number,
@@ -256,8 +257,6 @@ export const saveReport = () => {
           };
         }), //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
       };
-
-      console.log('Report Body:', JSON.stringify(requestBody, null, 2)); // Logging the request body
 
       const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
@@ -284,7 +283,7 @@ export const saveReport = () => {
         });
         // TODO: some kind of toast that report is saved?
       } else {
-        console.log(10, JSON.stringify(response, null, 2), getState().user);
+        console.log('FETCHING NOT WORKING', response);
         throw Error;
       }
     } catch (err) {
@@ -314,7 +313,6 @@ export const setReportByReg = (reports: ReportsByReg[]) => {
 
 export const fetchReportByReg = (registration_number: string) => {
   return async (dispatch: any, getState: any) => {
-    console.log('THis is registration number for car', registration_number);
     try {
       const response = await fetch(
         `${BASE_PATH}${PATHS.SAVE_REPORT}?registration_number=${registration_number}&language=${i18next.language}`,

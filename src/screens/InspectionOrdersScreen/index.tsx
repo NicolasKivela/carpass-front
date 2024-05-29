@@ -16,14 +16,12 @@ import {
   InformationBox,
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
-import {fetchOrders} from '../../store/actions/orders';
+import {fetchOrders, setCurrentOrder} from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
-import {useAppDispatch, useAppSelector} from '../../store/configureStore';
-import {fetchOrders} from '../../store/actions/orders';
-import {Card} from 'react-native-paper';
 import {Order} from '../../store/types/order';
+import {changePage} from '../../store/actions/routing';
 
 const backButtonHandler = () => {
   Navigation.setRoot({
@@ -32,7 +30,7 @@ const backButtonHandler = () => {
         children: [
           {
             component: {
-              name: SCREENS.CUSTOMER_SCREEN,
+              name: SCREENS.INSPECTOR,
             },
           },
         ],
@@ -43,20 +41,15 @@ const backButtonHandler = () => {
   return true;
 };
 
-const AllReportsScreen: React.FC = () => {
+const InspectionOrdersScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const order = useAppSelector(state => state.order.orders);
-  console.log('I was here', order);
+  const orders = useAppSelector(state => state.order.orders);
 
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchOrders());
-  }, []);
-  console.log('ORDERS IN THE COMPONENT', ordersData);
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -72,9 +65,9 @@ const AllReportsScreen: React.FC = () => {
           keyboardVerticalOffset={0}>
           <ScrollView keyboardShouldPersistTaps="handled">
             <Text style={styles.text}>{t('inspectionOrders')}</Text>
-            {ordersData.orders &&
-              ordersData.orders.length > 0 &&
-              ordersData.orders.map(item => {
+            {orders &&
+              orders.length > 0 &&
+              orders.map((item: Order) => {
                 return (
                   <InformationBox
                     title={item.registration_number}
@@ -82,6 +75,15 @@ const AllReportsScreen: React.FC = () => {
                     inspectionType={item.report_type}
                     orderDate={item.created_at}
                     key={item.id}
+                    btnText={
+                      item.order_status === 'ready'
+                        ? 'view'
+                        : 'start inspection'
+                    }
+                    onPress={() => {
+                      dispatch(setCurrentOrder(item));
+                      changePage(SCREENS.NEW_REPORT);
+                    }}
                   />
                 );
               })}
@@ -92,4 +94,4 @@ const AllReportsScreen: React.FC = () => {
     </Gradient>
   );
 };
-export default AllReportsScreen;
+export default InspectionOrdersScreen;

@@ -11,10 +11,12 @@ import {SCREENS, USER_TYPE} from '../../common/constants';
 import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
-import ProfileHanger from '../../components/ProfileHanger';
 import {User} from '../../store/types/user.tsx';
 import {useSelector} from 'react-redux';
 import {changePage} from '../../store/actions/routing.tsx';
+import {Divider, IconButton, Menu} from 'react-native-paper';
+import { colors } from '../../common/styles.tsx';
+import { removeUserData } from '../../store/actions/user.tsx';
 
 interface Props {}
 
@@ -28,9 +30,16 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
 
+  const [showDrawer, setShowDrawer] = useState(false);
+
   useEffect(() => {
     dispatch(setReportInitialState());
   }, []);
+
+  const logOutHandler = () => {
+    dispatch(removeUserData());
+    changePage(SCREENS.LOGIN);
+  };
 
   const startInspectionHandler = () => {
     changePage(SCREENS.NEW_REPORT);
@@ -45,7 +54,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           children: [
             {
               component: {
-                name: SCREENS.ALLORDERS,
+                name: SCREENS.INSPECTION_ORDERS,
               },
             },
           ],
@@ -59,6 +68,31 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <View style={{position: 'absolute', top: 0, right: 0}}>
+          <Menu
+            visible={showDrawer}
+            onDismiss={() => {
+              setShowDrawer(false);
+            }}
+            // style={{backgroundColor: colors.darkGrey}}
+            anchor={
+              <IconButton
+                size={40}
+                icon="menu"
+                theme={{
+                  colors: {
+                    onSurfaceVariant: colors.orange,
+                  },
+                }}
+                onPress={() => setShowDrawer(true)}
+              />
+            }>
+            <Menu.Item onPress={() => {}} title={user.user_name} />
+            <Menu.Item onPress={() => {}} title={user.organization_type} />
+            <Divider />
+            <Menu.Item onPress={logOutHandler} title={'logout'} />
+          </Menu>
+        </View>
         {/* <ProfileHanger user={user} /> */}
         <Image
           source={require('../../assets/images/carpasslogo.png')}

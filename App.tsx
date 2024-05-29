@@ -17,7 +17,8 @@ import {
   ViewReportScreen,
   CustomerScreen,
   MyNewOrderScreen,
-  AllOrdersScreen,
+  CustomerOrderScreen,
+  InspectionOrdersScreen,
 } from './src/screens/index';
 import store from './src/store/configureStore';
 import './src/locales/index';
@@ -73,15 +74,20 @@ Navigation.registerComponent(SCREENS.SUMMARY, () =>
 Navigation.registerComponent(SCREENS.VIEW_REPORT, () =>
   componentHOC(ViewReportScreen),
 );
-Navigation.registerComponent(SCREENS.ALLORDERS, () =>
-  componentHOC(AllOrdersScreen),
-);
 Navigation.registerComponent(SCREENS.CUSTOMER_SCREEN, () =>
   componentHOC(CustomerScreen),
 );
 
 Navigation.registerComponent(SCREENS.MY_NEW_ORDER, () =>
   componentHOC(MyNewOrderScreen),
+);
+
+Navigation.registerComponent(SCREENS.CUSTOMER_ORDERS, () =>
+  componentHOC(CustomerOrderScreen),
+);
+
+Navigation.registerComponent(SCREENS.INSPECTION_ORDERS, () =>
+  componentHOC(InspectionOrdersScreen),
 );
 
 const App = () => {

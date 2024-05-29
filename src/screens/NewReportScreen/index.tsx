@@ -22,16 +22,16 @@ import {
 } from '../../components/index';
 import {colors} from '../../common/styles';
 import {SCREENS} from '../../common/constants';
-import {useAppDispatch} from '../../store/configureStore';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {setCarData} from '../../store/actions/report';
 
 import {styles} from './styles';
-import {current} from '@reduxjs/toolkit';
 import {changePage} from '../../store/actions/routing.tsx';
 
 const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+  const currentOrder = useAppSelector(state => state.order.currentOrder);
 
   // refs for automatic focus
   const registrationNumberRef = useRef<any>(null);
@@ -77,6 +77,22 @@ const NewReportScreen: React.FC = () => {
       BackHandler.removeEventListener('hardwareBackPress', backButtonHandler);
     };
   }, []);
+
+  useEffect(() => {
+    if (currentOrder) {
+      console.log('I was called yupee', currentOrder);
+      setRegisterNumber({
+        value: currentOrder.registration_number,
+        tempValues: [],
+      });
+      setOtherData({
+        vehicleIdentificationNumber: currentOrder.car_production_number,
+        brandAndModel: currentOrder.brand_and_model,
+        modelYear: null,
+        odometerReading: null,
+      });
+    }
+  }, [currentOrder]);
 
   useEffect(() => {
     if (
@@ -130,13 +146,14 @@ const NewReportScreen: React.FC = () => {
 
   const backButtonHandler = () => {
     if (registerNumber.value) {
-      setRegisterNumber({value: '', tempValues: []});
-      setOtherData({
-        vehicleIdentificationNumber: '',
-        brandAndModel: '',
-        modelYear: null,
-        odometerReading: null,
-      });
+      // setRegisterNumber({value: '', tempValues: []});
+      // setOtherData({
+      //   vehicleIdentificationNumber: '',
+      //   brandAndModel: '',
+      //   modelYear: null,
+      //   odometerReading: null,
+      // });
+      changePage(SCREENS.INSPECTOR);
     } else {
       switch (currentScreen) {
         case SCREENS.NEW_REPORT:
@@ -207,6 +224,7 @@ const NewReportScreen: React.FC = () => {
             <NewReportTextInput
               innerRef={getRightRef('registrationNumber')}
               label={'registrationNumber'}
+              disabled={true}
               value={registerNumber.value}
               setOnChange={updateRegisterNumber}
               onSubmitEditing={() => inputOnSubmitHandler('registrationNumber')}
@@ -224,6 +242,10 @@ const NewReportScreen: React.FC = () => {
                     setOnChange={(value: string) => {
                       setOtherData({...otherData, [item]: value});
                     }}
+                    disabled={
+                      item === 'vehicleIdentificationNumber' ||
+                      item === 'brandAndModel'
+                    }
                     onSubmitEditing={() => inputOnSubmitHandler(item)}
                     icon={'keyboard'}
                   />
@@ -296,6 +318,7 @@ interface NewReportTextInputProps {
   onSubmitEditing: () => void;
   icon: string;
   setRegistrationNumberIcon?: React.Dispatch<React.SetStateAction<string>>;
+  disabled?: boolean;
 }
 
 const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
@@ -306,6 +329,7 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
   onSubmitEditing,
   icon,
   setRegistrationNumberIcon,
+  disabled,
 }) => {
   const {t} = useTranslation();
 
@@ -348,6 +372,7 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
       textColor={isActive ? colors.orange : colors.lightGrey}
       onChangeText={setOnChange}
       onSubmitEditing={onSubmitEditing}
+      disabled={disabled}
       mode="outlined"
       keyboardType={keyboardTypeHandler()}
       right={

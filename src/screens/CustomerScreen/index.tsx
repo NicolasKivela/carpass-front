@@ -27,9 +27,6 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const user = useSelector((state: {user: User}) => state.user);
-  const userType = user.organization_type;
-
-  console.log(user);
 
   //TODO: get usertype from backend when user logs in
   const [statisticVisible, setStatistic] = useState(false);
@@ -57,7 +54,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           children: [
             {
               component: {
-                name: SCREENS.ALLORDERS,
+                name: SCREENS.CUSTOMER_ORDERS,
               },
             },
           ],
@@ -156,7 +153,6 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           <SecondaryButton
             title={t('statistics')}
             onPress={() => {
-              console.log('statistic');
               setStatistic(true);
             }}
             icon="menu"

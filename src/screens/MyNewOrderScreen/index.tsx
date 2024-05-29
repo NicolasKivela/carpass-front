@@ -43,7 +43,6 @@ const NewReportScreen: React.FC = () => {
   const registrationNumberRef = useRef<any>(null);
   const vehicleIdentificationNumberRef = useRef<any>(null);
   const brandAndModelRef = useRef<any>(null);
-  const modelYearRef = useRef<any>(null);
   //   const odometerReadingRef = useRef<any>(null);
   const informationRef = useRef<any>(null);
 
@@ -60,7 +59,6 @@ const NewReportScreen: React.FC = () => {
   const [otherData, setOtherData] = useState({
     vehicleIdentificationNumber: '',
     brandAndModel: '',
-    modelYear: null,
     information: null,
   });
   const [currentScreen, setCurrentScreen] = useState('');
@@ -156,7 +154,6 @@ const NewReportScreen: React.FC = () => {
       registerNumber.value &&
       otherData.vehicleIdentificationNumber &&
       otherData.brandAndModel &&
-      otherData.modelYear &&
       otherData.information &&
       reportType !== null &&
       inspectorOrg !== null &&
@@ -177,8 +174,6 @@ const NewReportScreen: React.FC = () => {
         return vehicleIdentificationNumberRef;
       case 'brandAndModel':
         return brandAndModelRef;
-      case 'modelYear':
-        return modelYearRef;
       case 'information':
         return informationRef;
       default:
@@ -193,8 +188,6 @@ const NewReportScreen: React.FC = () => {
       case 'vehicleIdentificationNumber':
         return brandAndModelRef;
       case 'brandAndModel':
-        return modelYearRef;
-      case 'modelYear':
         return informationRef;
       case 'information':
         return;
@@ -207,7 +200,6 @@ const NewReportScreen: React.FC = () => {
       setOtherData({
         vehicleIdentificationNumber: '',
         brandAndModel: '',
-        modelYear: null,
         information: null,
       });
     } else {
@@ -227,11 +219,6 @@ const NewReportScreen: React.FC = () => {
   };
 
   const startInspectionHandler = () => {
-    console.log(otherData);
-    console.log(registerNumber);
-    console.log(getReportType(reportType!));
-    console.log(getEngineType(engineType!));
-    console.log(inspectorOrg);
     dispatch(
       createOrder({
         brand_and_model: otherData.brandAndModel,

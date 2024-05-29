@@ -39,7 +39,6 @@ export const setState = (token: string) => {
 export const loginUser = (username: string, password: string) => {
   return async (dispatch: any) => {
     try {
-      console.log(99, BASE_PATH + PATHS.LOGIN, username, password);
       // const response = await ApiManager.post(PATHS.LOGIN, {username, password})
       const response = await fetch(BASE_PATH + PATHS.LOGIN, {
         method: 'POST',
@@ -51,7 +50,6 @@ export const loginUser = (username: string, password: string) => {
       Keyboard.dismiss();
       if (response.ok) {
         const token = (await response.json()).authToken;
-        console.log(555, token);
         await AsyncStorage.setItem(LOCAL_STORAGE.TOKEN, token); // for autologin in the future
         const credentials = jwtDecode(token) as {
           username: string;
@@ -63,7 +61,6 @@ export const loginUser = (username: string, password: string) => {
           exp: string;
           organization: any;
         };
-        console.log(111, credentials);
 
         dispatch(
           setUserData({
@@ -76,7 +73,6 @@ export const loginUser = (username: string, password: string) => {
           }),
         );
 
-        console.log(222, credentials.organization.type);
         Navigation.setRoot({
           root: {
             stack: {
