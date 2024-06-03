@@ -50,8 +50,11 @@ export type ReportStructureItem = {
   id: number;
   name: string;
   questions: {
-    id: number;
-    name: string;
+    question: {
+      id: number;
+      name: string;
+      type: string;
+    };
   }[];
 };
 
@@ -60,4 +63,21 @@ export type ReportRow = {
   inspection_status: InspectionStatus | null;
   comment: string;
   attachments: Attachment[];
+  input_left: number | null;
+  input_left_measurement: String;
+  input_right: number | null;
+  input_right_measurement: String;
+  additional_input: number | null;
+  additional_input_measurement: String;
 };
+
+export type ReportSection = {
+  id: number,
+  created_at: string;
+  updated_at: string;
+  unit_price: number;
+  translations: Array<{value: string}>
+}
+export type ReportSections = {
+  sections: Array<ReportSection>
+}

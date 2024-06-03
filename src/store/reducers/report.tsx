@@ -6,7 +6,10 @@ import {
   SET_INITIAL_STATE,
   SET_REPORT_STRUCTURE,
   SET_REPORT_ROW_IMAGE,
+  SET_REPORT_ROW_ADDITIONAL_INPUT,
   SET_REPORT_ROW_COMMENT,
+  SET_REPORT_ROW_LEFT_INPUT,
+  SET_REPORT_ROW_RIGHT_INPUT,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
   SET_REPORT_HTML,
@@ -90,6 +93,43 @@ const reportReducer = (state = initialState, action: any) => {
                 attachments: row.attachments.filter(
                   attachment => attachment.id !== action.payload.idImage,
                 ),
+              }
+            : row,
+        ),
+      };
+
+    case SET_REPORT_ROW_LEFT_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                input_left: action.payload.input_left,
+              }
+            : row,
+        ),
+      };
+    case SET_REPORT_ROW_RIGHT_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                input_right: action.payload.input_right,
+              }
+            : row,
+        ),
+      };
+    case SET_REPORT_ROW_ADDITIONAL_INPUT:
+      return {
+        ...state,
+        report_rows: state.report_rows.map(row =>
+          row.question_id === action.payload.id
+            ? {
+                ...row,
+                additional_input: action.payload.additional_input,
               }
             : row,
         ),

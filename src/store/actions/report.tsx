@@ -10,7 +10,10 @@ import {
   SET_REPORT_STRUCTURE,
   SET_REPORT_ROWS,
   SET_REPORT_ROW_ANSWER,
+  SET_REPORT_ROW_ADDITIONAL_INPUT,
   SET_REPORT_ROW_COMMENT,
+  SET_REPORT_ROW_LEFT_INPUT,
+  SET_REPORT_ROW_RIGHT_INPUT,
   SET_REPORT_ROW_IMAGE,
   CHANGE_REPORT_ROW_IMAGE,
   REMOVE_REPORT_ROW_IMAGE,
@@ -45,10 +48,40 @@ export const setReportRowAnswer = (id: number, answer: string | null) => {
   };
 };
 
+export const setReportRowAdditionalInput = (
+  id: number,
+  additional_input: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_ADDITIONAL_INPUT,
+    payload: {id, additional_input},
+  };
+};
+
 export const setReportRowComment = (id: number, comment: string | null) => {
   return {
     type: SET_REPORT_ROW_COMMENT,
     payload: {id, comment},
+  };
+};
+
+export const setReportRowLeftInput = (
+  id: number,
+  input_left: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_LEFT_INPUT,
+    payload: {id, input_left},
+  };
+};
+
+export const setReportRowRightInput = (
+  id: number,
+  input_right: number | null,
+) => {
+  return {
+    type: SET_REPORT_ROW_RIGHT_INPUT,
+    payload: {id, input_right},
   };
 };
 
@@ -102,8 +135,8 @@ export const fetchReportQuestions = () => {
         `${BASE_PATH}${PATHS.REPORT_STRUCTURE}?language=${
           i18next.language
         }&engine_type=${
-          getState().report.engine_type
-        }&report_type=${REPORT_TYPE.FULL.toLowerCase()}`,
+          getState().order.currentOrder.engine_type
+        }&report_type=${getState().order.currentOrder.report_type}`,
         {
           method: 'GET',
           headers: {
@@ -119,12 +152,44 @@ export const fetchReportQuestions = () => {
         const reportRows = reportStructure
           .map((item: any) => {
             return item.questions.map((innerItem: any) => {
-              return {
-                question_id: innerItem.id,
-                inspection_status: null,
-                comment: '',
-                attachments: [],
-              };
+              let row;
+              // Depending on the question type, set additional properties
+              switch (innerItem.type) {
+                case 'description':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    comment: '',
+                  };
+                  break;
+                case 'leftrightnumeric':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    input_left: null,
+                    input_left_measurement: '',
+                    input_right: null,
+                    input_right_measurement: '',
+                  };
+                  break;
+                case 'singlenumeric':
+                  row = {
+                    question_id: innerItem.id,
+                    inspection_status: null,
+                    attachments: [],
+                    type: innerItem.type,
+                    additional_input: null,
+                    additional_input_measurement: '',
+                  };
+                  break;
+                default:
+                  break;
+              }
+              return row;
             });
           })
           .flat();
@@ -147,30 +212,61 @@ export const fetchReportQuestions = () => {
 export const saveReport = () => {
   return async (dispatch: any, getState: any) => {
     try {
-      // const response = await ApiManager.post(PATHS.SAVE_REPORT)
+      const reportRows = getState().report.report_rows;
+
+      // Check if inputleft, inputright or singlenumeric report_row inputs are empty
+      const isEmpty = reportRows.some((row: any) => {
+        return Object.keys(row).some((key: any) => {
+          if (
+            key === 'additional_input' ||
+            key === 'input_right' ||
+            key === 'input_left'
+          ) {
+            if (row[key] === '' || row[key] === null) {
+              return true;
+            }
+          }
+        });
+      });
+
+      if (isEmpty) {
+        dispatch(
+          setError({
+            type: 'Error',
+            title: 'errors.emptyRowInputsTitle',
+            message: 'errors.emptyRowInputsMessage',
+          }),
+        );
+        return; // Exit the function if any input is empty
+      }
+      console.log('getState().order.currentOrder', getState().report);
+      const requestBody = {
+        order_id: getState().order.currentOrder.id,
+        brand_and_model: getState().report.brand_and_model,
+        odometer_reading: getState().report.odometer_reading,
+        production_number: getState().report.production_number,
+        registration_number: getState().report.registration_number,
+        engine_type: getState().report.engine_type,
+        report_rows: getState().report.report_rows.map((item: any) => {
+          return {
+            ...item,
+            attachments: item.attachments.map((attachment: any) => ({
+              attachment_type: attachment.attachment_type,
+              data: attachment.data,
+            })),
+          };
+        }), //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
+      };
+
       const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getState().user.token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          brand_and_model: getState().report.brand_and_model,
-          odometer_reading: getState().report.odometer_reading,
-          production_number: getState().report.production_number,
-          registration_number: getState().report.registration_number,
-          engine_type: getState().report.engine_type,
-          report_rows: getState().report.report_rows.map((item: any) => {
-            return {
-              ...item,
-              attachments: item.attachments.map((attachment: any) => ({
-                attachment_type: attachment.attachment_type,
-                data: attachment.data,
-              })),
-            };
-          }),
-        }),
-      }); // TODO: remove later and use this from apimanager
+        body: JSON.stringify(requestBody),
+      });
+
       if (response.ok) {
         Navigation.setRoot({
           root: {
@@ -187,6 +283,7 @@ export const saveReport = () => {
         });
         // TODO: some kind of toast that report is saved?
       } else {
+        console.log('FETCHING NOT WORKING', response);
         throw Error;
       }
     } catch (err) {

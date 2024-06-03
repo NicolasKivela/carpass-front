@@ -7,36 +7,54 @@ import {Navigation} from 'react-native-navigation';
 import {useAppDispatch} from '../../store/configureStore';
 import {MainButton, SecondaryButton} from '../../components/index';
 import {StatisticModal, GuidanceModal} from '../../modals/index';
-import {SCREENS} from '../../common/constants';
+import {SCREENS, USER_TYPE} from '../../common/constants';
 import {setReportInitialState} from '../../store/actions/report';
 
 import styles from './styles';
+import {User} from '../../store/types/user.tsx';
+import {useSelector} from 'react-redux';
+import {changePage} from '../../store/actions/routing.tsx';
+import {Divider, IconButton, Menu} from 'react-native-paper';
+import { colors } from '../../common/styles.tsx';
+import { removeUserData } from '../../store/actions/user.tsx';
 
-interface Props {
-  userType: string; // Assuming userType is a string
-}
+interface Props {}
 
-const InspectorScreen: React.FC<Props> = ({userType}) => {
+const InspectorScreen: React.FC<Props> = ({}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-
+  const user = useSelector((state: {user: User}) => state.user);
+  const userType = user.organization_type;
+  console.log('USER TYPE', userType);
   //TODO: get usertype from backend when user logs in
-  userType = 'carDealer';
   const [statisticVisible, setStatistic] = useState(false);
   const [guidanceVisible, setGuidance] = useState(false);
+
+  const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
     dispatch(setReportInitialState());
   }, []);
 
+  const logOutHandler = () => {
+    dispatch(removeUserData());
+    changePage(SCREENS.LOGIN);
+  };
+
   const startInspectionHandler = () => {
+    changePage(SCREENS.NEW_REPORT);
+  };
+  const startCarDealerHandler = () => {
+    changePage(SCREENS.DEALERSHIP);
+  };
+  const showOrders = () => {
     Navigation.setRoot({
       root: {
         stack: {
           children: [
             {
               component: {
-                name: SCREENS.NEW_REPORT,
+                name: SCREENS.INSPECTION_ORDERS,
               },
             },
           ],
@@ -44,24 +62,38 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
       },
     });
   };
-  const startCarDealerHandler = () => {
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: SCREENS.DEALERSHIP,
-              },
-            },
-          ],
-        },
-      },
-    });
+  const startNewOrderHandler = () => {
+    changePage(SCREENS.MY_NEW_ORDER);
   };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <View style={{position: 'absolute', top: 0, right: 0}}>
+          <Menu
+            visible={showDrawer}
+            onDismiss={() => {
+              setShowDrawer(false);
+            }}
+            // style={{backgroundColor: colors.darkGrey}}
+            anchor={
+              <IconButton
+                size={40}
+                icon="menu"
+                theme={{
+                  colors: {
+                    onSurfaceVariant: colors.orange,
+                  },
+                }}
+                onPress={() => setShowDrawer(true)}
+              />
+            }>
+            <Menu.Item onPress={() => {}} title={user.user_name} />
+            <Menu.Item onPress={() => {}} title={user.organization_type} />
+            <Divider />
+            <Menu.Item onPress={logOutHandler} title={'logout'} />
+          </Menu>
+        </View>
+        {/* <ProfileHanger user={user} /> */}
         <Image
           source={require('../../assets/images/carpasslogo.png')}
           style={styles.imageStyles}
@@ -74,6 +106,7 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
           onDismiss={() => setGuidance(false)}
           visible={guidanceVisible}
         />
+
         {userType === 'inspector' && (
           <MainButton
             title={t('startInspection')}
@@ -91,10 +124,9 @@ const InspectorScreen: React.FC<Props> = ({userType}) => {
           />
         )}
         <MainButton
-          title={t('orders')}
+          title={t('carInspection')}
           icon="mail"
-          //Just a placeholder for getting into the next screen
-          onPress={() => showOrders()}
+          onPress={showOrders}
           style={styles.button}
         />
         <SecondaryButton

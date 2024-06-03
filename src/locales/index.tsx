@@ -5,7 +5,7 @@ import en_translation from './en.json';
 import fi_translation from './fi.json';
 
 i18n.use(initReactI18next).init({
-  lng: 'fi',
+  lng: 'en',
   compatibilityJSON: 'v3',
   debug: true,
   resources: {

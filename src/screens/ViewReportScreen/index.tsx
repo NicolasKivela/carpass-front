@@ -27,21 +27,26 @@ import {getReportHtml} from '../../store/actions/report';
 import {styles} from './styles';
 
 interface ViewReportScreenProps {
-  registerNumber: string;
-  id: number;
+  report_id: number;
+  register_number: number;
 }
 const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
-  registerNumber: regNumber,
-  id,
+  report_id,
+  register_number,
 }) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const reportHtml = useAppSelector(
     (state: RootState) => state.report.report_HTML,
   );
+  const user = useAppSelector(state => state.user);
+  const currentOrder = useAppSelector(state => state.order.currentOrder);
+  console.log('currentOrder', currentOrder);
+  console.log('user', user);
+
   useEffect(() => {
-    dispatch(getReportHtml(regNumber, id));
-  });
+    dispatch(getReportHtml(register_number.toString(), report_id));
+  }, []);
 
   //TODO: GET reportrows from backend
   const reportRows = [
@@ -337,10 +342,13 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
           children: [
             {
               component: {
-                name: SCREENS.DEALERSHIP, //TODO: Change to the correct screen
-                passProps: {
-                  defaultPageNumber: reportStructure.length,
-                },
+                name:
+                  user.organization_type === 'inspection'
+                    ? SCREENS.INSPECTION_ORDERS
+                    : SCREENS.CUSTOMER_ORDERS, //TODO: Change to the correct screen
+                // passProps: {
+                //   defaultPageNumber: reportStructure.length,
+                // },
               },
             },
           ],
@@ -359,11 +367,11 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
               action: goBackHandler,
             }}
           />
-          <View style={styles.rowSection}>
+          {/* <View style={styles.rowSection}>
             <Text>{t('registerNumber')}</Text>
             {registerNumber && <Text>{registerNumber}</Text>}
-          </View>
-          <View style={styles.circleRow}>
+          </View> */}
+          {/* <View style={styles.circleRow}>
             {formattedDate && <Text>{formattedDate}</Text>}
 
             {warningNum > 0 && (
@@ -374,9 +382,9 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
                 ]}>
                 <Text>{warningNum}</Text>
               </View>
-            )}
+            )} */}
 
-            {errorNum > 0 && (
+          {/* {errorNum > 0 && (
               <View
                 style={[
                   styles.circle,
@@ -384,9 +392,9 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
                 ]}>
                 <Text>{errorNum}</Text>
               </View>
-            )}
-          </View>
-          <View style={styles.rowSection}>
+            )} */}
+          {/* </View> */}
+          {/* <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowCarParts(!showCarParts)}>
               <View style={styles.textContainer}>
                 <Text style={styles.carSectionText}>
@@ -406,9 +414,9 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
                 })}
               </View>
             )}
-          </View>
+          </View> */}
 
-          <View style={styles.rowSection}>
+          {/* <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowWarnings(!showWarnings)}>
               <View style={styles.textContainer}>
                 <Text style={styles.carSectionText}>{t('warnings')}</Text>
@@ -426,7 +434,7 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
                 })}
               </View>
             )}
-          </View>
+          </View> */}
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowFullWebView(true)}>
               <View style={styles.webViewContainer}>

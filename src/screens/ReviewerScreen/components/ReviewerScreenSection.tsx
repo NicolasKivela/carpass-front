@@ -15,6 +15,7 @@ interface SectionProps {
   structureItem: ReportStructureItem;
   modifyWarningNum: (value: number) => void;
   modifyErrorNum: (value: number) => void;
+  index?: number;
 }
 
 export const Section: React.FC<SectionProps> = ({
@@ -22,6 +23,7 @@ export const Section: React.FC<SectionProps> = ({
   structureItem,
   modifyWarningNum,
   modifyErrorNum,
+  index,
 }) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -51,13 +53,17 @@ export const Section: React.FC<SectionProps> = ({
   };
 
   const descriptionVisibleHandler = (id: number) => {
-    const status = reportRows.find(
-      (i: ReportRow) => i.question_id === id,
-    )?.inspection_status;
-    return (
-      status === REPORT_QUESTION_STATUS.RED ||
-      status === REPORT_QUESTION_STATUS.YELLOW
-    );
+    const foundRow = reportRows.find((i: ReportRow) => i.question_id === id);
+    const status = foundRow?.inspection_status;
+    const type = foundRow.type;
+    if (type === 'description') {
+      return (
+        status === REPORT_QUESTION_STATUS.RED ||
+        status === REPORT_QUESTION_STATUS.YELLOW
+      );
+    } else {
+      return true;
+    }
   };
 
   const summaryAllowedHandler = () => {
@@ -71,9 +77,9 @@ export const Section: React.FC<SectionProps> = ({
       style={{
         width: Dimensions.get('window').width,
       }}>
-      <Text style={styles.header}>
-        {`${structureItem.id}. ${structureItem.name}`}
-      </Text>
+      <Text style={styles.header}>{`${index! + 1}. ${
+        structureItem.name
+      }`}</Text>
       <FlatList
         removeClippedSubviews={false}
         ref={flatListRef}

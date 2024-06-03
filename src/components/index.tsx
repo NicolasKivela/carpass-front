@@ -6,6 +6,7 @@ import Gradient from './Gradient/index';
 import InformationBox from './InformationBox/index'
 import LogoTopBar from './LogoTopBar/index';
 import MainButton from './MainButton/index';
+import RadioButton from './RadioButton/index';
 import PictureAddition from './PictureAddition/index';
 import {ReviewProgressBar, ReviewNavigation} from './ReviewNavigationBar/index';
 import SecondaryButton from './SecondaryButton/index';
@@ -24,6 +25,7 @@ export {
   InformationBox,
   LogoTopBar,
   MainButton,
+  RadioButton,
   PictureAddition,
   ReviewProgressBar,
   ReviewNavigation,
