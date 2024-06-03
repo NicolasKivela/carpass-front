@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 import {WebView} from 'react-native-webview';
+import HTMLView from 'react-native-htmlview';
 import {Modal} from 'react-native-paper';
 
 import {
@@ -40,14 +41,14 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
     (state: RootState) => state.report.report_HTML,
   );
   const [currentScreen, setCurrentScreen] = useState('');
+
   const user = useAppSelector(state => state.user);
   const currentOrder = useAppSelector(state => state.order.currentOrder);
   console.log('currentOrder', currentOrder);
   console.log('user', user);
-
+  //console.log('report HTML data', reportHtml);
   useEffect(() => {
     dispatch(getReportHtml(register_number.toString(), report_id));
-    console.log('FETCHING::::::: RHTML');
   }, []);
 
   useEffect(() => {
@@ -59,6 +60,29 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
     return () => {
       listener.remove();
     };
+  }, []);
+
+  useEffect(() => {
+    console.log('USE EFFECT PARSING');
+    const listItemRegex = /<div class="list-item">(.*?)<\/div>/gs;
+
+    // Extract list-item questions and answers
+    const listItemMatches = reportHtml.match(listItemRegex);
+
+    // Process matches into an array of objects
+    const listItems = listItemMatches
+      ? listItemMatches.map((match: any) => {
+          const questionRegex = /<strong>(.*?)<\/strong>/;
+          const answerRegex = /<span>(.*?)<\/span>/;
+          const questionMatch = match.match(questionRegex);
+          const answerMatch = match.match(answerRegex);
+          const question = questionMatch ? questionMatch[1].trim() : '';
+          const answer = answerMatch ? answerMatch[1].trim() : '';
+          return {question, answer};
+        })
+      : [];
+
+    console.log('THIS IS LIST ITEMS', Object.keys(listItems).length);
   }, []);
 
   //TODO: GET reportrows from backend

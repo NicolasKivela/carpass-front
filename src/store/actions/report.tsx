@@ -1,4 +1,5 @@
 import {Navigation} from 'react-native-navigation';
+
 import i18next from 'i18next';
 
 import {BASE_PATH, PATHS, REPORT_TYPE, SCREENS} from '../../common/constants';
@@ -21,6 +22,7 @@ import {
   SET_REPORT_HTML,
 } from './actionTypes';
 import {setError} from './error';
+import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 export const setReportInitialState = () => {
   return {
@@ -259,7 +261,9 @@ export const saveReport = () => {
           };
         }), //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
       };
+      const bodySize = JSON.stringify(requestBody).length;
 
+      console.log('Request Body Size:', bodySize);
       const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
@@ -270,6 +274,7 @@ export const saveReport = () => {
       });
 
       if (response.ok) {
+        console.log(response.bodyUsed.length());
         Navigation.setRoot({
           root: {
             stack: {
@@ -364,6 +369,7 @@ export const getReportHtml = (
         },
       ); // TODO: remove later and use this from apimanager
       if (response.ok) {
+        console.log('FETHICNG');
         const html = await response.text();
 
         dispatch(setReportHTML(html));

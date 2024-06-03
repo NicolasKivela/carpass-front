@@ -65,9 +65,6 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   const startNewOrderHandler = () => {
     changePage(SCREENS.MY_NEW_ORDER);
   };
-  const startCarReportReview = () => {
-    changePage(SCREENS.CARREPORTS);
-  };
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
@@ -115,14 +112,6 @@ const InspectorScreen: React.FC<Props> = ({}) => {
             title={t('startInspection')}
             icon="checklist"
             onPress={startInspectionHandler}
-            style={styles.button}
-          />
-        )}
-        {userType === 'carDealer' && (
-          <MainButton
-            title={t('reviewReports')}
-            icon="search"
-            onPress={startCarReportReview}
             style={styles.button}
           />
         )}
