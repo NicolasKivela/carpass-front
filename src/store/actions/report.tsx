@@ -145,6 +145,7 @@ export const fetchReportQuestions = () => {
         },
       ); // TODO: remove later and use this from apimanager
       if (response.ok) {
+        console.log(response);
         const reportStructure = await response.json();
         dispatch(
           setReportStructure(reportStructure.sort((a, b) => a.id - b.id)),
@@ -193,6 +194,7 @@ export const fetchReportQuestions = () => {
             });
           })
           .flat();
+        console.log('reportROWS', reportRows);
         dispatch(setReportRows(reportRows));
       } else {
         throw Error;

@@ -39,13 +39,27 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   const reportHtml = useAppSelector(
     (state: RootState) => state.report.report_HTML,
   );
+  const [currentScreen, setCurrentScreen] = useState('');
   const user = useAppSelector(state => state.user);
   const currentOrder = useAppSelector(state => state.order.currentOrder);
   console.log('currentOrder', currentOrder);
   console.log('user', user);
 
   useEffect(() => {
+    console.log(Navigation);
     dispatch(getReportHtml(register_number.toString(), report_id));
+  }, []);
+
+  useEffect(() => {
+    const listener = Navigation.events().registerComponentDidAppearListener(
+      ({componentId, componentName}) => {
+        console.log('cmp name', componentName);
+        setCurrentScreen(componentName);
+      },
+    );
+    return () => {
+      listener.remove();
+    };
   }, []);
 
   //TODO: GET reportrows from backend
@@ -336,6 +350,7 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   };
 
   const goBackHandler = () => {
+    console.log(Navigation.events());
     Navigation.setRoot({
       root: {
         stack: {

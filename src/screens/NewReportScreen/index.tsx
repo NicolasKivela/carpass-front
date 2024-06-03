@@ -18,7 +18,6 @@ import {
   Gradient,
   FrameProcessorCamera,
   DropdownNotification,
-  CarInspections,
 } from '../../components/index';
 import {colors} from '../../common/styles';
 import {SCREENS} from '../../common/constants';
@@ -336,11 +335,13 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
+    console.log('THIS IS TExtinput');
     if (
       isActive &&
       label === 'registrationNumber' &&
       setRegistrationNumberIcon
     ) {
+      console.log('THIS IS REGISTRATION');
       setRegistrationNumberIcon('keyboard');
     } else if (
       !isActive &&
@@ -395,4 +396,4 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
   );
 };
 
-export default NewReportScreen;
+export {NewReportScreen, NewReportTextInput};

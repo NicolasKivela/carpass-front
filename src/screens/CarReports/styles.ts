@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
+  containerSafe: {
+    flex: 1,
+    paddingBottom: 20,
+  },
   header: {
     fontSize: 25,
     color: colors.white,
@@ -15,6 +19,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   innerContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+    justifyContent: 'flex-start',
+  },
+  innerContainer2: {
     width: '100%',
     height: 60,
     flexDirection: 'row',
@@ -26,14 +38,14 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     width: '50%',
-    
+
     justifyContent: 'center',
   },
   rigthContainer: {
     width: '50%',
     flexDirection: 'row',
     alignItems: 'center',
-   
+
     justifyContent: 'flex-end',
   },
   textstyle: {color: colors.white},

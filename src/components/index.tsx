@@ -1,4 +1,4 @@
-import CarInspections from './CarInspections/index';
+import CarInspections from '../screens/CarReports/index';
 import Description from './Description';
 import DropdownNotification from './DropdownNotification/index';
 import FrameProcessorCamera from './FrameProcessorCamera/index';
@@ -17,7 +17,6 @@ import Spinner from './Spinner';
 import Switch from './Switch';
 
 export {
-  CarInspections,
   Description,
   DropdownNotification,
   FrameProcessorCamera,

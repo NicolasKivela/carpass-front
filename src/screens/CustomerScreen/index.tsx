@@ -65,6 +65,21 @@ const InspectorScreen: React.FC<Props> = ({}) => {
   const startNewOrderHandler = () => {
     changePage(SCREENS.MY_NEW_ORDER);
   };
+  const startCarReportReview = () => {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: SCREENS.CARREPORTS,
+              },
+            },
+          ],
+        },
+      },
+    });
+  };
   return (
     <SafeAreaProvider>
       {/* <IconButton
@@ -127,6 +142,12 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           /> */}
         {/* )} */}
         {/* {userType === USER_TYPE.SELLER && ( */}
+        <MainButton
+          title={t('reviewReports')}
+          icon="search"
+          onPress={startCarReportReview}
+          style={styles.button}
+        />
         <>
           <MainButton
             title={t('newOrder')}
