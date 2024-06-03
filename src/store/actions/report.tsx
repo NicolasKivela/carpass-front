@@ -315,6 +315,10 @@ export const setReportByReg = (reports: ReportsByReg[]) => {
 
 export const fetchReportByReg = (registration_number: string) => {
   return async (dispatch: any, getState: any) => {
+    if (!registration_number) {
+      console.log('Registration number is empty, fetch aborted');
+      return;
+    }
     try {
       const response = await fetch(
         `${BASE_PATH}${PATHS.SAVE_REPORT}?registration_number=${registration_number}&language=${i18next.language}`,
@@ -364,6 +368,7 @@ export const getReportHtml = (
 
         dispatch(setReportHTML(html));
       } else {
+        console.log('ERROR FETCHING THE HTML');
         throw Error;
       }
     } catch (err) {

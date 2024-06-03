@@ -38,7 +38,7 @@ const CarReports: React.FC = () => {
     dispatch(fetchReportByReg(regNumber));
 
     dispatch(setReportByRegInitialState());
-  }, []);
+  }, [regNumber]);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -48,7 +48,7 @@ const CarReports: React.FC = () => {
       clearTimeout(delay);
       dispatch(setReportByRegInitialState());
     };
-  }, [regNumber]);
+  }, []);
 
   const handleOpenPress = (registerNumber: string, id: number) => {
     setRegNumber(registerNumber);
@@ -59,7 +59,7 @@ const CarReports: React.FC = () => {
           children: [
             {
               component: {
-                name: SCREENS.VIEW_REPORT,
+                name: SCREENS.VIEW_REPORT_REG,
                 passProps: {
                   register_number: regNumber,
                   report_id: id,

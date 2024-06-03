@@ -29,6 +29,7 @@ export const SCREENS = {
   INSPECTOR: 'inspectorScreen',
   CARREPORTS: 'carReportScreen',
   VIEW_REPORT: 'viewReportScreen',
+  VIEW_REPORT_REG: 'viewReportRegScreen',
   ALLORDERS: 'allOrdersScreen',
   CUSTOMER_SCREEN: 'customerScreen',
   MY_NEW_ORDER: 'myNewOrderScreen',

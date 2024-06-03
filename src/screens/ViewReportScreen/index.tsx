@@ -46,14 +46,13 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   console.log('user', user);
 
   useEffect(() => {
-    console.log(Navigation);
     dispatch(getReportHtml(register_number.toString(), report_id));
+    console.log('FETCHING::::::: RHTML');
   }, []);
 
   useEffect(() => {
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName}) => {
-        console.log('cmp name', componentName);
         setCurrentScreen(componentName);
       },
     );
@@ -350,7 +349,6 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   };
 
   const goBackHandler = () => {
-    console.log(Navigation.events());
     Navigation.setRoot({
       root: {
         stack: {
@@ -360,6 +358,8 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
                 name:
                   user.organization_type === 'inspection'
                     ? SCREENS.INSPECTION_ORDERS
+                    : currentScreen === 'viewReportRegScreen'
+                    ? SCREENS.CARREPORTS
                     : SCREENS.CUSTOMER_ORDERS, //TODO: Change to the correct screen
                 // passProps: {
                 //   defaultPageNumber: reportStructure.length,

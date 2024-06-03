@@ -75,6 +75,9 @@ Navigation.registerComponent(SCREENS.SUMMARY, () =>
 Navigation.registerComponent(SCREENS.VIEW_REPORT, () =>
   componentHOC(ViewReportScreen),
 );
+Navigation.registerComponent(SCREENS.VIEW_REPORT_REG, () =>
+  componentHOC(ViewReportScreen),
+);
 Navigation.registerComponent(SCREENS.CUSTOMER_SCREEN, () =>
   componentHOC(CustomerScreen),
 );

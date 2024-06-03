@@ -313,7 +313,7 @@ interface NewReportTextInputProps {
   innerRef: RefObject<TextInputProp>;
   label: string;
   value: string;
-  setOnChange: (value: string) => void;
+  setOnChange?: (value: string) => void;
   onSubmitEditing: () => void;
   icon: string;
   setRegistrationNumberIcon?: React.Dispatch<React.SetStateAction<string>>;
@@ -335,7 +335,6 @@ const NewReportTextInput: React.FC<NewReportTextInputProps> = ({
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    console.log('THIS IS TExtinput');
     if (
       isActive &&
       label === 'registrationNumber' &&
