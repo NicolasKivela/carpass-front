@@ -8,35 +8,44 @@ export const styles = StyleSheet.create({
   },
   carSectionText: {
     fontSize: 20,
-    marginTop: 30,
-    marginLeft: 10,
     color: colors.lightGrey,
   },
-  carParts: {
-    flex: 0.9,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+  headerText: {
+    fontSize: 30,
+    color: colors.white,
+  },
+  headerSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
-    marginLeft: 40,
+    flex: 1,
+  },
+  carParts: {
+    width: '100%',
+    justifyContent: 'center',
     gap: 5,
+    //backgroundColor: colors.green,
   },
   error: {
     fontSize: 16,
     color: colors.red,
   },
   rowSection: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     flex: 1,
+    flexDirection: 'row',
+    //backgroundColor: colors.red,
+    marginTop: 20,
+    margin: 10,
   },
   textContainer: {
-    width: 150,
-    marginRight: 10,
+    width: '100%',
+    minWidth: '50%',
+    justifyContent: 'center',
+    //backgroundColor: colors.orange,
   },
   circleRow: {
     flexDirection: 'row',
-    marginLeft: 135,
+    marginLeft: '20%',
   },
   circle: {
     width: 25,
@@ -53,14 +62,14 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.red,
   },
   webView: {
-
     flex: 1,
     minWidth: 250,
     minHeight: 350,
   },
   webViewContainer: {
     flex: 1,
-
+    justifyContent: 'center',
+    margin: 20,
   },
   warning: {
     fontSize: 16,
@@ -70,7 +79,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.darkGrey,
     flex: 0.5,
     minHeight: '95%',
-    maxWidth: '95%',  
+    maxWidth: '95%',
     borderWidth: 1,
     borderColor: 'white',
   },

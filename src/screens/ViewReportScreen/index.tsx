@@ -5,6 +5,8 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -72,11 +74,7 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   useEffect(() => {
     console.log('USE EFFECT PARSING');
     const listItemRegex = /<div class="list-item">(.*?)<\/div>/gs;
-
-    // Extract list-item questions and answers
     const listItemMatches = reportHtml.match(listItemRegex);
-
-    // Process matches into an array of objects
     const listItems = listItemMatches
       ? listItemMatches.map((match: any) => {
           const questionRegex = /<strong class="(yellow|red)">(.*?)<\/strong>/;
@@ -102,17 +100,6 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   const errorNum = reportRows.filter(
     row => row.status === REPORT_QUESTION_STATUS.RED,
   ).length;
-  /*
-  const registerNumber = reportDetails[0].registration_number
-    ? reportDetails[0].registration_number
-    : null;
-  const dateString = reportDetails[0].updated_at
-    ? reportDetails[0].updated_at
-    : reportDetails[0].created_at
-    ? reportDetails[0].created_at
-    : '';
-  */
-
   const goBackHandler = () => {
     Navigation.setRoot({
       root: {
@@ -138,8 +125,8 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   };
 
   return (
-    <Gradient>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Gradient>
         <ScrollView>
           <LogoTopBar
             leftButton={{
@@ -147,32 +134,37 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
               action: goBackHandler,
             }}
           />
-          <View style={styles.rowSection}>
-            <Text>{t('registerNumber')}</Text>
-            {register_number && <Text>{register_number}</Text>}
-          </View>
-          <View style={styles.circleRow}>
-            {formatted_date && <Text>{formatted_date}</Text>}
 
-            {warningNum > 0 && (
-              <View
-                style={[
-                  styles.circle,
-                  warningNum > 0 ? styles.yellowBackground : null,
-                ]}>
-                <Text>{warningNum}</Text>
-              </View>
+          <View style={styles.headerSection}>
+            {register_number && (
+              <Text style={styles.headerText}>{register_number}</Text>
             )}
 
-            {errorNum > 0 && (
-              <View
-                style={[
-                  styles.circle,
-                  errorNum > 0 ? styles.redBackground : null,
-                ]}>
-                <Text>{errorNum}</Text>
-              </View>
-            )}
+            <View style={styles.circleRow}>
+              {formatted_date && (
+                <Text style={styles.headerText}>{formatted_date}</Text>
+              )}
+
+              {warningNum > 0 && (
+                <View
+                  style={[
+                    styles.circle,
+                    warningNum > 0 ? styles.yellowBackground : null,
+                  ]}>
+                  <Text>{warningNum}</Text>
+                </View>
+              )}
+
+              {errorNum > 0 && (
+                <View
+                  style={[
+                    styles.circle,
+                    errorNum > 0 ? styles.redBackground : null,
+                  ]}>
+                  <Text>{errorNum}</Text>
+                </View>
+              )}
+            </View>
           </View>
           <View style={styles.rowSection}>
             <TouchableOpacity onPress={() => setShowCarParts(!showCarParts)}>
@@ -238,8 +230,8 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
           </View>
         </Modal>
         <DropdownNotification />
-      </SafeAreaView>
-    </Gradient>
+      </Gradient>
+    </SafeAreaView>
   );
 };
 
