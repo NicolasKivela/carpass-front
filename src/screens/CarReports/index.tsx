@@ -50,7 +50,11 @@ const CarReports: React.FC = () => {
     };
   }, []);
 
-  const handleOpenPress = (registerNumber: string, id: number) => {
+  const handleOpenPress = (
+    registerNumber: string,
+    id: number,
+    date: string,
+  ) => {
     setRegNumber(registerNumber);
     console.log('regNUmber in carreports', regNumber);
     Navigation.setRoot({
@@ -63,6 +67,7 @@ const CarReports: React.FC = () => {
                 passProps: {
                   register_number: regNumber,
                   report_id: id,
+                  formatted_date: date,
                 },
               },
             },
@@ -163,7 +168,11 @@ const CarReports: React.FC = () => {
                     <TouchableOpacity
                       style={styles.button}
                       onPress={() => {
-                        handleOpenPress(report.registration_number, report.id);
+                        handleOpenPress(
+                          report.registration_number,
+                          report.id,
+                          dateFormatter(report.updated_at),
+                        );
                       }}>
                       <Text style={styles.textbutton}>
                         {t('open').toLocaleUpperCase()}
