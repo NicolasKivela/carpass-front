@@ -24,11 +24,10 @@ import {SCREENS} from '../../common/constants';
 import styles from './styles';
 
 interface carReportProps {
-  register_Number?: string;
+  register_number?: string;
 }
 
-const CarReports: React.FC<carReportProps> = ({register_Number}) => {
-  console.log(register_Number);
+const CarReports: React.FC<carReportProps> = ({register_number}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const reportsData = useAppSelector(state => state.reportbyreg.reports);
@@ -36,13 +35,13 @@ const CarReports: React.FC<carReportProps> = ({register_Number}) => {
   const registrationNumberRef = useRef<any>(null);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
-  const [regNumber, setRegNumber] = useState(register_Number || '');
+  const [regNumber, setRegNumber] = useState(register_number || '');
 
   useEffect(() => {
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName, passProps}) => {
         console.log(componentName);
-        console.log(passProps);
+        console.log('PORPTS', passProps);
       },
     );
     return () => {
@@ -51,13 +50,18 @@ const CarReports: React.FC<carReportProps> = ({register_Number}) => {
   }, []);
 
   useEffect(() => {
-    setRegNumber(register_Number || '');
+    setRegNumber(register_number || '');
     const delay = setTimeout(() => {
       dispatch(fetchReportByReg(regNumber));
     }, 1000);
     return () => {
       clearTimeout(delay);
     };
+  }, []);
+
+  useEffect(() => {
+    setReportByRegInitialState();
+    console.log('setting initial report state', reportsData);
   }, []);
 
   const handleOpenPress = (
