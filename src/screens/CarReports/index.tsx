@@ -23,7 +23,12 @@ import {NewReportTextInput} from '../NewReportScreen';
 import {SCREENS} from '../../common/constants';
 import styles from './styles';
 
-const CarReports: React.FC = () => {
+interface carReportProps {
+  register_Number?: string;
+}
+
+const CarReports: React.FC<carReportProps> = ({register_Number}) => {
+  console.log(register_Number);
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const reportsData = useAppSelector(state => state.reportbyreg.reports);
@@ -31,22 +36,27 @@ const CarReports: React.FC = () => {
   const registrationNumberRef = useRef<any>(null);
   const [registrationNumberIcon, setRegistrationNumberIcon] =
     useState('photo-camera');
-  const [regNumber, setRegNumber] = useState('');
+  const [regNumber, setRegNumber] = useState(register_Number || '');
 
   useEffect(() => {
-    console.log('CAR REPORTS IS THE CURRENT');
-    dispatch(fetchReportByReg(regNumber));
-
-    dispatch(setReportByRegInitialState());
-  }, [regNumber]);
+    const listener = Navigation.events().registerComponentDidAppearListener(
+      ({componentId, componentName, passProps}) => {
+        console.log(componentName);
+        console.log(passProps);
+      },
+    );
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   useEffect(() => {
+    setRegNumber(register_Number || '');
     const delay = setTimeout(() => {
       dispatch(fetchReportByReg(regNumber));
     }, 1000);
     return () => {
       clearTimeout(delay);
-      dispatch(setReportByRegInitialState());
     };
   }, []);
 
@@ -99,11 +109,11 @@ const CarReports: React.FC = () => {
     return day + '.' + month + '.' + year;
   };
   const updateRegisterNumber = (value: string) => {
-    console.log('presed');
     setRegNumber(value);
   };
   const inputOnSubmitHandler = (item: string) => {
-    console.log('hellpo');
+    console.log(regNumber);
+    dispatch(fetchReportByReg(regNumber));
     if (item !== 'odometerReading') {
       const ref = registrationNumberRef;
       ref?.current && ref.current.focus();

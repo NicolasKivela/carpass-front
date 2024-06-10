@@ -54,7 +54,6 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   const user = useAppSelector(state => state.user);
   const currentOrder = useAppSelector(state => state.order.currentOrder);
   console.log('currentOrder', currentOrder);
-  console.log('user', user);
   //console.log('report HTML data', reportHtml);
   useEffect(() => {
     dispatch(getReportHtml(register_number.toString(), report_id));
@@ -62,8 +61,9 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
 
   useEffect(() => {
     const listener = Navigation.events().registerComponentDidAppearListener(
-      ({componentId, componentName}) => {
+      ({componentId, componentName, passProps}) => {
         setCurrentScreen(componentName);
+        console.log(passProps);
       },
     );
     return () => {
@@ -72,7 +72,6 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   }, []);
 
   useEffect(() => {
-    console.log('USE EFFECT PARSING');
     const listItemRegex = /<div class="list-item">(.*?)<\/div>/gs;
     const listItemMatches = reportHtml.match(listItemRegex);
     const listItems = listItemMatches
@@ -101,21 +100,23 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
     row => row.status === REPORT_QUESTION_STATUS.RED,
   ).length;
   const goBackHandler = () => {
+    const screenName =
+      user.organization_type === 'inspection'
+        ? SCREENS.INSPECTION_ORDERS
+        : currentScreen === 'viewReportRegScreen'
+        ? SCREENS.CARREPORTS
+        : SCREENS.CUSTOMER_ORDERS;
+
     Navigation.setRoot({
       root: {
         stack: {
           children: [
             {
               component: {
-                name:
-                  user.organization_type === 'inspection'
-                    ? SCREENS.INSPECTION_ORDERS
-                    : currentScreen === 'viewReportRegScreen'
-                    ? SCREENS.CARREPORTS
-                    : SCREENS.CUSTOMER_ORDERS, //TODO: Change to the correct screen
-                // passProps: {
-                //   defaultPageNumber: reportStructure.length,
-                // },
+                name: screenName,
+                ...(screenName === SCREENS.CARREPORTS
+                  ? {passProps: {register_number: register_number}}
+                  : {}),
               },
             },
           ],
