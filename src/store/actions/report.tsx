@@ -21,7 +21,7 @@ import {
   SET_INITIAL_STATE_CAR_REPORTS,
   SET_REPORT_HTML,
 } from './actionTypes';
-import {setError} from './error';
+import {deleteError, setError} from './error';
 import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 export const setReportInitialState = () => {
@@ -331,6 +331,7 @@ export const fetchReportByReg = (registration_number: string) => {
       if (response.ok) {
         const reportByReg: ReportsByReg[] = await response.json();
         dispatch(setReportByReg(reportByReg));
+        dispatch(deleteError());
       } else {
         throw Error;
       }

@@ -18,7 +18,11 @@ import {
   fetchReportByReg,
   setReportByRegInitialState,
 } from '../../store/actions/report';
-import {LogoTopBar, Gradient} from '../../components/index';
+import {
+  LogoTopBar,
+  Gradient,
+  DropdownNotification,
+} from '../../components/index';
 import {NewReportTextInput} from '../NewReportScreen';
 import {SCREENS} from '../../common/constants';
 import styles from './styles';
@@ -49,13 +53,16 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
   }, []);
 
   useEffect(() => {
-    setRegNumber(register_number || '');
+    //setRegNumber(register_number || '');
+    if (register_number) {
+      dispatch(fetchReportByReg(register_number));
+    }
   }, []);
 
   useEffect(() => {
-    setReportByRegInitialState();
-  }, []);
-
+    console.log(regNumber);
+    dispatch(setReportByRegInitialState());
+  }, [regNumber]);
   const handleOpenPress = (
     registerNumber: string,
     id: number,
@@ -204,6 +211,7 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
             <Text style={styles.header}>{t('summary')}</Text>
           </View>
         </KeyboardAvoidingView>
+        <DropdownNotification />
       </SafeAreaView>
     </Gradient>
   );
