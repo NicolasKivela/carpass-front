@@ -41,7 +41,6 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
     const listener = Navigation.events().registerComponentDidAppearListener(
       ({componentId, componentName, passProps}) => {
         console.log(componentName);
-        console.log('PORPTS', passProps);
       },
     );
     return () => {
@@ -51,17 +50,10 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
 
   useEffect(() => {
     setRegNumber(register_number || '');
-    const delay = setTimeout(() => {
-      dispatch(fetchReportByReg(regNumber));
-    }, 1000);
-    return () => {
-      clearTimeout(delay);
-    };
   }, []);
 
   useEffect(() => {
     setReportByRegInitialState();
-    console.log('setting initial report state', reportsData);
   }, []);
 
   const handleOpenPress = (
@@ -70,7 +62,6 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
     date: string,
   ) => {
     setRegNumber(registerNumber);
-    console.log('regNUmber in carreports', regNumber);
     Navigation.setRoot({
       root: {
         stack: {
@@ -116,7 +107,6 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
     setRegNumber(value);
   };
   const inputOnSubmitHandler = (item: string) => {
-    console.log(regNumber);
     dispatch(fetchReportByReg(regNumber));
     if (item !== 'odometerReading') {
       const ref = registrationNumberRef;
@@ -149,8 +139,8 @@ const CarReports: React.FC<carReportProps> = ({register_number}) => {
             />
             <Text style={styles.header}>{t('carInspectionHistory')}</Text>
             {reportsData && reportsData.length > 0 ? (
-              reportsData.map((report: any, index: number) => (
-                <View key={index} style={styles.innerContainer2}>
+              reportsData.map((report: any) => (
+                <View key={report.id} style={styles.innerContainer2}>
                   <View style={styles.leftContainer}>
                     <Text style={styles.textstyle}>
                       {dateFormatter(report.updated_at)}

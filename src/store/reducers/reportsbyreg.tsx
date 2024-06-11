@@ -2,6 +2,7 @@ import {ReportsByReg} from '../types/report';
 import {
   SET_REPORTS_BY_REG,
   SET_INITIAL_STATE_CAR_REPORTS,
+  SET_INITIAL_STATE,
 } from '../actions/actionTypes';
 
 export interface ReportsByRegState {
@@ -22,7 +23,7 @@ const reportsByRegReducer = (
         ...state,
         reports: action.payload,
       };
-    case SET_INITIAL_STATE_CAR_REPORTS:
+    case SET_INITIAL_STATE:
       return initialState;
     default:
       return state;

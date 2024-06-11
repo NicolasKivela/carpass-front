@@ -147,7 +147,6 @@ export const fetchReportQuestions = () => {
         },
       ); // TODO: remove later and use this from apimanager
       if (response.ok) {
-        console.log(response);
         const reportStructure = await response.json();
         dispatch(
           setReportStructure(reportStructure.sort((a, b) => a.id - b.id)),
@@ -196,7 +195,6 @@ export const fetchReportQuestions = () => {
             });
           })
           .flat();
-        console.log('reportROWS', reportRows);
         dispatch(setReportRows(reportRows));
       } else {
         throw Error;
@@ -243,7 +241,7 @@ export const saveReport = () => {
         );
         return; // Exit the function if any input is empty
       }
-      console.log('getState().order.currentOrder', getState().report);
+      //console.log('getState().order.currentOrder', getState().report);
       const requestBody = {
         order_id: getState().order.currentOrder.id,
         brand_and_model: getState().report.brand_and_model,
@@ -261,9 +259,6 @@ export const saveReport = () => {
           };
         }), //REMOVE REDUCE FUNCTION WHEN BACKEND FIXED
       };
-      const bodySize = JSON.stringify(requestBody).length;
-
-      console.log('Request Body Size:', bodySize);
       const response = await fetch(BASE_PATH + PATHS.SAVE_REPORT, {
         method: 'POST',
         headers: {
@@ -274,7 +269,6 @@ export const saveReport = () => {
       });
 
       if (response.ok) {
-        console.log(response.bodyUsed.length());
         Navigation.setRoot({
           root: {
             stack: {
@@ -290,7 +284,7 @@ export const saveReport = () => {
         });
         // TODO: some kind of toast that report is saved?
       } else {
-        console.log('FETCHING NOT WORKING', response);
+        //console.log('FETCHING NOT WORKING', response);
         throw Error;
       }
     } catch (err) {
@@ -307,7 +301,7 @@ export const saveReport = () => {
 
 export const setReportByRegInitialState = () => {
   return {
-    type: SET_INITIAL_STATE_CAR_REPORTS,
+    type: SET_INITIAL_STATE,
   };
 };
 
@@ -338,15 +332,15 @@ export const fetchReportByReg = (registration_number: string) => {
         const reportByReg: ReportsByReg[] = await response.json();
         dispatch(setReportByReg(reportByReg));
       } else {
-        console.log('FETCHING NOT WORKING', response);
         throw Error;
       }
     } catch (err) {
+      console.error('Error fetching report by registration number:', err);
       dispatch(
         setError({
           type: 'Error',
-          title: 'errors.fetchReportQuestinsTitle',
-          message: 'errors.fetchReportQuestinsMessage',
+          title: 'errors.fetchReportByReg',
+          message: 'errors.fetchReportByRegMessage',
         }),
       );
     }
@@ -369,20 +363,18 @@ export const getReportHtml = (
         },
       ); // TODO: remove later and use this from apimanager
       if (response.ok) {
-        console.log('FETHICNG');
         const html = await response.text();
 
         dispatch(setReportHTML(html));
       } else {
-        console.log('ERROR FETCHING THE HTML');
         throw Error;
       }
     } catch (err) {
       dispatch(
         setError({
           type: 'Error',
-          title: 'errors.fetchReportQuestinsTitle',
-          message: 'errors.fetchReportQuestinsMessage',
+          title: 'errors.fetchReportById',
+          message: 'errors.fetchReportByIdMessage',
         }),
       );
     }

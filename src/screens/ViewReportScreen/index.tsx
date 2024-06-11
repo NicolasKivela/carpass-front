@@ -52,8 +52,8 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
   const [currentScreen, setCurrentScreen] = useState('');
   const [reportRows, setReportRows] = useState<ReportRow[]>([]);
   const user = useAppSelector(state => state.user);
-  const currentOrder = useAppSelector(state => state.order.currentOrder);
-  console.log('currentOrder', currentOrder);
+  //const currentOrder = useAppSelector(state => state.order.currentOrder);
+  //console.log('currentOrder', currentOrder);
   //console.log('report HTML data', reportHtml);
   useEffect(() => {
     dispatch(getReportHtml(register_number.toString(), report_id));
@@ -76,10 +76,11 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
     const listItemMatches = reportHtml.match(listItemRegex);
     const listItems = listItemMatches
       ? listItemMatches.map((match: any) => {
-          const questionRegex = /<strong class="(yellow|red)">(.*?)<\/strong>/;
-          const answerRegex = /<span class="(yellow|red)">(.*?)<\/span>/;
+          const questionRegex = /<strong class="(\w+)">(.*?)<\/strong>/s;
+          const answerRegex = /<span class="(\w+)">(.*?)<\/span>/s;
           const questionMatch = match.match(questionRegex);
           const answerMatch = match.match(answerRegex);
+
           const question = questionMatch ? questionMatch[2].trim() : '';
           const answer = answerMatch ? answerMatch[2].trim() : '';
           const status = questionMatch[1];
@@ -87,7 +88,7 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
         })
       : [];
     setReportRows(listItems);
-  }, []);
+  }, [reportHtml]);
 
   const [showCarParts, setShowCarParts] = useState(true);
   const [showWarnings, setShowWarnings] = useState(true);
@@ -177,9 +178,11 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
             </TouchableOpacity>
             {showCarParts && (
               <View style={styles.carParts}>
-                {reportRows.map(row => {
+                {reportRows.map((row, index) => {
                   return row.status === REPORT_QUESTION_STATUS.RED ? (
-                    <Text style={styles.error}>{row.question}</Text>
+                    <Text key={index} style={styles.error}>
+                      {row.question}
+                    </Text>
                   ) : null;
                 })}
               </View>
@@ -194,9 +197,11 @@ const ViewReportScreen: React.FC<ViewReportScreenProps> = ({
             </TouchableOpacity>
             {showWarnings && (
               <View style={styles.carParts}>
-                {reportRows.map(row => {
+                {reportRows.map((row, index) => {
                   return row.status === REPORT_QUESTION_STATUS.YELLOW ? (
-                    <Text style={styles.warning}>{row.question}</Text>
+                    <Text key={index} style={styles.warning}>
+                      {row.question}
+                    </Text>
                   ) : null;
                 })}
               </View>
