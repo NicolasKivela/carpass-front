@@ -101,10 +101,10 @@ const InspectorScreen: React.FC<Props> = ({}) => {
             }
             contentStyle={styles.menuContent}
             >
-            <Menu.Item style={styles.menuItem}titleStyle={styles.text} onPress={() => {}} title={user.user_name} />
-            <Menu.Item style={styles.menuItem}titleStyle={styles.text} onPress={() => {}} title={user.organization_type} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={() => {}} title={user.user_name} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={() => {}} title={user.organization_type} />
             <Divider />
-            <Menu.Item style={styles.menuItem}titleStyle={styles.text} onPress={logOutHandler} title={'logout'} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={logOutHandler} title={'logout'} />
           </Menu>
         </View>
         {/* <ProfileHanger user={user} /> */}
