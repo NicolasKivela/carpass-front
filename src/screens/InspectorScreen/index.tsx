@@ -74,7 +74,6 @@ const InspectorScreen: React.FC<Props> = ({}) => {
             onDismiss={() => {
               setShowDrawer(false);
             }}
-            // style={{backgroundColor: colors.darkGrey}}
             anchor={
               <IconButton
                 size={40}
@@ -86,11 +85,13 @@ const InspectorScreen: React.FC<Props> = ({}) => {
                 }}
                 onPress={() => setShowDrawer(true)}
               />
-            }>
-            <Menu.Item onPress={() => {}} title={user.user_name} />
-            <Menu.Item onPress={() => {}} title={user.organization_type} />
+            }
+            contentStyle={styles.menuContent}
+            >
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={() => {}} title={user.user_name} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={() => {}} title={user.organization_type} />
             <Divider />
-            <Menu.Item onPress={logOutHandler} title={'logout'} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={logOutHandler} title={'logout'} />
           </Menu>
         </View>
         {/* <ProfileHanger user={user} /> */}
