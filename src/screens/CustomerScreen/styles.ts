@@ -46,6 +46,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  menu: {
+    right: 0,
+    top: 0,
+    position: 'absolute',
+  },
+  menuContent: {
+    backgroundColor: colors.darkGrey,
+  },
+  menuItem: {
+    backgroundColor: colors.darkGrey,
+    color: colors.orange,
+  },
 });
 
 export default styles;

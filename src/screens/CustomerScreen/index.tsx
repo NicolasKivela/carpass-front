@@ -16,7 +16,7 @@ import {User} from '../../store/types/user.tsx';
 import {useSelector} from 'react-redux';
 import {changePage} from '../../store/actions/routing.tsx';
 import ProfileHanger from '../../components/ProfileHanger';
-import {Divider, Drawer, IconButton, Menu} from 'react-native-paper';
+import {Divider, Drawer, IconButton, Menu, Text} from 'react-native-paper';
 import {colors} from '../../common/styles.tsx';
 import {TouchableWithoutFeedback} from 'react-native';
 import {removeUserData} from '../../store/actions/user.tsx';
@@ -94,7 +94,7 @@ const InspectorScreen: React.FC<Props> = ({}) => {
         onPress={() => setShowDrawer(!showDrawer)}
       /> */}
       <View style={styles.container}>
-        <View style={{position: 'absolute', top: 0, right: 0}}>
+        <View style={styles.menu}>
           <Menu
             visible={showDrawer}
             onDismiss={() => {
@@ -112,11 +112,14 @@ const InspectorScreen: React.FC<Props> = ({}) => {
                 }}
                 onPress={() => setShowDrawer(true)}
               />
-            }>
-            <Menu.Item onPress={() => {}} title={user.user_name} />
-            <Menu.Item onPress={() => {}} title={user.organization_type} />
+              
+            }
+            contentStyle={styles.menuContent}
+            >
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={() => {}} title={user.user_name} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={() => {}} title={user.organization_type} />
             <Divider />
-            <Menu.Item onPress={logOutHandler} title={'logout'} />
+            <Menu.Item style={styles.menuItem} titleStyle={styles.text} onPress={logOutHandler} title={'logout'} />
           </Menu>
         </View>
         {/* <ProfileHanger user={user} /> */}
