@@ -1,7 +1,7 @@
 {
   "aboutMe": "Omat tiedot",
-  "carInspection": "Auton kuntotarkastukset",
-  "carInspectionHistory": "Auton kuntotarkastushistoria",
+  "carInspection": "Kuntotarkastukset",
+  "carInspectionHistory": "Kuntotarkastushistoria",
   "brandAndModel": "Merkki ja malli",
   "continue": "Jatka",
   "description": "Selitys",
@@ -42,8 +42,8 @@
     "createOrder": "Tilaus lähetetty",
     "changeUserType": "Tyyppisi on muutettu"
   },
-  "createOrder": "luoda järjestystä",
-  "createdOrders": "Order created",
+  "createOrder": "Tee tilaus",
+  "createdOrders": "Tehdyt tilaukset",
   "full": "LAAJA",
   "fullInsp": "Laaja kuntotarkastus",
   "goBack": "Palaa tekemään muutoksia",
