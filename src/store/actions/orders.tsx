@@ -22,6 +22,7 @@ export const fetchOrders = () => {
       });
       if (response.ok) {
         const orders: {orders: Order[]} = await response.json();
+        console.log(orders)
         dispatch(setOrdersState(orders.orders));
       } else {
         throw Error;

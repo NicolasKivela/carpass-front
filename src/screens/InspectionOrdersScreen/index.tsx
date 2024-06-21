@@ -94,6 +94,7 @@ const InspectionOrdersScreen: React.FC = () => {
                     state={item.order_status}
                     inspectionType={item.report_type}
                     orderDate={item.created_at}
+                    deliveryDate={item.delivery_date}
                     key={item.id}
                     btnText={
                       item.order_status === 'ready'
