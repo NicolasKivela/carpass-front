@@ -1,25 +1,23 @@
-function dateToIsoString(dateString: string | null | undefined): string | null {
+function dateToIsoString(dateString: string | null | undefined): string {
   if (!dateString) {
-    return null;
+    return '';
   }
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {
     // Check if the date is invalid
-    return null;
+    return '';
   }
   return date.toISOString();
 }
 
-function isoToDateString(
-  isoString: string | null | undefined,
-): string | null | undefined {
+function isoToDateString(isoString: string | null | undefined): string {
   if (!isoString) {
-    return null;
+    return '';
   }
   const date = new Date(isoString);
   if (isNaN(date.getTime())) {
     // Check if the date is invalid
-    return null;
+    return '';
   }
   return date.toISOString().slice(0, 10); // Extracts 'YYYY-MM-DD'
 }

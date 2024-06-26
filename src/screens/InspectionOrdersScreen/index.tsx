@@ -109,7 +109,7 @@ const InspectionOrdersScreen: React.FC = () => {
                     title={item.registration_number}
                     state={item.order_status}
                     inspectionType={item.report_type}
-                    orderDate={item.created_at}
+                    orderDate={isoToDateString(item.created_at)}
                     deliveryDate={isoToDateString(item.delivery_date)}
                     handleSubmit={value => handleSubmit(value, item)}
                     key={item.id}
