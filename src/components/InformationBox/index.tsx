@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Button} from 'react-native-paper';
+import {useSelector} from 'react-redux';
 
 import TextField from '../TextField';
 import {colors} from '../../common/styles';
 import styles from './styles';
+import {User} from '../../store/types/user.tsx';
 
 interface InformationBoxProps {
   title: string;
@@ -14,6 +16,7 @@ interface InformationBoxProps {
   deliveryDate?: string | null;
   onPress?: () => void;
   btnText?: string;
+  handleSubmit?: (value: string | null) => void;
 }
 
 const InformationBox: React.FC<InformationBoxProps> = ({
@@ -24,10 +27,12 @@ const InformationBox: React.FC<InformationBoxProps> = ({
   deliveryDate,
   onPress,
   btnText,
+  handleSubmit,
 }) => {
   const {width, height} = Dimensions.get('window');
   const isTablet = width >= 768 && height >= 1024;
-  const [text, setText] = useState<string | null>(deliveryDate);
+  const [text, setText] = useState<string>(deliveryDate ?? '');
+  const user = useSelector((stateUser: {user: User}) => stateUser.user);
   return (
     <View style={styles.container}>
       <View style={[styles.row, styles.topRow]}>
@@ -69,25 +74,27 @@ const InformationBox: React.FC<InformationBoxProps> = ({
           ]}>
           {'Tilattu: ' + orderDate}
         </Text>
-        {deliveryDate && btnText === 'ready' ? (
+        {state === 'ready' || user.organization_type === 'seller' ? (
           <Text
             style={[
               styles.text,
               styles.bottomRight,
               isTablet && styles.tabletText,
             ]}>
-            {'Arvioitu valmistumisaika: ' + deliveryDate}
+            {'Arvioitu valmistumisaika: ' + (deliveryDate ? deliveryDate : '')}
           </Text>
         ) : (
           btnText === 'start inspection' && (
             <TextField
               label="Arvioitu valmistumisaika"
-              value={text}
+              value={text ?? ''}
               onChangeText={setText}
               secureTextEntry={false}
               onIconPress={() => console.log('Icon pressed')}
               backgroundColor="#f0f0f0"
-              onSubmit={() => {}}
+              onSubmit={() => {
+                handleSubmit?.(text);
+              }}
             />
           )
         )}

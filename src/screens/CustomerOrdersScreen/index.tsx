@@ -89,13 +89,22 @@ const CustomerOrderScreen: React.FC = () => {
               orders.length > 0 &&
               orders.map((item: Order) => {
                 console.log(item);
+                function isoToDateString(
+                  isoString: string | null | undefined,
+                ): string | null | undefined {
+                  if (!isoString) {
+                    return null;
+                  }
+                  const date = new Date(isoString);
+                  return date.toISOString().slice(0, 10);
+                }
                 return (
                   <InformationBox
                     title={item.registration_number}
                     state={item.order_status}
                     inspectionType={item.report_type}
                     orderDate={item.created_at}
-                    deliveryDate={item.delivery_date}
+                    deliveryDate={isoToDateString(item.delivery_date)}
                     key={item.id}
                     btnText={
                       item.order_status === 'ready' ? 'View Report' : undefined
