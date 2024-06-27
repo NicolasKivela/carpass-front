@@ -15,8 +15,9 @@ import {User} from '../../store/types/user.tsx';
 import {useSelector} from 'react-redux';
 import {changePage} from '../../store/actions/routing.tsx';
 import {Divider, IconButton, Menu} from 'react-native-paper';
-import { colors } from '../../common/styles.tsx';
-import { removeUserData } from '../../store/actions/user.tsx';
+import {colors} from '../../common/styles.tsx';
+import {removeUserData} from '../../store/actions/user.tsx';
+import { create } from 'react-test-renderer';
 
 interface Props {}
 
@@ -86,12 +87,26 @@ const InspectorScreen: React.FC<Props> = ({}) => {
                 onPress={() => setShowDrawer(true)}
               />
             }
-            contentStyle={styles.menuContent}
-            >
-            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={() => {}} title={user.user_name} />
-            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={() => {}} title={user.organization_type} />
+            contentStyle={styles.menuContent}>
+            <Menu.Item
+              style={styles.menuItem}
+              titleStyle={styles.text}
+              onPress={() => {}}
+              title={user.user_name}
+            />
+            <Menu.Item
+              style={styles.menuItem}
+              titleStyle={styles.text}
+              onPress={() => {}}
+              title={user.organization_type}
+            />
             <Divider />
-            <Menu.Item style={styles.menuItem} titleStyle={styles.text}onPress={logOutHandler} title={'logout'} />
+            <Menu.Item
+              style={styles.menuItem}
+              titleStyle={styles.text}
+              onPress={logOutHandler}
+              title={'logout'}
+            />
           </Menu>
         </View>
         {/* <ProfileHanger user={user} /> */}
@@ -128,6 +143,12 @@ const InspectorScreen: React.FC<Props> = ({}) => {
           title={t('carInspection')}
           icon="mail"
           onPress={showOrders}
+          style={styles.button}
+        />
+        <MainButton
+          title={t('newOrder')}
+          icon="mail"
+          onPress={startNewOrderHandler}
           style={styles.button}
         />
         <SecondaryButton

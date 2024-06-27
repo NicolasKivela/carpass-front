@@ -1,4 +1,4 @@
-import {BASE_PATH, PATHS, SCREENS} from '../../common/constants';
+import {BASE_PATH, PATHS, SCREENS, USER_TYPE} from '../../common/constants';
 import {SET_CURRENT_ORDER, SET_ORDERS_STATE} from './actionTypes';
 import {CreateOrder, Order} from '../types/order';
 
@@ -50,7 +50,11 @@ export const createOrder = (order: CreateOrder) => {
         body: JSON.stringify(order),
       });
       if (response.ok) {
-        changePage(SCREENS.CUSTOMER_SCREEN);
+        if (getState().user.organization_type === USER_TYPE.INSPECTION) {
+          changePage(SCREENS.INSPECTOR);
+        } else {
+          changePage(SCREENS.CUSTOMER_SCREEN);
+        }
       } else {
         throw Error;
       }
