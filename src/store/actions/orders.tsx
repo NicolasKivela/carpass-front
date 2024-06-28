@@ -70,6 +70,36 @@ export const createOrder = (order: CreateOrder) => {
   };
 };
 
+export const deleteOrder = (orderId: string) => {
+  console.log(`${BASE_PATH}${PATHS.ORDER}?id=${orderId}`);
+  return async (dispatch: any, getState: any) => {
+    try {
+      const response = await fetch(`${BASE_PATH}${PATHS.ORDER}?id=${orderId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
+        },
+      });
+      console.log(response);
+      if (response.ok) {
+        console.log('Order deleted');
+        dispatch(fetchOrders());
+      } else {
+        throw Error;
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch(
+        setError({
+          type: 'Error',
+          title: 'errors.deleteOrderTitle',
+          message: 'errors.deleteOrderMessage',
+        }),
+      );
+    }
+  };
+};
+
 export const setCurrentOrder = (order: Order) => {
   return {
     type: SET_CURRENT_ORDER,
