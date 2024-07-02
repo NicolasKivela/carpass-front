@@ -60,11 +60,8 @@ const TextField = forwardRef<TextFieldRef, TextFieldProps>(
       return text;
     };
     const handleChangeText = (text: string) => {
-      console.log(text, 'from input');
       const formattedText = formatInput(text);
-      console.log('FORMAMTTED', formattedText);
       setInputValue(formattedText);
-      console.log(inputValue);
       onChangeText(formattedText);
       //handleChangeText(text);
     };

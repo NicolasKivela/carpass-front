@@ -14,6 +14,7 @@ import {
   Gradient,
   DropdownNotification,
   InformationBox,
+  isoToDateString,
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {fetchOrders, setCurrentOrder} from '../../store/actions/orders';
@@ -88,30 +89,18 @@ const CustomerOrderScreen: React.FC = () => {
             {orders &&
               orders.length > 0 &&
               orders.map((item: Order) => {
-                console.log(item);
-                function isoToDateString(
-                  isoString: string | null | undefined,
-                ): string | null | undefined {
-                  if (!isoString) {
-                    return null;
-                  }
-                  const date = new Date(isoString);
-                  return date.toISOString().slice(0, 10);
-                }
                 return (
                   <InformationBox
                     title={item.registration_number}
                     state={item.order_status}
                     inspectionType={item.report_type}
-                    orderDate={item.created_at}
+                    orderDate={isoToDateString(item.created_at)}
                     deliveryDate={isoToDateString(item.delivery_date)}
                     key={item.id}
                     btnText={
                       item.order_status === 'ready' ? 'View Report' : undefined
                     }
                     onPress={() => {
-                      console.log(item.registration_number);
-                      console.log(item.report_id);
                       viewOrderHandler(
                         item.report_id,
                         item.registration_number,
