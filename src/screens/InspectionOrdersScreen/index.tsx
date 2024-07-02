@@ -19,6 +19,7 @@ import {
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {
+  deleteOrder,
   fetchOrders,
   setCurrentOrder,
   updateOrderDeliveryDate,
@@ -71,6 +72,9 @@ const InspectionOrdersScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const orders = useAppSelector(state => state.order.orders);
+  const user = useAppSelector(state => state.user);
+
+  console.log(user.organization);
 
   useEffect(() => {
     dispatch(fetchOrders());
@@ -130,6 +134,14 @@ const InspectionOrdersScreen: React.FC = () => {
                         changePage(SCREENS.NEW_REPORT);
                       }
                     }}
+                    onDelete={
+                      item.order_status === 'not_started' &&
+                      item.customer_organization_id === user.organization_id
+                        ? () => {
+                            dispatch(deleteOrder(item.id.toString().trim()));
+                          }
+                        : undefined
+                    }
                   />
                 );
               })}

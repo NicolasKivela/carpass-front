@@ -35,6 +35,8 @@ const NewReportScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector(state => state.user);
+
   const [reportType, setReportType] = useState<number | null>(null);
   const [inspectorOrg, setInspectorOrg] = useState<number | null>(null);
   const [engineType, setEngineType] = useState<number | null>(null);
@@ -210,7 +212,11 @@ const NewReportScreen: React.FC = () => {
           changePage(SCREENS.INSPECTOR);
           break;
         case SCREENS.MY_NEW_ORDER:
-          changePage(SCREENS.CUSTOMER_SCREEN);
+          if (user.organization_type === USER_TYPE.SELLER) {
+            changePage(SCREENS.CUSTOMER_SCREEN);
+          } else {
+            changePage(SCREENS.INSPECTOR);
+          }
           break;
       }
     }

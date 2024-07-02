@@ -16,6 +16,7 @@ interface InformationBoxProps {
   deliveryDate?: string | null;
   onPress?: () => void;
   btnText?: string;
+  onDelete?: () => void;
   handleSubmit?: (value: string | null) => void;
 }
 
@@ -27,6 +28,7 @@ const InformationBox: React.FC<InformationBoxProps> = ({
   deliveryDate,
   onPress,
   btnText,
+  onDelete,
   handleSubmit,
 }) => {
   const {width, height} = Dimensions.get('window');
@@ -102,6 +104,11 @@ const InformationBox: React.FC<InformationBoxProps> = ({
       {onPress && btnText && (
         <Button mode="contained" onPress={onPress} style={styles.button}>
           <Text style={styles.buttonText}>{btnText}</Text>
+        </Button>
+      )}
+      {onDelete && (
+        <Button mode="contained" onPress={onDelete} style={styles.button}>
+          <Text style={styles.buttonText}>Delete</Text>
         </Button>
       )}
     </View>

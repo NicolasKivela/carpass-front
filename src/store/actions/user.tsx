@@ -16,6 +16,7 @@ export const setUserData = (user: {
   first_name: string;
   last_name: string;
   organization_type: string;
+  organization_id: string;
   avatar_uri: string;
   token: any;
 }) => {
@@ -68,6 +69,7 @@ export const loginUser = (username: string, password: string) => {
             first_name: credentials.firstname,
             last_name: credentials.lastname,
             organization_type: credentials.organization.type,
+            organization_id: credentials.organization.id,
             avatar_uri: credentials.avatarUri,
             token: token,
           }),

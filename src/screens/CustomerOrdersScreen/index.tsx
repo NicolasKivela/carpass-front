@@ -17,7 +17,7 @@ import {
   isoToDateString,
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
-import {fetchOrders, setCurrentOrder} from '../../store/actions/orders';
+import {deleteOrder, fetchOrders, setCurrentOrder} from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
@@ -66,6 +66,7 @@ const CustomerOrderScreen: React.FC = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const orders = useAppSelector(state => state.order.orders);
+  const user = useAppSelector(state => state.user);
 
   useEffect(() => {
     dispatch(fetchOrders());
@@ -105,9 +106,18 @@ const CustomerOrderScreen: React.FC = () => {
                         item.report_id,
                         item.registration_number,
                       );
+
                       // setCurrentOrder(item);
                       // changePage(SCREENS.VIEW_REPORT);
                     }}
+                    onDelete={
+                      item.order_status === 'not_started' &&
+                      item.customer_organization_id === user.organization_id
+                        ? () => {
+                            dispatch(deleteOrder(item.id.toString().trim()));
+                          }
+                        : undefined
+                    }
                   />
                 );
               })}
