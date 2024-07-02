@@ -17,7 +17,11 @@ import {
   isoToDateString,
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
-import {deleteOrder, fetchOrders, setCurrentOrder} from '../../store/actions/orders';
+import {
+  deleteOrder,
+  fetchOrders,
+  setCurrentOrder,
+} from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
 import {styles} from './styles';
