@@ -14,12 +14,15 @@ import {
   Gradient,
   DropdownNotification,
   InformationBox,
+  isoToDateString,
+  dateToIsoString,
 } from '../../components/index';
 import {useAppDispatch, useAppSelector} from '../../store/configureStore';
 import {
   deleteOrder,
   fetchOrders,
   setCurrentOrder,
+  updateOrderDeliveryDate,
 } from '../../store/actions/orders';
 import {SCREENS} from '../../common/constants';
 
@@ -77,6 +80,16 @@ const InspectionOrdersScreen: React.FC = () => {
     dispatch(fetchOrders());
   }, []);
 
+  const handleSubmit = (value: string | null, order: Order) => {
+    dispatch(
+      updateOrderDeliveryDate({
+        ...order,
+        delivery_date: dateToIsoString(value),
+      }),
+    );
+    dispatch(fetchOrders());
+  };
+
   return (
     <Gradient>
       <SafeAreaView style={styles.container}>
@@ -100,7 +113,9 @@ const InspectionOrdersScreen: React.FC = () => {
                     title={item.registration_number}
                     state={item.order_status}
                     inspectionType={item.report_type}
-                    orderDate={item.created_at}
+                    orderDate={isoToDateString(item.created_at)}
+                    deliveryDate={isoToDateString(item.delivery_date)}
+                    handleSubmit={value => handleSubmit(value, item)}
                     key={item.id}
                     btnText={
                       item.order_status === 'ready'

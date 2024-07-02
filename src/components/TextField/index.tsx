@@ -1,5 +1,5 @@
-import React, {forwardRef, useImperativeHandle, useRef} from 'react';
-import {StyleProp, TextStyle} from 'react-native';
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {StyleProp, TextStyle, View, Text} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
 import {colors} from '../../common/styles';
@@ -36,7 +36,7 @@ const TextField = forwardRef<TextFieldRef, TextFieldProps>(
     ref,
   ) => {
     const inputRef = useRef(null);
-
+    const [inputValue, setInputValue] = useState(value);
     useImperativeHandle(ref, () => ({
       focus: () => {
         if (inputRef.current) {
@@ -54,28 +54,45 @@ const TextField = forwardRef<TextFieldRef, TextFieldProps>(
           return 'default';
       }
     };
+    const formatInput = (text: string) => {
+      // Remove any non-digit characters
+      text = text.replace(/\D/g, '-');
+      return text;
+    };
+    const handleChangeText = (text: string) => {
+      const formattedText = formatInput(text);
+      setInputValue(formattedText);
+      onChangeText(formattedText);
+      //handleChangeText(text);
+    };
     const inputType = keyboardTypeHandler();
+    const placeholder =
+      label === 'Arvioitu valmistumisaika' ? 'YYYY/MM/DD' : '';
     return (
       <TextInput
+        label={label}
         ref={inputRef}
         style={[styles.textInput, style]}
         mode="outlined"
         textColor={colors.white}
-        value={value}
+        value={label === 'Arvioitu valmistumisaika' ? inputValue : value}
         keyboardType={inputType}
         right={
           rightIcon ? (
             <TextInput.Icon icon={rightIcon} onPress={onIconPress} />
           ) : undefined
         }
-        label={label}
-        onChangeText={onChangeText}
+        onChangeText={
+          label === 'Arvioitu valmistumisaika' ? handleChangeText : onChangeText
+        }
         secureTextEntry={secureTextEntry}
         activeOutlineColor={colors.orange}
         onSubmitEditing={onSubmit}
+        placeholder={
+          label === 'Arvioitu valmistumisaika' ? placeholder : undefined
+        }
       />
     );
   },
 );
-
 export default TextField;

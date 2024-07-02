@@ -22,6 +22,7 @@ export const fetchOrders = () => {
       });
       if (response.ok) {
         const orders: {orders: Order[]} = await response.json();
+        console.log(orders);
         dispatch(setOrdersState(orders.orders));
       } else {
         throw Error;
@@ -101,8 +102,39 @@ export const deleteOrder = (orderId: string) => {
 };
 
 export const setCurrentOrder = (order: Order) => {
+  console.log(order, 'THIS IS ORDER SYNC');
   return {
     type: SET_CURRENT_ORDER,
     payload: order,
+  };
+};
+
+export const updateOrderDeliveryDate = (order: Order) => {
+  console.log('updating order', order);
+  return async (dispatch: any, getState: any) => {
+    try {
+      const response = await fetch(`${BASE_PATH}${PATHS.ORDER}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: order.id,
+          status: order.order_status,
+          delivery_date: order.delivery_date,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update order');
+      }
+      const updatedOrder = await response.json();
+      console.log('Order updated successfully', updatedOrder);
+
+      return updatedOrder;
+    } catch (error) {
+      console.error('Error updating order:', error);
+      throw error;
+    }
   };
 };

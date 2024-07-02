@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Button} from 'react-native-paper';
+import {useSelector} from 'react-redux';
+
+import TextField from '../TextField';
 import {colors} from '../../common/styles';
 import styles from './styles';
+import {User} from '../../store/types/user.tsx';
 
 interface InformationBoxProps {
   title: string;
   state: string;
   inspectionType: string;
   orderDate: string;
+  deliveryDate?: string | null;
   onPress?: () => void;
   btnText?: string;
   onDelete?: () => void;
+  handleSubmit?: (value: string | null) => void;
 }
 
 const InformationBox: React.FC<InformationBoxProps> = ({
@@ -19,13 +25,16 @@ const InformationBox: React.FC<InformationBoxProps> = ({
   state,
   inspectionType,
   orderDate,
+  deliveryDate,
   onPress,
   btnText,
-  onDelete
+  onDelete,
+  handleSubmit,
 }) => {
   const {width, height} = Dimensions.get('window');
   const isTablet = width >= 768 && height >= 1024;
-
+  const [text, setText] = useState<string>(deliveryDate ?? '');
+  const user = useSelector((stateUser: {user: User}) => stateUser.user);
   return (
     <View style={styles.container}>
       <View style={[styles.row, styles.topRow]}>
@@ -67,6 +76,30 @@ const InformationBox: React.FC<InformationBoxProps> = ({
           ]}>
           {'Tilattu: ' + orderDate}
         </Text>
+        {state === 'ready' || user.organization_type === 'seller' ? (
+          <Text
+            style={[
+              styles.text,
+              styles.bottomRight,
+              isTablet && styles.tabletText,
+            ]}>
+            {'Arvioitu valmistumisaika: ' + (deliveryDate ? deliveryDate : '')}
+          </Text>
+        ) : (
+          btnText === 'start inspection' && (
+            <TextField
+              label="Arvioitu valmistumisaika"
+              value={text ?? ''}
+              onChangeText={setText}
+              secureTextEntry={false}
+              onIconPress={() => console.log('Icon pressed')}
+              backgroundColor="#f0f0f0"
+              onSubmit={() => {
+                handleSubmit?.(text);
+              }}
+            />
+          )
+        )}
       </View>
       {onPress && btnText && (
         <Button mode="contained" onPress={onPress} style={styles.button}>
